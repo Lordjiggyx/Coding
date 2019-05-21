@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AJAX 2 - Fectching local JSON </title>
+    
+</head>
+<body>
+
+
+    	<!--Buttons to load single user and Array of users-->
+        <button id ="button1">Get User</button>
+        <button id ="button2">Get Users</button>
+        <br>
+        <h1>User</h1>
+        <div id="User"></div>
+        <h1>Users</h1>
+        <div id="Users"></div>
+    
+        <script>
+            //Event listeners in corresondence with buttons
+            document.getElementById('button1').addEventListener('click' , loadUser)
+            document.getElementById('button2').addEventListener('click' , loadUsers)
+
+            //Method to grab single user
+
+            function loadUser()
+            {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET' ,'user.Json' ,true )
+
+                xhr.onload = function()
+                {
+                    if(this.status == 200)
+                    {
+                        //wrap in JSON.PARSE TO GET ACCESS TO VALUES
+                        var user = JSON.parse(this.responseText)
+                        var output = " "
+                        
+                        //Can be done in ES6 with string literals
+                        output += '<ul>' +
+                            '<li>ID:'+user.id+'</li>'+
+                            '<li>name:'+user.name+'</li>'+
+                            '<li>email:'+user.email+'</li>'+
+                            '</ul>'
+                        document.getElementById('User').innerHTML = output
+                    }
+                }
+                xhr.send()
+            }
+            
+            //Methid to grab array of users
+            function loadUsers()
+            {
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET' ,'users.Json' ,true )
+
+                xhr.onload = function()
+                {
+                    if(this.status == 200)
+                    {
+                        //wrap in JSON.PARSE TO GET ACCESS TO VALUES
+                        var users = JSON.parse(this.responseText)
+                        var output = " "
+                        
+                        //for in loop
+                        for(var i in users)
+                        {
+                             //Can be done in ES6 with string literals
+                        output += '<ul>' +
+                            '<li>ID:'+users[i].id+'</li>'+
+                            '<li>name:'+users[i].name+'</li>'+
+                            '<li>email:'+users[i].email+'</li>'+
+                            '</ul>'
+                        }
+                        document.getElementById('Users').innerHTML = output
+                    }
+                }
+                xhr.send()
+            }
+
+        </script>
+</body>
+</html>

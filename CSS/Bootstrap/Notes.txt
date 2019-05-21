@@ -1,0 +1,193 @@
+What is it?
+Front-end framework
+Contains css html and javascript
+used for builiding responsive mobile first web applications and websites
+Increased development speed
+Very responsive
+Consistency
+customizable
+
+https://coursetro.com/posts/code/130/Learn-Bootstrap-4-Final-in-2018-with-our-Free-Crash-Course
+
+
+https://getbootstrap.com/docs/4.3/getting-started/download/
+Download source files
+You only really need the css and the js file loacted inside the zip
+
+Create folders called css and js
+copy scss folder and js folder over
+Then refer to it in the index.html
+
+
+****Getting started*****
+
+THE STARTRING POINT OF THE PROJECT WILL USUALLY BE A CONTAINER
+
+the container class allows you to horizontally your layout
+so we define one in the body
+
+<div class="container-fluid">
+
+***Nav Bar***
+
+add a navigation bar most headers have a company logo
+so left align is most commonn for the logo
+
+ <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class= "navbar-brand" href="#">Company Name</a>
+        </nav>
+
+This usually the start for the company name and logo 
+
+
+then the nav bar is usally right align
+We then use another div for the menu items
+
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+ <ul class="navbar-nav ml-auto"></ul>
+<div>
+
+note the **ml-auto** thats what pushes it to the very right
+the unorderd list gets a navbar class
+
+then inside the ul a li tag is used for the items
+this tag gets a nav-item class this is for each item
+
+<li class="nav-item">
+<a href="#" class="nav-link">Home</a>
+</li>
+
+
+***DropDown**
+add dropdown class to the li class
+then add dropdown-toggle
+then add an id of navbardropdwon
+and then data-toggle to the a tag
+
+<li class="nav-item dropdown">
+<a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" data-toggle="dropdown">Home</a>
+</li>
+
+outside the a tag but still inside the li tag 
+you will add a div tag with a class of dropdown menu
+
+**Hamburger navbar**
+Underneath the logo
+we wil insert a button with the following information
+
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="~navbarSupportedContent">
+
+Then within the button you add a span class 
+<span class="navar-toggler-icon"></span>
+
+
+****Vertical navbar****
+ <div class="col-sm-12 col-md-4">
+                   <h3 class="mb-4">Secondary Menu</h3>
+                    <ul class="nav flex-column nav-pills">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active">Link 1- active</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link ">Link 4</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Link 3</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link ">Link 3</a>
+                        </li>
+                    </ul>
+                </div>
+
+
+
+
+
+
+
+
+
+
+**JumboTron*** i dont see the point of this kinda like a paragraph
+ <div class="jumbotron">
+            <h1 class="display4">Simple. elegant. awesome</h1>
+            <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, minus.</p>
+            <p class="lead">
+                <a href="" class="btn btn-primary btn-lg" href="#" role="button">learn more</a>
+            </p>
+        </div>
+
+***Columns and row***
+
+use a div tag with row to make a row
+use a div tag with col to make a column
+
+<div class="row">
+            <div class="col">
+                1
+            </div>
+
+***Card***
+Like a little webpage essentially a card in the web page
+you need a div for the following:
+card
+card body
+card title
+card text
+
+<div class="card">
+    <div class="card-body text-center">
+        <div class="card-title">Card Title</div>
+        <p class="card-text">Quick text for the card title</p>
+        <a href="#" class = 'card-link'>New Link</a>
+    </div>
+</div>
+
+you can edit the size of the card by adding a hyphen to the column tag and pickin a number between 1 & 12
+
+<div class="row">
+            <div class="col-6">
+                1
+            </div>
+
+we can also make it more responsive using sm and md and lg 
+
+sm -small
+md-medium
+lg-large
+
+you can specify what size makes a card small medium or large
+<div class="col-sm12 col-md-4">
+
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Card Title</h5>
+                        <p class="card-text">Quick text for the card title</p>
+                        <a href="#" class = 'card-link'>New Link</a>
+                    </div>
+                </div>
+
+            </div>
+
+****Margins and padding***
+this is under the spacing section
+
+you use m for a marging
+you use p for padding
+
+you then use either t , b, l , r , x , y which sets top bottom left right then horizontal then vertical
+
+you then add a hyphen then a size between 0-5
+
+
+*********TYPOGraphy***********
+Mostly Underneath the documentation
+
+
+****Customization****
+Done in the style sheet
+
+should use scss instead of css
+
+you must import sass files

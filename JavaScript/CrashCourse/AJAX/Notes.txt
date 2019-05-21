@@ -1,0 +1,48 @@
+What is AJAx
+
+-not a framework or langauge
+-Asynchronous Javascript & XML
+-set of Web technologies
+-Send and recieve data Asynchronously
+-does not interfere with current web page
+-Json has replaced XML dor the most part
+
+Calls to a server can be made with javascript or the likes of jquery
+A rquest is made using an XMLHTTPREQUEST
+Server sends back a response in JSON format and then the ajax engine converts it to html
+
+XMLHTTPREQUEST (XHR) Object
+-API in the form of an Object-provided by the broweser's js environment
+-methods transfer data between client/server
+-can be used with other protocols than http
+-can work with data other than xml(JSON , plain text)
+
+Libraries and & other methods to make ajax Calls
+-jquery-DOM manipulation library
+-axios - slim Libraries for http requests
+-superagent - slim Libraries for http requests
+-fetch API - part of the broweser 
+-prototype
+-node http
+
+-You need a server to work with ajax
+-install software at home so your not fucked with SAP
+
+When making requests the Status must be checked 
+however with onreadystatechange both Status and Status values must be checked
+
+
+Ready state values
+//0 - request not initialzed
+//1 - server connection established
+//2 - request recieved
+//3 - processing requests
+//4 - request finished and response is ready
+
+Status values
+//200= 'OK'
+//403 = 'FORBIDDEN'
+//404 = 'NOT FOUND'
+
+
+****Must go back and do the php part of the video because you can't downliad xampp on sap laptop

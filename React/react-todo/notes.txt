@@ -1,0 +1,282 @@
+React is used to bulid user interfaces and front end applications
+the code written in react works on the clients machine instead of the server 
+React behaves like a framework the V in THe MVC process
+
+
+---Why Use React----
+Makes front end javascript much easier
+uses slef contained independent components with thier own state
+very interactive UI
+Virtual DOM - Only update whats needed
+JSX - ALLOWS use fo Javascript in the markup
+Easy to work with teams
+
+State determines how the object renders and behaves
+we can also have application level state by using a state manager 
+like redux or reacts own context api
+
+---How to start---
+Recreate React app
+CLI tool for creating react application
+uses webpack but needs no configuration from you
+comes bundeled with a dev server with hot reload
+
+components
+
+Two types
+class based components
+functional components
+
+class based components hold state
+
+they usally extend the react component
+this contains a render method that renders the component on th page
+returns JSX
+this allows for JS in the markup
+
+must type into terminal "npx create-react-app app_name ."
+This will install all the node files needed to run the react app
+
+Everything runs through one page that page being the index.thml page
+
+The app component gets put in the index.html through the index.js file 
+this is the entry point of react
+all the neccessary imports are maid
+
+app.js is the actual application component
+cant use class attriburte only 'classname'
+youneed semi-colons
+
+use "npm start" to start the server ***Make sure your in the right fuxking file path***
+can use the react app and check parameters
+
+BASIC CLEANUP
+import React , {Component} from 'react'; place at the top of your file
+-delete index.css and remove from index.js
+-delete logo
+-re do app.css
+-copy redone app.js and apply to component js file in component folder
+-to bring component into page import the file name into the app.js file
+-must embed component into web component by usinga a tag like a custom html tag e.g <Todos />
+
+**State**
+a lot of the time you will have multiplle components need to access
+need to go in a place where it can be fed to all the components
+
+to add state go within the class and make a js object
+
+properties can be added in the same way like html by allowing them to = the name of the components
+e.g.
+<Todos todos = {this.state.todos} />
+comes from the state from of the app.js
+then its passed as props 
+then access it using this .probs
+
+---Comments---
+ {/* */}
+
+---Prop types---
+Validation for properties a component should have
+we can set the type
+set if their required or not
+so whichever component contains the props we must add trhe type to this class
+
+we first type in the line along the following imports
+----import PropTypes from 'prop-types'-----
+
+then go below the class and define the prop types
+
+1.The name of the class
+2.use .propTypes
+3.object type - e.g array object etc
+4.isRequired/notRequired
+
+
+--Style--
+with jsx we canuse inline Style
+
+if were doing inline style 
+we use double curly brackets
+put the style in the div
+esstentially same as css just no hyphens
+it uses camel case
+e.gets
+<div style = {{backgroundColor: '#333}}>
+
+
+we can use variables
+this uses single braces in the div
+e.g
+
+<div style = {itemstyle}>
+const itemstyle = {
+    backgroundColor: #333
+}
+
+can also do styling through variables
+
+here we create a method in this case getStyle
+
+then in the div make refernece to this method its a method needs brackets
+e.g.
+<div style = {this.getStyle()}>
+
+then above render write the method method can be done with es5/es6
+usally better practice to do with arrow function
+e.g.
+
+es5
+
+getStyle = () =>
+{
+    if(this.props.todo.completed)
+    {
+        return
+        {
+            textDecoration: 'line-through'
+        }
+    }
+    else
+    {
+        return
+        {
+            textDecoration: 'none'
+        }
+    }
+}
+
+es6
+return{
+    textDecoration: this.props.todo.completed ?
+    'line-through' : 'none',
+    backgroundColor: this.props.todo.completed ?
+    'red' : 'beige',
+    padding : '10px',
+    borderBottom: '1px #ccc dotted'
+  }
+
+  ---events----
+done outside render
+same as Javascript jsut uses camel case
+placed inside the input type tag
+<input type = "Checkbox" onChange={this.markComplete} />{' '}
+
+Best done with arrow functions as it removes need to bind this. to  variable
+
+e.g.
+markComplete = (e)=>
+{
+  console.log(this.props.todo.title)
+}
+
+
+---Component Drilling---
+You must climb the ladder using props 
+by creating the methods into the props
+ 
+---APP.JS---
+    Place method in above render 
+    attach the method to the Todos class in the custom class tag to binc them all together
+    <Todos todos = {this.state.todos} markComplete = {this.markComplete} delTodo = {this.delTodo}/>
+    |
+    |
+    >Todos.js
+    add a prop of mark complete to the todo class
+    <TodoItem key = {todo.id} todo = {todo} markComplete = {this.props.markComplete}  delTodo = {this.props.delTodo}/>
+
+        |
+        |
+        >Todoitem.js
+        <input type = "Checkbox" onChange={##this.props.markComplete##} />{' '}
+        ***Note that this.markComplete chnages to this.props.markComplete
+
+-button example-
+<button onClick={this.props.delTodo.bind(this,id)} style = {btnStyle}>X</button>
+
+***NOTE***
+All of the calling is done withing braces 
+
+when we hav an input field usually we wnat to have your fields as a piece
+of state for that component
+
+There are levels of state
+App level state 
+Component level state
+ 
+The todo items are shared amongst the whole app tus making the app
+level state 
+
+the addtodo onchange method is component leve; state
+
+---Routing---
+
+when making a new page you do not need a div
+can just replace with react fragment
+this acts as a ghost value 
+
+you must intall react-router-dom first
+Accessing different urls
+
+Router must be implemented using in app.js
+"BrowserRouter as Router , Route} from 'react-router-dom'
+
+In render if we want to use 
+router we must wrap evrything in that BrowserRouter
+
+To add a route that is a single component
+you must add a component prop but use what is called 
+render props
+
+1.Create route
+Takes in a path which is index reprsented by "/"
+the props => returns a react fragment
+in this parentheses you plave your multiplle components
+
+<Route exact path = "/" render  = {props =>(
+    <React.Fragment>
+
+    </React.Fragment>
+)}/>
+
+2. To route to another page you create a route again
+change the path name to the location of the page
+import the component from the page that it is created
+
+<Route path = "/about" component = {About}/>
+then add /about to the url to bring you ti the page
+or the name of the desired page
+
+---Creating links---
+cant use a tag
+we must use the link from react-router-dom
+
+so we must import this at the top
+
+import{Link} form 'react-router-dom'
+
+then use the <Link to> tag 
+
+inside you put  the location of the page
+
+<Link to = "/">Home</Link>
+
+
+To make inital requests
+also import axios 
+import axios from 'axios'
+we must use naother lifecycle method apart from render
+componentDidMount() is the name of the method
+
+then we use axios.get and enter the url where we are geetting data
+This gives us a promise which has a response and a data property
+in which you use arrow function to return something
+
+componentDidMount() {
+  axios.get('https://jsonplaceholder.typicode.com/todos?_limit=10')
+  .then(res => console.log(res.data))
+}
+
+e.g res.data
+
+
+you can deploy react app from anywhere just use npm run build

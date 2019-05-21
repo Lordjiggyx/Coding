@@ -1,0 +1,41 @@
+----Tag Syntax-----
+
+-Element names are surrounded by angle brackets
+-Normally they come in pairs a start tag and an end tag
+-End tag is usuakky the sma ebut with a forward slash
+-some tags close themselves
+
+.e.g <h1>About us </h1>
+
+List of tags can be found in thius website
+https://www.w3schools.com/tags/
+
+---Comments---
+
+Comments are done using angle brackets an exclamation
+mark and dashes 
+
+e.g. <!--Hello-->
+
+----Tag Attribute-----
+-All tags can have attributes
+-They provide inofrmation about an Element
+-Placed withing the start tag
+-Done as Key value pairs 
+
+e.g.
+<tagname attributename = "attribute value">content</tagname>
+
+---HTML5 Semantic tags----
+
+Used to clearly describe the menaning to both the browser and the developer
+e.g.
+<header> - top of the page
+<footer> - bottom of the page
+<aside> - The side of the page
+<Section> a section of the page
+<small> used for sub content
+<nav> used for navigation
+
+You can give these tags id's to be referenced later
+

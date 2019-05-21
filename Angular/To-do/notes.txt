@@ -1,0 +1,291 @@
+-must change directory to angualar
+-Create new folder using ng new file_name
+- say yes to routing
+- choose css
+-change directory to this new file
+-Open dev server with ng serve --open
+components will have a .ts file for typescript
+
+
+---Files---
+package.json - used to hold all the imported modules
+index.html - main page that loads in the browser
+style.css - global stylesheet
+
+
+---index.html---
+every angualar application has an app route component
+this is known as the <app-root>
+this embeds the route app component
+
+--App folder--
+in the app folder this is where the components and
+services will be created
+
+There is a file called the app.module.ts 
+this is the entry/meeting place for all the components
+Angular is comprised of different modules
+
+The root app module aka "@NgModule" takes in
+a number of things:
+declarations - where components will go whenever you make a new component it must be added to this cli will automatically add this
+imports - If you want to use a module you add it here
+providers - Has to do with services you want to include
+bootstrap - bootstrapping the main component
+
+--appcomponent.ts--
+main component file
+
+imports main component package
+
+DECORATOR - INCLUDES METADATA FOR YTHE Component
+@Component({
+  selector: 'app-root', - WHAT WILL BE USED IN THE HTML ELEMENT
+  templateUrl: './app.component.html', - POINTS TO HTML TEMPLATE
+  styleUrls: ['./app.component.css'] - POINTS TO THE STYLESHEET
+})
+
+CLASS
+export class AppComponent  TAKES ONE PROPERTY THAT CAN BE SEEN IN THE HTML File
+recommended to use typescript when defining properties
+ {
+  name:string = 'To-do';
+
+  constructor()
+  {
+      this.name = tomi
+  }
+}
+
+we can have methods in the component
+can place a constructor in the class
+
+---AppComponent.HTML--
+All templates must be wrapped in a single element
+
+
+--Creating a new component from the terminal--
+to generate a component we can do:
+ng generate component
+we can also place them in a folder by placing 
+components/folder_name
+
+e.g.
+
+ng generate component components/Todos
+
+or 
+ng g c components/TodoItem
+
+This will creates the component folder and the todos folder
+with all component files 
+
+these files however implement has an OnInit which is like an constructor
+that runs staright away 
+
+constructor is used to implement services 
+
+---Models folder---
+This is where me create classes similar to objects
+we create this in the app folder
+
+example of a class
+export class Todo
+{
+    id:number;
+    title:string;
+    completed:boolean
+
+}
+
+we must then import this into main components folder in the app folder
+import {Todo} from '../../models/Todo'
+
+
+--loop through array--
+using directive ngfor you can out this on any element
+example
+
+<ul *ngFor = "let todo of todos">
+<li>{{todo.title}}</li>
+</ul>
+
+when looping through actual components you act like the
+we use <app-todo-item> because this is the selector used to reference the component
+
+component is a property in the tag and pass it in
+when you pass in something you must 
+label it as an input 
+
+--in the TodoItem---
+import { Component, OnInit , ***Input***}
+@Input() todo:Todo;
+
+<app-todo-item *ngFor = "let todo of todos" [todo] = "todo">
+</app-todo-item>
+
+--button---
+<button class="del ">x</button>
+
+--checkbox--
+ <input type="checkbox">
+
+
+--ng classes directive--
+<div [ngClasses] = "method_name()">
+
+then go to typescript file and create the method
+e.g.
+
+setClasses()
+  {
+    let classes = {
+      todo:true,
+      'is-complete':this.todo.completed
+    }
+    return classes
+  }
+
+  ---Events----
+  add events by using parentheses e.g.
+  and let it equal a method and whatever property that you want to access
+
+ <input (change) = "onToggle(todo)" type="checkbox">
+ <button (click) = "onDelete(todo)" class="del ">x</button>
+
+ Then you go and create the method in the related class
+
+ onToggle(todo)
+ {
+   todo.completed = !todo.completed
+ }
+
+ onDelete(todo)
+ {
+   console.log("Delete")
+ }
+
+
+ ---Changing server values usnig the http modules--
+ open terminal
+
+ ng g s services/file_name
+
+This creates a todo service which creates an injectable
+which allows us to inject it into a component
+
+must import the service into the related component file file
+import {TodoService} from '../../services/todo.service'
+
+constructor is whwrre you initaialse your services
+ constructor(private todoService:TodoService) { }
+
+ make reference to the todoService and let it equal this.todos
+ 
+  ngOnInit()
+   {
+ 
+      this.todos = this.todoService.getTodos()
+  }
+
+  ---Fetch from an APi---
+  implement the http APi
+
+  must go to app.module.ts import the http method
+  import {HttpClientModule} from '@angular/common/http'
+
+  then place it in the imports
+   imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule
+  ],
+
+  then go to services and import trh module and headers
+  import {HttpClient , HttpHeaders} from '@angular/common/http'
+
+  To use it we must actually inject it into the constructor
+  to make a get request we add the URL as a property
+  todosUrl:string 'https://jsonplaceholder.typicode.com/todos'
+
+  Then say similar to axios
+  this.http.get<Todo[]>()
+  must import object type from model
+
+an observable is returned which gets a property which is the class that it uses
+must import observable from rxjs
+
+import {Observable} from "rxjs"
+
+----Observable returned-----
+ getTodos(): Observable<Todo[]> 
+  {
+   return this.http.get<Todo[]>(this.todosUrl)
+  }
+
+  This is all asynchronous so we use .subscribe to get the requested elements
+
+  ---Put request/Update server---
+  go to related class here we go to todo item as we want to change value on on
+  Toggle
+
+  import TodoService
+  inject it into the constructor
+
+   constructor(private tododService:TodoService) { }
+
+   in the todoitrem class we go to where the method is wrtitten and add another callable method
+   
+ this.tododService.toggleCompleted(todo).subscribe(todo =>
+    console.log(todo))
+ }
+
+ This returns a observable so we must subscribe the value returened
+
+ we then go to the the services where the method is made 
+ we pass in the url the object and httpsOptions
+
+ HttpOptions includes the header of content type we must include this
+ const httpOptions ={
+     headers:new HttpHeaders({
+         'Content-Type':'application/JSON'
+     })
+ }
+toggleCompleted(todo:Todo):Observable<any>
+{
+  const url = `${this.todosUrl}/${todo.id}`
+  return this.http.put(url,todo,httpOptions)
+}
+currently returning the url along with the object itslef
+
+---Delete----
+
+We must emit an event upwards 
+import { Component, OnInit , Input , EventEmitter , Output} from '@angular/core';
+
+We must then go and also register the output to where the class is being expoprted
+Output() deleteTodo:EventEmitter<Todo> = new EventEmitter();
+This sends out the method deleteTodo while taking a todo object and this equals a new event
+
+must then go to the component html and catch the event
+(deleteTodo) = 'deleteTodo($event)'
+
+we must then go to the component type script page and add the method
+ deleteTodo(todo:Todo)
+  {
+    console.log("Delete me")
+  }
+} 
+
+add done the same way
+
+
+---Adding a header----
+This is still a component
+put in a folder called layout
+ng g c component/layout/Header
+
+To bring into main app component go to appcomponent.ts
+and add the tag related to the component
+
+

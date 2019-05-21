@@ -1,0 +1,423 @@
+---What is Javascript----
+
+-high level interpreted programming language
+-Multi-paradigm - can write in OOP or functional
+-Runs on the client/browser as well as on the server(node.js)
+-Very interactive
+-used in mobile development
+-used in desktop application development
+
+
+---Console----
+when getting output with javascript it is advised
+to mostly use the console through google developer tools
+<script src = main.js"></script> - used link page to js page
+There are plenty of methids attached to the console object
+
+--live Server-- 
+Open html files with live server to get lve responses
+
+--Variables--
+-Three ways to set Variables var let and const
+var-globally stored
+let - allows you re-assign values
+const - const makes varibales a constant value throughtout the file
+always use const unless you know the varivale will need to be reassigned
+
+--Data types--
+Primitive - directly assigned to memory
+you do not have to state the data type like python
+    -String
+    -Numbers
+    -Boolean
+    -Null
+    -Undefined
+    -symbol
+
+----Template strings-----
+place the varibale inside a ${} to place it inside of a string 
+//Must use back ticks to utilise the template strings
+
+----methods----
+A method is a function that is associated with an object
+e.g 
+    .substring
+    .length
+    .touppercase
+esstentially this is like calling methods in java
+https://www.w3schools.com/jsref/jsref_obj_string.asp list of string methods i javascript
+
+---Arrays---
+Two ways of making Arrays
+
+#1 using the array constructor using the "new" keyword like in java
+e.g. const numbers = new array(1,2,3,4,5);
+
+#2 Place them inside sqaure brackets 
+
+e.g. const fruits = ['apples' , 'oranges' , 'pears,];
+
+-Can have multiple data types in an array
+
+-can access varibales like java 
+e.g. console.log(fruits[1]);
+
+-can add values
+
+e.g. fruits.push('mangos')
+
+-can add values to the start
+e.g. fruits.unshift('strawberries')
+
+
+-can remove last element
+e.g. fruits.pop()
+
+--Index of array
+e.g console.log(fruits.indexOf)
+
+https://www.w3schools.com/jsref/jsref_obj_string.asp - list of array methods
+
+
+--Object Literals--
+-Key value pairs
+-Like dictionaries in python
+when entering values a colon is used to set a a key pair like in python
+can have objects and arrays in side an object literal
+values are enclosed in a {} brackets
+
+e.g.
+const person = {
+
+    firstname: "Tomi",
+    lastname:"Ilori",
+    age: 20,
+    hobbies:["Music" , "Reading" ,"Sports"] ,
+    address:{
+        Street:269,
+        city:"Tyrrelstown",
+        county:"Dublin"
+  }
+}
+
+- if you want to get a value in the object you use the dot syntax
+- can get multiple values 
+e.g. console.log(person.firstname , person.lastname)
+
+- Getting a value from another object within an object
+console.log(person.address.city)
+
+can pull values form objetc Literals
+e.g. const{firstname , lastname} = person;
+
+console.log(firstname)
+
+---Adding properties---
+-As easy as that kust use dot notation and create a new varibale
+person.email = "Tomiilori123@gmail.com"
+
+
+---JSON----
+JSON is a data format for sending data to server
+Similar syntax
+double quotes around keys and strings 
+no single quotes
+
+--To convert and send to server create a new variable use the JSON.stringify(<Variable_name>)
+
+e.g. const todoJSON = JSON.stringify(<Variable_name>);
+console.log(todoJson)
+
+
+--Loops---
+-for
+like java
+
+for(let i  = 0; i<10 ; i++)
+{
+
+}
+
+-While
+
+while(i < 10 )
+{
+    console.log(`While loop Number:${i}`)
+    i++;
+}
+
+
+    --Looping through arrays--
+
+#1 for loop
+    for(let i  = 0; i< todos.length ; i++)
+{
+    console.log(todos[i].text)
+}
+
+#2 like using the for: in java
+creates a new object for every loop that can be referneced
+for(let todo of todos)
+{
+    console.log(todo)
+}
+
+
+--High order array methods--
+Used for looping through arrays in a more effcuient manner
+-The high order methods take in functions as a parameter
+-Can take in multiple parameters 
+***These methods each create new Variables in this case the todo which are then referred to***
+
+-forEach - Loops thriugh them
+e.g.
+todos.forEach(function(todo)
+{
+    console.log(todo.text);
+});
+
+
+-Map -allows us to create a new array from an array
+-Must dcelare a new array 
+-can use return to display new array
+
+const todoText= todos.map(function(todo)
+{
+   return todo.text;
+});
+console.log(todoText);
+
+
+-filter - allows us to create a new array with a condition
+same format as map with creating a new varibale
+
+const ConpletedTask= todos.filter(function(todo)
+{
+   return todo.isCompleted ===true;
+});
+console.log(ConpletedTask);
+
+condition is inside the braces
+
+***These methods can be chained on to ecah other***
+
+--Gets the text of only completed tasks
+const CompletedTask= todos.filter(function(todo)
+{
+   return todo.isCompleted ===true;
+}).map(function(todo)
+{
+    return todo.text;
+})
+console.log(CompletedTask);
+
+
+---Conditionals---
+'==' does not match data types just the value
+'===' matches the value and the data type
+
+Mostly the same as java using the 
+> - greater than
+< - less than
+|| - or
+&& - and
+
+---Tenery operator---
+Shorthand if statement
+used to assign variavles based on a condition
+
+const x = 10
+const color = x > 10 ? `red` : `blue`;
+
+***The first part is the condition***
+***The '?' is the same as saying 'then'***
+***The ':' is the same as saying 'else'***
+
+
+---Switches---
+another way to evaluate a value
+e.g.
+
+switch(color)
+{
+    case:`red`:
+    console.log('color is red');
+    break;
+    case `blue`:
+    console.log(`color is blue`)
+    break;
+    default:
+    console.log(`color is not red or blue`);
+    break;
+}
+
+---Functions---
+Same as java esstentially
+can take parameters
+Uses function keyword
+desired action placed inside the braces
+method must be called 
+usually you return rather than using the console.log() method
+
+e.g.
+function addNums(x , y)
+{
+    console.log(x + y);
+}
+
+addNums(10 ,5);
+
+function addNums(x , y)
+{
+ return x + y;
+}
+
+console.log(addNums(10 ,5));
+
+***ARROW FUMCTIONS***
+-uses '=>'
+-Turns a variable into a function
+
+const addNums(x , y)=>
+{
+    console.log(x + y);
+}
+
+addNums(10 ,5);
+
+//ARRROW FUNCTIONS//
+const addNums = (x , y)=> console.log(x + y);
+
+addNums(10 ,5);
+
+---Object Orientated programming----
+
+-Two ways
+#1-construtor with prototypes
+Exactly like java
+e.g.
+
+function Person(firstname , lastname , dob)
+{
+    this.firstname = firstname;
+    this.lastname = lastname;
+    this.dob = dob;
+    ***adding a method to the object****
+    this.getbirthyear= function(){
+        return this.dob.getFullYear()
+    }
+}
+
+
+
+//Instantiating the person object
+
+const person1 = new Person(`Tomi` , `Ilori` , `25-4-1999`)
+
+***Using prototypes***
+This allows us to add functions to another object 
+e.g.
+
+Person.prototype.getbirthyear = function()
+{
+    return this.dob.getFullYear()
+}
+
+Person.prototype.getfullname = function()
+{
+    return `${this.firstname} ${this.lastname}`;
+}
+
+
+#2-es6 classes - MORE LIKE JAVA
+-better looking way of doing OOP
+
+e.g.
+
+class Person{
+    constructor(firstname , lastname , dob){
+    this.firstname = firstname;
+    this.lastname = lastname;
+    this.dob = dob;
+}
+
+getbirthyear()
+{
+    return this.dob.getFullYear()
+}
+
+getfullname()
+{
+    return `${this.firstname} ${this.lastname}`;
+}
+}
+
+//INSTANTIATE
+const person1 = new Person(`Tomi` , `Ilori` , `25-4-1999`)
+
+
+---DOM---
+DOCUMENT OBJECT MODEL
+
+***Selecting***
+taking html elemennts and put them into Variables
+
+--Two Types--
+
+#1 Single element
+
+document.getElementById()
+
+//can be assigned to a variable
+
+//My form taken from the html file and is logged
+console.log(document.getElementById('my-form'))
+
+//can be assigned to a variable
+const form = document.getElementById('my-form')
+console.log(form)
+
+//QuerySelcector is another method
+console.log(document.querySelector('.container'))
+
+
+#2 multiple element
+
+//Queryselectorall returns a node list which is very similar to an array
+console.log(document.querySelectorAll('.item'))
+
+//Loop through a list of items
+
+const items = document.querySelectorAll('.item')
+
+items.forEach(item) => console.log(item);
+
+***Manipulation***
+
+const ul = document.querySelector(.items);
+
+//can call methods on it 
+//e.g. .remove method
+
+//This removes the unordered list
+ul.remove();
+
+list of DOM DOCUMENT OBJECT methods - https://www.w3schools.com/js/js_htmldom_document.asp
+
+---Creating an event ---
+
+
+//Takes in the event we want
+//Then takes in the function that will be called when the event occurs
+//Essentially like an actionlistener in java
+e.g
+btn.addEventListener('click' , (e)=>
+{
+ console.log('click');
+});
+
+https://www.w3schools.com/js/js_htmldom_events.asp - list of button events
+
+
+can also be done making a seperate method to call when the button is presses
+

@@ -1,0 +1,77 @@
+Css is used for desgining and layouts
+ -Not a programming language
+ -Stylesheet/sty;ing language
+
+ ----Three ways of using Css---
+
+ -Inline CSS: directly in the HTML element
+ <h1 style = "color:red">Hello World</h1>
+
+ -Internal CSS: Using <style> tags within a single document
+Refers to the element/ tag using the style tag
+Place the style tag in the head tag of the page and add 
+the requested attribute
+
+ -External CSS : linking an external .css file
+ in the css file we again make a refernece to the specfic 
+ attribute or element we want to edit and then use the 
+ html tag called <link> placed in the head of the file
+
+
+ ---CSS Selectors----
+a { Background-color : yellow; }
+
+a = Selector/link
+{ = declaration start
+Background-color = property
+: = property/value separator
+; = declaration separator
+} = declaration end
+
+selectors list - https://www.w3schools.com/cssref/css_selectors.asp
+
+----Colors in Css----
+-Can ise color name
+-Hexidecimal
+-rgb 
+
+--Fonts---
+Font attributes-https://www.w3schools.com/css/css_font.asp
+Web safe fonts - no special fonts that you have to import - https://www.cssfontstack.com/
+
+--ID/Class---
+-ID's are unique elements e.g "main navigation bar"
+
+-Classes are used when the style may be applied more than once 
+-You should not repeat ID'S
+
+When referencing ID'S in CSS you use the "#"
+e.g. #mainbar
+
+When referencing Classes in CSS you use the "."
+e.g. .mainbar
+
+
+---Margin & Padding---
+Padding - The space in between an element and it's border
+Border - Border propertyto stop elements interacting
+Margin - The space outside of an element
+
+---Text formatting---
+Allows you to choose specfically what tag you want to style in the spefic class
+
+----links---
+links have different states
+
+
+---Postioning--
+-Static- Default when position isnt assigned
+-Relative - positioned to it's normal postion falls naturally
+-Absolute - Target whatever postion we want
+-Fixed- fixed to one postion
+-Intial - sets to initial postion
+-Inherit- inherits property of parent
+
+
+Markup first
+Then style it

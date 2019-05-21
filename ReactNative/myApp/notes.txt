@@ -1,0 +1,455 @@
+http://facebook.github.io/react-native/docs/getting-started
+refer to this page to get started
+you need android studio and a jdk
+ctrl + m to help
+
+you edit app.js to run stuff
+
+create a folder called app and in that folder create
+a folder called components
+
+
+----Starting off----
+Go to app.js and clear it
+
+--Import the following---
+import React , {Component} from 'react'
+import {AppRegistry , Text , View} from 'react-native';
+
+--create a class---
+export default class MyApp extends Component
+{
+
+}
+
+-Register the Component---
+AppRegistry.registerComponent('MyApp' , () => MyApp)
+
+now it works like react js 
+add render to the class
+export default class MyApp extends Component
+{
+    render()
+    {
+        return(
+            <View>
+                <Text>
+
+                </Text>
+            </View>
+        )
+    }
+}
+
+Create a folder called components this is where you will place your components
+
+in this folder each Component will get a folder
+and each folder will be a .js file of the Component
+
+the component.js file follows the same strutcure as the app.js file
+however you must chnage the respective class name whereever it is referenced
+
+import React , {Component} from 'react'
+import {AppRegistry , Text , View} from 'react-native';
+
+export default class Component1 extends Component
+{
+    render()
+    {
+        return(
+            <View>
+                <Text>
+                  This is Component1
+                </Text>
+            </View>
+        )
+    }
+}
+
+AppRegistry.registerComponent('Component1' , () => Component1)
+
+****NOTE***
+MyApp has been replaced with Component1
+when making components keep the C capital
+
+then to refer back to this component
+
+you go to the app.js
+create a custim tag with name of the component
+e.g.
+
+ return(
+            <View>
+                  <Component1/>
+            </View>
+
+
+---Properties----
+we can pass Properties into a component
+
+in App.js
+
+<Component1 message = 'hello world'/>
+
+in Component1.js
+
+{this.props.message}
+
+just like react values are referred to using props
+
+---State---
+we can also use state
+
+creating a constructor like in react in the component class
+
+    constructor()
+    {
+        super()
+        this.state = {
+            name:'Brad'
+        }
+
+    }
+then we can refer to it in the view by using this.state
+
+<Text>{this.state.name} </Text>
+
+sometimes we turn props into state by passing props into the constructor and the super
+ constructor(props)
+    {
+        super(props)
+        this.state = {
+            name:'Brad',
+            showname:false
+        }
+
+    }
+
+***To debug go onto terminal and then enter react-native log-**
+then use console.log
+
+
+---Styling---
+done with javascript
+but done in the same format as css
+
+you must bring in stylesheet from react native
+import {AppRegistry , Text , View , StyleSheet} from 'react-native';
+
+we can use inline styling e.g.
+<Text style = {{color:'red'}}>Hello Brad</Text>
+<View style = {{backgroundColor:'yellow'}}>
+
+if you want to format it jsut like css you can ujust the style 
+equal a variable and them do the styling in that object being passed in
+
+const styles = StyleSheet.create(
+    {
+        
+    }
+)
+
+then you must make reference to this style in tag you want styled
+and also give a reference to the values that will edit the styles on these objects
+e.g.<View style = {styles.myView}> the .myView is what is referenced in the tstyles object
+
+then inside the style objects you can carry on andd edit the style like css
+
+const styles = StyleSheet.create(
+    {
+        myView:
+        {
+            backgroundColor:'blue'
+        }
+        ,
+        myText:
+        {
+            color:'white'
+        }
+    }
+)
+
+---Using a version of flexbox to make boxes---
+create a view witt the flex container
+each view should gone in a container 
+
+  <View style = {styles.container}>
+                
+                <View style = {styles.v1}>
+                <Text> View-1</Text>
+                </View>
+            
+           
+                <View style = {styles.v2}>
+                <Text> View-2</Text>
+                </View>
+           
+           
+                <View style = {styles.v3}>
+                <Text> View-3</Text>
+                </View>
+
+                </View>
+
+note that everything is in a single view as this is what is being returned
+almost like wrapping everything in a single div tag
+
+
+Then carry on in the css object editing the related box objects
+const styles = StyleSheet.create(
+    {
+        myView:
+        {
+            backgroundColor:'blue'
+        },
+        myText:
+        {
+            color:'white'
+        },
+        container:
+        {
+            flexDirection:'row',
+            height:100,
+        },
+        v1:
+        {
+            backgroundColor:'green',
+            padding:10
+        },
+        v2:
+        {
+            backgroundColor:'yellow',
+            padding:10
+        },
+        v3:
+        {
+            backgroundColor:'red',
+            padding:10
+        }
+    }
+)
+
+----Touchable Highlight---
+must import it into class
+must wrap desired object being edited with it 
+and also add that you want it to happen on a press action
+
+<TouchableHighlight   style = {styles.v1} onPress = {this.onPress}>
+                <View style = {styles.v1}>
+                <Text> View-1</Text>
+                </View>
+</TouchableHighlight>
+
+then you must go and create the onpress method
+this is done above the render method
+onPress()
+    {
+        console.log('Space pressed')
+    }
+
+same thing with TouchableOpacity
+
+
+---Input control----
+
+import text input
+import {AppRegistry , Text , View , TextInput} from 'react-native';
+
+then use TextInput tag
+ <TextInput/>
+
+ takes a number of Properties e.g. placeholder
+
+ usually we assign a state value to whatever the text input is
+
+ we create a constructor and then set the state to equal a value
+
+ constructor()
+    {
+        super()
+        {
+            this.state = {
+                textValue:'Hello'
+            }
+        }
+    }
+
+---Switch---
+True or false value
+
+import switch
+
+import {AppRegistry , Text , View , TextInput , Switch} from 'react-native';
+
+add the switch to the view by using a switch tag
+<Switch/>
+
+give it a value in the state usually set to false
+
+this.state = {
+                textValue:'This Component has been registered',
+                switchValue:false
+            }
+
+then inside the switch tag set the value of the state to equal the value given inside the this.state bracket
+ <Switch
+    value = {this.state.switchValue}
+    />
+
+To get the switch to change value we need to add an onvaluechange property
+in the switch tag
+
+<Switch
+    value = {this.state.switchValue}
+    onValueChange= {value => this.onSwitchChange(value)}
+    />
+this line of code states that the value will be changed to whatevr is returbned from the onSwitchChange method 
+which you will have to create
+
+
+---List View----
+
+We have to create a variable for a data source
+
+import listview
+import {AppRegistry , Text , View , ListView} from 'react-native';
+
+Then copy this code into the constructor
+
+const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        this.state = {
+          dataSource: ds.cloneWithRows(['row 1', 'row 2']),
+        };
+instead of using row 1 & row 2 in the d.cloneWithRows we pass in the collection of values that we want to iterate through
+
+
+in the render we use the list view tag
+THhis takes in a dataSource which is set to the state value 
+also takes in renderRow which returns a function that represents the row we must also bind it ot the this value to make use of it
+<ListView
+dataSource={this.state.userDataSource}
+renderRow={this.renderRow.bind(this)}
+/>
+
+Then we create the renderRow method 
+renderRow(user)
+{
+    return(
+    <View>
+    <Text>
+        {user.name}
+    </Text>
+    </View>
+    )
+}
+
+
+
+----Fetch----
+We need to hook up to the component did mount to make the call to fetch the data
+
+
+We will use the same code used for the listview but will remove the ds.clonewiithrows method
+  constructor()
+    {
+        super()
+        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        this.state = {
+          dataSource: ds,
+        };
+    }
+
+Then we create a fetch users function/methods
+as it is async we use .then and pass in the response which is set to json and then use another .then to set the state
+we then take the data source and set the state of it to the cloneWithRows and then pass in the response
+fetchUsers()
+{
+    fetch('https://jsonplaceholder.typicode.com/users')
+    .then(response) => response.json())
+    .then(resonse =>
+    {
+        this.setState(
+            {
+                dataSource:this.state.dataSource.cloneWithRows(response)
+            }
+        )
+    })
+}
+
+Once this is done it follows the same process as the list view component
+using the render row method
+and having the return as the same code block
+
+Finally we make a metod called componentDidMount
+and call the fetchusers method
+
+componentDidMount()
+{
+    this.fectUsers()
+}
+
+
+---Navigator----
+Navigator
+Navigator has been removed from the core
+ React Native package in version 0.44. 
+ The module has been moved to a react-native-custom-components package
+ that can be imported by your application in order to maintain backwards compatibility.
+ just have to import it from react-native-custom-component
+
+ Navigator will be implemented in the main app.js
+ we will import Navigator
+ then instead of returning view we will return Navigator
+ it takes a few Properties:
+ 
+ initialRoute={{id: 'component5'}}
+ //A scene is a view page or component
+ renderScene={this.renderScene}
+ //
+  configureScreen={(route , routeStack) => Navigator.sceneConfigs.FloatFromBottom}
+
+
+  then create render scene function this takes in the route and the Navigator
+  we must have a condition to see waht scene it is
+  we will use a switch 
+  we want to use the navigator from within the components so we 
+  will pass it in as a property
+    renderScene(route , navigator)
+  {
+      switch(route.id)
+      {
+          case'component5':
+          return(<Component5 navigator={navigator} title = 'Component 5'/>)
+          case'component6':
+          return(<Component6 navigator={navigator} title = 'Component 6'/>)
+      }
+  }
+
+  we need TouchableHighlight in the file where we plan to navigate to and from from
+
+  Then wrap the row view with TouchableHighlight in render row
+  then add an on press to the TouchableHighlight
+
+  Then cretae the onpress method
+
+  we can call the navigator as a property into the method as 
+  we have already passed it into the component
+
+To pass in information we just add the obkect parameter to the push method
+
+then go to the renderScene and specify that the component will
+take in a user variable as well
+
+in component6 we should now add the user to the state
+
+we will make a constructor and pass in props
+constructor(props)
+{
+    super(props)
+    this.state =
+    {
+        name:this.props.user.name,
+        email:this.props.user.email
+    }
+}
+

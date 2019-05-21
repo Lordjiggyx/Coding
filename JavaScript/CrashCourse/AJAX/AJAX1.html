@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AJAX 1 - Text File</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+ 
+    
+</head>
+
+
+<body>
+    <!--Button to grab text-->
+    <button id ="button">Get Text File</button>
+
+    <!--Insert text ifrom file into web page-->
+    <br>
+    <div id="text"></div>
+
+
+    <!--Create an event listener-->
+    <script>
+        document.getElementById('button').addEventListener('click' , loadText)
+        
+
+
+        function loadText()
+        {
+            //check button is clicked
+            //console.log('button clicked')
+            //Create an XHR Object works as a function so it needs parentheses
+            var XHR = new XMLHttpRequest();
+            //function to make request , type of request and what file or url were making it to
+            //we use the open function
+            //OPEN - type , url/file . async(true|false)
+
+            XHR.open('GET' , 'Sample.txt' , true)
+            
+        //     Method one using onload
+            XHR.onload = function()
+            {
+                //Check for the status of the response
+                //200= 'OK'
+                //403 = 'FORBIDDEN'
+                //404 = 'NOT FOUND'
+                if(this.status == 200)
+                {
+                    //Gets text from Sample.txt file
+                    console.log(this.responseText)
+                    document.getElementById('text').innerHTML = 
+                    this.responseText
+                }
+            }
+           //sends request
+           XHR.send()
+
+
+            //Method two using onreadystatechange
+            // XHR.onreadystatechange = function()
+            // {
+            //     //Must chcek for readyState values and status
+            //     //0 - request not initialzed
+            //     //1 - server connection established
+            //     //2 - request recieved
+            //     //3 - processing requests
+            //     //4 - request finished and response is ready
+
+            //     if(this.readyState ==4 && this.status==200)
+            //     {
+            //         console.log(this.responseText)
+            //     }
+            // }
+
+            // //OPTIONAL - USED FOR LOADERS
+            // //
+            // XHR.onprogress =function()
+            // {
+            //     console.log('READYSTATE:', XHR.readyState)
+            // }
+
+            // //Handler for errors
+            // XHR.onerror = function()
+            // {
+            //     console.log("Error with request")
+            // }
+
+
+            
+        }
+    </script>
+  
+</body>
+</html>

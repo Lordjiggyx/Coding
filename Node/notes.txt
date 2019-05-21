@@ -1,0 +1,195 @@
+---What is NODE.js
+
+-Javascript runtime(not a language or framework)
+-written in c++
+-allows us to run javascript code on the server 
+-Allows us to use javascript as a server aside language
+-fast efficient and higly scable
+-same language on the front and back end
+- Best used for blogs , shopping carts , social network , tools and utilities , real time services
+
+
+--Lets Get Started---
+Create a package.Json File
+you must go into the node folder or required folder
+can do this by saying  npm init
+
+-purpose of package.json-
+stores all depdendecies incase you move to another computer or server
+you must run npm install to install all the listed packages
+
+you can havedev depdendecies which are depdendecies just for 
+development we will use nodemon so we do not have to restart the server constantly
+
+can do by saying npm install -D nodemon
+
+
+Wheb you want to move the app somewhere else you do not include 
+the node_modules folder you can delete that and just run 
+npm install  and this will recreate the node_modules
+
+create a new file called index.js
+
+You can run a file from the terminial by using nose index.js
+
+you will have multiple files but most of them will be modules
+
+you can export files by using modules. export
+you first do 
+Module.exports = person
+in the file being exported
+
+then you create a new object and use require to import it taking in the path of where the file is located
+const person = require('./person')
+
+
+----Node core Modules---
+core modules are inclueded with node thus you dont need to install
+path is an example
+
+see path_demo.js
+
+file system module/fs module
+see fs_demo.js
+
+Os module
+os_demo.js
+
+URL module
+
+url_demo.js
+
+
+---Event Emitter---
+see logger.js
+see event demo
+Built around async event driven architecure
+allows listeners to be called
+
+
+must bring in event emitter 
+const EventEmitter = require('events')
+
+//Create an emitter class allow to extend event emitter
+class MyEmitter extends EventEmitter{}
+
+instantiate the object
+const myEmitter = new MyEmitter();
+
+cretae the listener
+myEmitter.on('event',() => console.log('event Fired!!'))
+
+instantiate the listener
+myEmitter.emit('event')
+
+
+--Creating a web server--
+
+see http_demo.js
+see index.js
+
+bring in the http module
+const http = require('http')
+
+use the http.createServer to create a server
+this method takes in a function we will use arrow
+http.createServer((req , res)=>
+
+write a response using a res.write()
+res.write('Hello World')
+
+then end the repsons using res.end()
+res.end()
+
+
+in order for this to run it must listen on a port using .listen
+this takes in a port and a callback
+.listen(5000 , () => console.log('Server Running....'))
+
+place in localost:500 into url and you will see what is written
+
+to stop server from running you use ctrl+c
+
+to use nodemon
+
+we go into the terminal and create an npm script
+go to scripts in package.json and add to new values
+
+"start":"node index",
+"dev":"nodemon index"
+
+Then go to the terminal and the run npm dev
+this allows us to to reload the site withiut restarting the server
+
+
+we can also add content type by adding 
+'res.writeHead(200 , {'Content-Type': 'text/html'})'
+
+-Loading a file--
+we can use the fs module to read the file path to the page
+    fs.readFile(path.join(__dirname , 'Public' , 'index.html') , (err , content)=>{}
+
+we should be serving JSON rather then Html 
+
+to do this we change the (req.url==='/api/file_name')
+this should be done for a database however in this case we will hardcode
+the refernece file
+
+we must also change the content type tp application/json
+
+ res.writeHead(200 , {'Content-Type': 'application/json'})
+
+see remaining commnets in index.js
+
+---Most efficinent way of reading files---
+This is done by making the file path dynamic
+
+we create a variable called filePath and we let it eqaula the requested url
+to do this we use path.join() place in the current directory then the location of all the web page files
+then we use a tenary operator to load either the landing page or the requested url
+? = then
+: = else
+let filePath = path.join(__dirname , 'public' , req.url ==='/' ? 'index.html' : req.url)
+
+we must then set the content type
+to do this we get the extension of the file using the path module
+let extension = path.extname(filePath)
+
+we then set the initial content type tp html cause thats whtas expected
+let contentType = 'text/html'
+
+Then we check for other extemsions using a switch statemnet
+switch(extension)
+{
+    case ".js":
+      contentType = "text/javascript";
+      break;
+    case ".css":
+      contentType = "text/css";
+      break;
+    case ".json":
+      contentType = "application/json";
+      break;
+    case ".png":
+      contentType = "image/png";
+      break;
+    case ".jpg":
+      contentType = "image/jpg";
+      break;
+}
+
+we then read in the file 
+
+however we must handle any potential errors
+see index.js for more
+
+if there is no error we just return the content like always using res.writehead and res.end
+
+This can work for css as well
+
+---Deploy to heroku---
+install heroku cli
+
+stop server
+
+login through terminal with heroku login

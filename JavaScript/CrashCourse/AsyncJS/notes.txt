@@ -1,0 +1,12 @@
+ASYNC JS is pretty much the same concept as what you did in java
+with synchronization and calling waits. It is used when you want the 
+program running to be able to run and perform different actions without 
+waiting for one action to finsh
+
+There are ways of doing async js 
+
+#1 Call backs - Older
+preety much just waits for a action/function to compleete before acting
+
+
+#2 Promises - Newer
