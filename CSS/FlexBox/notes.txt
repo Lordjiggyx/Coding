@@ -1,18 +1,145 @@
-What is it
-
--A clean layout moode that provides an easy and clean way to arrnage 
-items within a container
-
-no floats
-responsive and mobile friendly
-order of elements can be changed without editing html
-
-Ability to alter item width and height to best fit containers free space
-built for small sacle layouts while grid is used for more lare scale 
-
-https://yoksel.github.io/flex-cheatsheet/ - for flex properties
+Used to align componenets beetter
+responisve to mobile
+easier to Use
 
 
-Lets Go 
+lets start 
 
-Displlay flex can be used to place elements side by side
+mostly done in containers 
+
+there is a general container and then 
+child elements in this container that
+are manipulated using flex
+
+for example 
+
+.container-1{
+display :flex;
+}
+*****Display flex must be put in containers to assign the flex variables
+
+display flex is used to align side by side 
+
+you can use flex on it's own to edit the size of these elements
+
+e.g.
+
+.box{
+flex:1;
+}
+
+******Arrangement/Order*******
+
+To change the order of objects we can use order
+e.g
+
+.box-1{
+flex: 1;
+order:2
+}
+
+.box-2{
+flex: 1;
+order:3
+
+}
+
+.box-3{
+flex: 1;
+order:1
+
+}
+
+
+*****Alignment*****
+
+We can use align to align the height of the elements due to content
+
+using align there's multiple values for align e.g.
+align-items
+align-content
+align-self
+
+Each of these have thier own set of values
+e.ge.
+flex-start
+flex-end
+center
+strech
+
+e.g.
+
+.container-1
+{
+display: flex;
+align-items: flex-start
+align-content:
+}
+
+*********Direction/Horizontal/Columns******
+
+You can do this by using flex Direction
+
+can set the flex direction to either Column or row
+
+.container-1{
+display :flex;
+flex-direction:column;
+}
+
+
+*****Margin/Width********
+
+we can use width
+
+.container-2-box
+{
+    width: 20%;
+}
+we can use flex-basis too
+.container-2-box
+{
+    flex-basis: 20%;
+}
+
+Margins can be done by using justify-content
+justify-content has it's own set of values
+e.g
+
+flex-start
+flex-end
+center
+space-between - This one allows the whole page to be taken up if there is empty space
+space-around-Does the same thing but adds margins around the elements
+
+
+To allow flexibility between devices we can use a media query around the container
+this makes the size more responisve
+ @media(min-width:769px)
+        {
+            .container-1
+            {
+            display: flex;
+
+            }
+            .container-2
+            {
+            display: flex;
+            justify-content: space-between
+            }
+        }
+
+
+***********Wrapping***********************
+we can wrap elements using flex-wrap
+
+flex-wrap has it's own values 
+the most common being wrap
+
+.container-3
+            {
+            display: flex;
+            flex-wrap: wrap
+            }
+
+Much More Practice needed when you try this yourself
