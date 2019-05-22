@@ -1,0 +1,18 @@
+What is it
+
+-A clean layout moode that provides an easy and clean way to arrnage 
+items within a container
+
+no floats
+responsive and mobile friendly
+order of elements can be changed without editing html
+
+Ability to alter item width and height to best fit containers free space
+built for small sacle layouts while grid is used for more lare scale 
+
+https://yoksel.github.io/flex-cheatsheet/ - for flex properties
+
+
+Lets Go 
+
+Displlay flex can be used to place elements side by side
