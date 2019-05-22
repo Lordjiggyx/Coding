@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Grid Layout</title>
+
+    <!--Styles to see layout better-->
+    <style>
+        .wrapper
+        {
+            display: grid;
+            grid-template-columns:70% 30% ;
+            /*
+            grid-column-gap:1em;
+            grid-row-gap: 1em
+            */
+            grid-gap: 1em 
+        }
+        .wrapper>div
+        {
+            background: grey;
+            padding:1em
+        }
+        .wrapper>div:nth-child(odd)
+        {
+            background:lightcoral
+        }
+    </style>
+        
+</head>
+<body>
+    <!--Layout with main column and side bar -->
+    <!--Wrapper class/Grid container-->
+    <div class="wrapper">
+        <div>
+        Lorem ipsum dolor sit amet 
+        adipisicing elit. Ratione reiciendis ea 
+        voluptas vitae, aut velit culpa natus minima
+        earum, labore voluptates! Sit consectetur rem
+        ipsum, dolorum voluptas, excepturi aut accusamus aperiam iste pra
+        esentium dolorem esse. Perspiciatis vel,
+        inventore nobis odit id commodi dolor illum magni iure vero? Eum in aspernatur beatae? Culpa possimus reiciendis temporibus neque maiores voluptatem officia quia aliquam, cum rerum porro sed. Ratione asperiores incidunt quo nostrum exercitationem aperiam magnam sed, sapiente quae odit mo
+        lestiae assumenda doloremque.
+        </div>
+        <div>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi nam architecto voluptatum alias rem, molestiae saepe suscipit praesentium nobis quo, quod enim error hic est natus temporibus rerum consequuntur pariatur.
+        </div>
+        <div>
+        Lorem ipsum dolor sit amet 
+        adipisicing elit. Ratione reiciendis ea 
+        voluptas vitae, aut velit culpa natus minima
+        earum, labore voluptates! Sit consectetur rem
+        ipsum, dolorum voluptas, excepturi aut accusamus aperiam iste pra
+        esentium dolorem esse. Perspiciatis vel,
+        inventore nobis odit id commodi dolor illum magni iure vero? Eum in aspernatur beatae? Culpa possimus reiciendis temporibus neque maiores voluptatem officia quia aliquam, cum rerum porro sed. Ratione asperiores incidunt quo nostrum exercitationem aperiam magnam sed, sapiente quae odit mo
+        lestiae assumenda doloremque.
+        </div>
+        <div>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi nam architecto voluptatum alias rem, molestiae saepe suscipit praesentium nobis quo, quod enim error hic est natus temporibus rerum consequuntur pariatur.
+        </div>
+    </div>
+</body>
+</html>

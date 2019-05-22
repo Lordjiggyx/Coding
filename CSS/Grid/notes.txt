@@ -1,0 +1,127 @@
+A more efficient way of using flex
+
+
+Lets start
+
+same scheme with containers and elements
+like flexbox you use
+
+display:grid; when assigning grid layout to the container
+
+** div sizing**
+we can use grid-template for either rows or columns to mess with sizing
+
+e.g.
+
+.wrapper
+        {
+            display: grid;
+            grid-template-columns:70% 30% 
+        }
+Because this is a grid it will follow this template for the rest of the page
+
+***Spacing***
+We can use gap
+
+this must be attached to either grid-colum or grid rows
+
+ .wrapper
+        {
+            display: grid;
+            grid-template-columns:70% 30% ;
+            grid-column-gap:1em;
+            grid-row-gap: 1em 
+        }
+
+If your going ot use the same spacing you cancel it out by using grid gap
+grid-gap:1em
+
+ /*fr are Fractionals which is a different unit 
+            each represnts a column whike the number represents the size of the element
+            */
+            /*
+            grid-template-columns: 1fr 2fr 1fr
+            */
+
+            /*This allws us to repeat a sequence of elements*/
+            grid-template-columns: repeat(3, 1fr );
+
+
+***Height***
+/*To make the elements flexible we can use auto rows
+            This means that by default we will be able to set the sixe to 100px
+            but if the content exceeds this we can make the element follow it */
+            grid-auto-rows: minmax(100px,auto)
+
+***Nesting Grids***
+
+Same shit you just make a nested class for the grid
+
+        .nested
+        {
+            display:grid;
+            grid-template-columns: repeat(3, 1fr );
+            grid-auto-rows: 70px;
+            grid-gap:1em;
+        }
+
+        .nested >div
+        {
+            border: black 1px solid;
+            padding: 1EM
+        }
+
+****Justify Items***
+
+like flexbox justify-items places the element at a specified postion
+has it's own set of values
+start
+end
+center
+strech
+
+e.g.
+     .wrapper{
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            grid-auto-rows: minmax(100px, auto);
+            grid-gap:1em;
+            justify-items: start;
+        }
+****Align Items***
+
+like flexbox Align-items places the element at a specified postion
+has it's own set of values
+start
+end
+center
+strech
+
+e.g.
+     .wrapper{
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            grid-auto-rows: minmax(100px, auto);
+            grid-gap:1em;
+            Align-items: start;
+        }
+
+***Align Self**
+used to align the object itself
+same process
+***justify Self**
+used to justify the object itself
+same process
+
+
+****Lines****
+Like an actual grid it allows you to strech or shrink an element
+
+This is done using grid-column or grid-rows
+
+the element is size is specified using a fraction like notation
+grid-column:1/3 - Box one column one to 3
+
+You can also overlap elements
+
+
