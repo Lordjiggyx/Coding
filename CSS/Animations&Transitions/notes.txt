@@ -1,0 +1,176 @@
+To start off mostly everything will be done in the css file
+in the html file we just use a div with class of box
+
+The postition of the object being moved around should be set to relative
+
+we will use a numbver of properties 
+
+#1-Animation-name - name of the aniumation
+#2-Animation-duration - the duration of the Animation in seconds
+
+We take the name of the animation and make a keyframe
+
+a key frame is made with the @keyframes e.g.
+
+@keyframes myanimation
+{
+
+}
+
+We then declare at what percent the kind of style we want 
+****This must be done within curly braces****
+@keyframes myanimation
+{
+/*At what percent do we want a certain style */
+    0%{background-color: white}
+    0%{background-color: white}
+    0%{background-color: white}
+    0%{background-color: white}
+    100%{background-color: white}
+}
+
+There are loads of properties that can be used 
+
+https://www.w3schools.com/cssref/css3_pr_animation.asp
+
+We can animate the position by simply indictaing how many
+pixlels we ant it to move at a given point in the animation
+the two most common ones are left and top but you can also use bottom and right
+ you can use "transform(x, y)" to move elements on the page instead of top or left
+
+@keyframes myanimation
+{
+/*At what percent do we want a certain style */
+    0%{background-color: white;left: 0px; top: 0px}
+    25%{background-color: red;left: 300px; top: 0px}
+    50%{background-color: green ;left: 300px; top: 300px}
+    75%{background-color: blue;left: 0px; top: 300px}
+    100%{background-color: white;left: 0px; top: 0px}
+}
+
+
+We can also manipulate the shpae of the object an example would be using border radius
+@keyframes myanimation
+{
+/*At what percent do we want a certain style */
+    0%{background-color: white;left: 0px; top: 0px;border-radius:  0 0 0 0 }
+    25%{background-color: red;left: 300px; top: 0px;border-radius:  50% 0 0 0 }
+    50%{background-color: green ;left: 300px; top: 300px;border-radius:  50% 50% 0 0 }
+    75%{background-color: blue;left: 0px; top: 300px;border-radius:  50% 50% 50% 0 }
+    100%{background-color: white;left: 0px; top: 0px;border-radius:  50% 50% 50% 50% }
+}
+
+This property has for values being the 4 corners of an element
+
+We can also cause an animation to repeat itself using animation-iteration-count
+this is actually done within the box class and not the key frame
+We can also delay the animation using animation-delay
+We can also change the direction using animation-direction 
+
+.box{
+    background: white;
+    width: 200px;
+    height: 200px;
+    position: relative;
+    animation: myanimation 4s;
+    animation-iteration-count: infinite;
+    animation-delay: 2s;
+    animation-direction: reverse;
+}
+
+
+We can play with the timing of the object to change the way it moves
+using the animation-timing-function
+it has a lot of values that it can be set to
+
+linear-moves at the same speed
+ease-in-Start slow end fast
+ease-out-start fast end slow
+
+To keep the aninmation shape the way it ends at the cycle 
+you can use animation-fill-mode-forwards
+
+
+*****Transitions******
+
+Transitions are different they need a trigger for it to occur
+for example hover
+
+to alter this we use the name of the element class and then the requested action that
+will trgger the action ,active
+
+.box:hover{
+    background:red;
+}
+
+List of editable properties
+
+TRANSITIONAL PROPERTIES
+-Properties that have an identifiable halfway point
+
+background-color 
+background-position 
+border-color 
+border-width 
+border-spacing 
+bottom 
+color
+font-size 
+font-weight 
+height left 
+letter-spacing 
+line-height 
+margin 
+max-height 
+max-width 
+min-height 
+min-width 
+opacity 
+outline-color 
+outline-offset 
+outline-width 
+padding right 
+text-indent 
+text-shadow 
+top 
+vertical-align 
+visibility 
+width 
+word-spacing 
+z-index */
+
+in the actual box class we must define what properties we want to add
+to the Transition
+
+for example
+
+.box{
+    background: white;
+    width: 200px;
+    height: 200px;
+    position: relative;
+    margin: auto;
+    top: 200px;
+    transition-property: background;
+    transition-duration: 3s;
+    
+}
+
+we can separate the duration for the different animations
+transition-duration: 1s , 2s;
+1s to chnage color
+2s to change shape
+
+
+*****Transform***
+This is declared in the box class and then in the transition:hover 
+
+ transition-property: background , border-radius,
+    transform;
+
+Transform has a number of properties including rotate , scale etc
+
+transform: rotateY(180deg)
+
+
+You can use transition-property :all

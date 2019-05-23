@@ -1,0 +1,25 @@
+body{
+    background: darkgrey
+}
+
+.box{
+    background: white;
+    width: 200px;
+    height: 200px;
+    position: relative;
+    margin: auto;
+    top: 200px;
+    transition-property: background , border-radius,
+    transform;
+    transition-duration: 1s , 2s;
+   
+    
+}
+
+.box:hover
+{
+    background:red;
+    border-radius: 50%;
+    transform: rotateY(180deg)
+    
+}
