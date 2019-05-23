@@ -1,0 +1,67 @@
+/*Define elements for the root element*/
+
+:root{
+    --main-bg-color:darkgrey;
+    --main-txt-color:white;
+    --container-witdh:90%;
+    --header-bg-color:black;
+    --header-text-color:white
+}
+
+body
+{
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    background-color:var(--main-bg-color);
+    color:var(--main-txt-color)
+}
+
+.container
+{
+    width: var(--container-witdh);
+    margin:20px auto
+}
+
+header#main-header h1
+{
+    background-color: var(--header-bg-color);
+    color:var(--header-text-color);
+}
+
+/*Define box vars-These will not work anywhere else but the box class*/
+.box
+{
+--box-bg-color:black;
+--box-main-color:blue;
+--box-padding:5px 10px
+}
+
+.box
+{
+    background-color: var(--box-bg-color);
+    padding: var(--box-padding);
+    border:1px solid var(--box-main-color);
+    box-shadow:10px 5px 5px var(--box-main-color);
+}
+
+.box h1
+{
+color: var(--box-main-color)
+}
+/*
+.box p
+{
+ --box-main-color:red;
+ color: var(--box-main-color)
+}
+*/
+
+/*Grid Layout*/
+.grid
+{
+    display: grid;
+    grid-template-columns:1fr 1fr;
+    grid-gap:20px;
+    align-items:center;
+}

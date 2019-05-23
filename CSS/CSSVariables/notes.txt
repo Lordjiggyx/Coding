@@ -1,0 +1,71 @@
+we can define a css varibale on different scopes
+or different scopes
+
+you can place these variables in a :root{}
+This allows them to be used globally
+
+to declare a varibale you use --variable_name
+
+:root{
+    --main-bg-color:white;
+}
+
+to use the varibale ot change a property we must use var along with parentheses
+
+body
+{
+    background-color:var(--main-bg-color)
+}
+
+You can create certain elements on certain scopes
+
+/*Define box vars-These will not work anywhere else but the box class*/
+.box
+{
+--box-bg-color:black;
+--box-main-color:blue;
+--box-padding:5px 10px
+}
+
+We can also overwrite variables
+.box h1
+{
+color: var(--box-main-color)
+}
+
+.box p
+{
+ --box-main-color:red;
+ color: var(--box-main-color)
+}
+
+
+****Accesing variables in javascript****
+
+Must be done witing a script tag
+
+to select a value of a varibale we must create a variable
+then use querySelector in relation to where the variable is 
+e.g. --box-main-color is in the box brace
+
+const box = document.querySelector('.box')
+
+Then create another variable and let it equal getComputedStyle and pass in the previos variable
+
+const boxStyles =getComputedStyle(box)
+
+We must then used getPropertyValue and then pass in the variable we wanna get
+
+const boxMainColor = boxStyles.getPropertyValue('--box-main-color')
+console.log(boxMainColor)
+
+if we want to change the variables we must first garb the value by creating
+a new variable and letting it equal document.querySelector of where the variable is located
+
+const header =document.querySelector('#main-header')
+
+Then we must apply the .style.setProperty method onto it 
+this takes teo values the variable being chaneged and then the value you want to change it to
+
+header.style.setProperty('--header-bg-color' , boxMainColor)
+
