@@ -1,0 +1,41 @@
+$primaryBtn:red;
+$textColor:grey;
+
+@mixin flexCenter($background)
+{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    
+    background:$background;
+}
+
+
+
+header
+{
+
+@include flexCenter(yellow);
+   
+    
+    color: $textColor;
+
+    button{
+    background: $primaryBtn;
+    color:$textColor;
+    &:hover
+    {
+        background: blue;
+    }
+}
+}
+
+
+
+
+.contact 
+{
+    @include flexCenter( green);
+    background: $primaryBtn;
+    color:$textColor
+}

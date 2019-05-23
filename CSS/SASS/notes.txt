@@ -1,0 +1,177 @@
+Makes the use of css more elegant and compact
+
+
+Go to extension store and searh for sass comlier
+
+create a file call style.scss
+
+You can write normal css
+
+click watch saas and it creates a css file
+link the noraml scss
+
+you can write js in scss aswell
+
+to create a variable you must use a dollar sign and then the name of the variable
+
+$primaryBtn:red;
+$textColor:grey;
+
+We can nest different things e.g.
+
+instead of writing header button we can copy the button and nest it in 
+the header part
+
+
+
+header
+{
+    background: lightblue;
+    display:flex;
+    justify-content:center;
+    color: $textColor;
+
+    button{
+    background: $primaryBtn;
+    color:$textColor;
+        
+    p
+    {
+
+    }
+
+    .mainText
+    {
+
+    }
+}
+}
+
+
+if you want to add an action you can just use the &: symbol and add then the value
+
+
+
+header
+{
+    background: lightblue;
+    display:flex;
+    justify-content:center;
+    color: $textColor;
+
+    button{
+    background: $primaryBtn;
+    color:$textColor;
+    &:hover
+    {
+        background: blue;
+    }
+        
+    p
+    {
+
+    }
+
+    .mainText
+    {
+
+    }
+}
+
+
+***Mixins***
+Like a small function in just
+allows us to use code anywhere 
+
+to create a mixin you use the @ symbol and type mixin
+and then write desired ocde inside
+
+@mixin name 
+{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+}
+
+To use this method we use @include and call the mixin
+
+.contact 
+{
+    @include flexCenter();
+    background: $primaryBtn;
+    color:$textColor
+}
+
+If we want to change the mixin we can add parenthses then parameters in the 
+
+@mixin flexCenter($direction)
+{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    flex-direction: $direction
+}
+
+header
+{
+
+@include flexCenter(column);
+    background: lightblue;
+    
+    color: $textColor;
+
+    button{
+    background: $primaryBtn;
+    color:$textColor;
+    &:hover
+    {
+        background: blue;
+    }
+}
+}
+
+.contact 
+{
+    @include flexCenter(row);
+    background: $primaryBtn;
+    color:$textColor
+}
+
+@mixin flexCenter($background)
+{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    
+    background:$background;
+}
+
+
+
+header
+{
+
+@include flexCenter(yellow);
+   
+    
+    color: $textColor;
+
+    button{
+    background: $primaryBtn;
+    color:$textColor;
+    &:hover
+    {
+        background: blue;
+    }
+}
+}
+
+
+
+
+.contact 
+{
+    @include flexCenter( green);
+   
+    color:$textColor
+}
