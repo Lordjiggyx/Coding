@@ -1,0 +1,32 @@
+We will use HTML5 Semantic tags
+They are used to let the browser know waht content is where
+
+https://www.w3schools.com/html/html5_semantic_elements.asp -Link for better explanation
+
+When making a responsive website it is important we set the viewport
+This will set the width of the website
+usually this is done when you use the html:5 shorcut
+
+Also good to have SEO in the html to make the site more reachable
+
+Wrapping elements in a container allows for them to have margin so they do not
+extend all the way to the side of the webpage
+
+---General rule of thumb for calsses and id's---
+
+An ID is for something that is unique for example a showcase area
+
+A class is somehing that will be used repeatedly
+
+for images you use img src not a href
+
+--css---
+overflow hidden meand that if something oes out of the div it stays hidden rathee rthan making a scroll bar
+
+You can target a certain piece if css using the span tag the css must have a class that can be referneced in the html file
+
+you can set the type of input required for somehing using input[tyoe='']
+
+To make a site responsive we use media querys 
+this means that the css will only work if the site is a certain width
+
