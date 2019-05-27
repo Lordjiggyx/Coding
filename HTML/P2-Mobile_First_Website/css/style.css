@@ -1,0 +1,175 @@
+body{
+    font-family: 'Lato', sans-serif;
+    /*Gets Rid of margin*/
+    margin:0;
+    background: lightgray;
+    height:auto;
+}
+
+h1
+{
+    /*Boldness of font*/
+    font-weight: 400;
+    font-size: 2.5rem;
+    /*Upper/lower case*/
+    text-transform: uppercase;
+    margin:0;
+}
+
+h2
+{
+    font-weight: 400;
+    font-size: 1.2rem;
+    /*First Letter of each word with capitals*/
+    text-transform: capitalize;
+    margin:0;
+}
+
+h3
+{
+
+}
+
+img
+{
+    /*This makes it a block level elenment*/
+    display: block;
+    /*This makes it 100% the size of the container which is the browser window*/
+    width: 100%;
+}
+
+main
+{
+    max-width: 900px;
+    /*Pushes container to the middle*/
+    margin: auto;
+    /*Creates a shadown for the box*/
+    box-shadow: 30px 0px 40px rgba(0, 0, 0, 0.2.5),
+    -30px 0px 40px rgba(0, 0, 0, 0.2.5)
+}
+
+#landing
+{
+    background: white
+
+}
+
+/*Using flebox*/
+#landingtext
+{
+display: flex;
+/*It takes in three things flex grow flex shrink and the width*/
+/*vw stands for viweport widths are like slices almost like a percentage
+so this means it will take 40 percent of the viewport and the height will take
+50 percent*/
+flex: 0 1 40vw;
+height:50vw;
+justify-content: center;
+align-items: center;
+text-align: center;
+/*Just doing padding on it's own sets Top and Bottom adding another value pads the left and right*/
+padding-right: 1rem;
+padding-left: 1rem;
+}
+
+#landingtext h2
+{
+    color: #888888
+}
+
+
+/*Making This a fixed image takem from unsplash.com*/
+#landingimage
+{
+    background: url(https://source.unsplash.com/_X7k5n32ybo);
+    /*You must add the following properties for the image to appear*/
+    background-position: center;
+    /*This sets the image size to the largest size contained within the background area*/
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 50vh;
+    flex: 0 1 60vw;
+    margin: 0;
+
+}
+
+.btn
+{
+    padding: 0.5rem 2rem;
+    border: 1px #ccc solid;
+    /*This stops the link from joing into the text*/
+    display: inline-block;
+    margin:2rem 0 0;
+    border-radius: 50px;
+    text-decoration: none;
+    color: #333333;
+    transition: background 2000ms ease;
+}
+
+.btn:hover
+{
+    background: #f4f4f4
+}
+
+#header
+{
+    padding:1.5rem;
+    text-align: center;
+    background: #333333;
+    color:white
+}
+
+#header h2
+{
+    border-left: dotted 1px white;
+    border-right: dotted 1px white;
+    display: inline-block;
+    padding:1rem;
+}
+
+.caption
+{
+    padding:0.8rem;
+    text-align: center
+
+}
+
+footer
+{
+    text-align: center;
+    padding : 2rem 1rem;
+    margin:auto;
+    color:#333
+}
+
+footer h3
+{
+    font-size: 3rem;
+    margin-bottom: 0
+}
+
+
+@media(min-width:500px)
+{
+    #landing{
+        display:flex;
+        height:100%
+
+    }
+    #landingtext
+    {
+        height: 100vh
+    }
+    #landingimage
+    {
+        height: 100vh
+    }
+}
+
+@media(min-width:700px)
+{
+    .btn
+    {
+        padding: 1rem 3rem
+    }
+}

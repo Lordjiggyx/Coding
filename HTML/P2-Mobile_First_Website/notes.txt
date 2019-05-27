@@ -1,0 +1,78 @@
+Responsive One page website
+HTML5
+CSS3
+MOBILE QUERIES
+FLEXBOX
+Css Transitions
+JQuery - for smart scroling
+JS - Also for smart scrolling
+
+This site is meant to replicate a photography website
+
+Mobile first is an approcah to design 
+it means that we start with a mobile small view
+and then make it adaptt to larger screens
+Bootstrap 4 has adopted this methodlogy
+
+Viewport in meta data is very important for the Responsiveness of the site
+
+Strong tags used to make text bold
+
+script is using JQuery so this must be included
+
+to do theis we go to code.jquery.com 
+and grab the minified version 3 and copy the script tag above our script tag
+
+<script
+  src="http://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+
+  <script src=js/main.js></script>
+
+
+  The split when the scereen is made largerfor the landing is acheived using flexbox
+  when you display something as flex it automatically turns into a flex row which weill
+  go horizontal instead of vertically we will do this using a media query
+
+  ---Media Query---
+  Works like a function
+  Css only works at the specified sizes
+
+  used by saying
+
+  @media(min-width:500px)
+  {
+      #landing{
+          display:flex;
+          height:100%
+      }
+  }
+
+
+  --Smooth scroling--
+
+  Smooth scrolling is done in the main js file
+
+it grabs onto the id of the view work button
+this will activate a function
+and this function will cause the scrolling
+
+the function has a variable called images this varibale is set to the postion of the images id and the top postion
+
+the jquery will animate the body as it will scroll from the top
+this takes in the time it needs to do the animattion
+
+
+// Animate Smooth Scroll
+$('#view-work').on('click', function() {
+  const images = $('#images').position().top;
+
+  $('html, body').animate(
+    {
+      scrollTop: images
+    },
+    900
+  );
+});
+  

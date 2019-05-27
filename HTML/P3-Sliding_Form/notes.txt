@@ -1,0 +1,39 @@
+We have a main container component
+
+in this component we have 4 smaller screens 
+
+-The sign in form
+The sign up form
+The sign in overlay
+The sign up overlay
+
+At one moment you can see either
+
+The sign in form alongside the sign up overlay
+the sign up form alongside the sign in overlay
+
+Explanation of the overlay
+
+The overlay container:
+this will display the visvle area at a certain time it has a width of 50% of the total containers width
+
+The overlay:
+this div has a double width size =200% so this takes the full width of the main container
+
+The overlay panels:
+These divs are holding the actual content(text and button) they both have a postion of absolute meaning we can postion them 
+wherever we want in the .overlay conmponent , one to the left and one to the right. both have a width of 50% of the overlay component
+
+****Check out picture in linke******
+
+This is the overlay container layer this acts as a focus area alowwing us to hide the panel which is overflowing 
+This is why the overlay must be twice as big ,
+by moving around the overlay container we can hide or show which panel we want
+
+
+The Forms animation
+we have two containers the .formcontainers and each have a width of 50% we must mover them at the same time from the left to the right
+when they get behind the overlay-container we chnage the z-index which is the 3d postioning of the panel so the 
+form will either move on top or move underneath
+
+https://www.florin-pop.com/blog/2019/03/double-slider-sign-in-up-form/
