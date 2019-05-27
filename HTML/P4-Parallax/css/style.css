@@ -1,0 +1,103 @@
+body , html
+{
+    font-family: 'Raleway', sans-serif;
+    margin: 0;
+    height:100%;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.8em;
+    color:lightslategray
+   
+}
+
+
+/*Scrolling effect*/
+.pimg1 , .pimg2 , .pimg3
+{
+    position: relative;
+    opacity: 0.70;
+    background-position: center;
+    background-size: cover;
+    /*To get the parrallax effect you must add a background attachment style*/
+    background-attachment: fixed
+
+    /*
+    fixed = parrallax
+    scroll = normal
+    */
+}
+
+
+
+
+.pimg1
+{
+    background-image: url(https://source.unsplash.com/1600x900/?japanese,buddha);
+    background-repeat: no-repeat;
+    min-height: 100%
+}
+
+.pimg2
+{
+    background-image: url(https://source.unsplash.com/1600x900/?flames);
+   background-repeat: no-repeat;
+    min-height: 400px
+}
+
+.pimg3
+{
+    background-image: url(https://source.unsplash.com/1600x900/?darkness);
+    background-repeat: no-repeat;
+    min-height: 400px
+}
+
+
+.section
+{
+    text-align: center;
+    padding:50px 80px;
+}
+
+.section-light
+{
+    background-color:lightgrey;
+    color: #666666; 
+}
+
+.section-dark
+{
+    background-color: #282e34;
+    color:#ddd
+}
+
+.ptext
+{
+    position:absolute;
+    top: 50%;
+    width: 100%;
+    text-align: center;
+    color: #000000;
+    font-size: 50px;
+    letter-spacing :8px;
+}
+
+.ptext .border
+
+{
+    background-color: #111111;
+    color: white;
+    padding:20px;
+}
+
+.ptext .border.trans
+{
+    background-color: transparent
+}
+
+@media(max-width:568px)
+{
+    .pimg1 .pimg2 .pimg3
+    {
+        background-attachment: scroll;
+    }
+}
