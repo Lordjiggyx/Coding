@@ -1,0 +1,86 @@
+body
+{
+    font-family: "lato" , sans-serif;
+    background: #333333;
+    color:#fff;
+
+}
+.col
+{
+    float: left;
+    width: 33.3%;
+    padding:8px;
+    /*This allows all column to be on the same line by including all the pading in the width*/
+    box-sizing: border-box;
+    position: relative;
+    animation-name: movement;
+    animation-duration:1.8s;
+    animation-fill-mode:forwards;
+    
+}
+
+@keyframes movement
+{
+    0%{top :3000px;}
+    100%{top:0px;}
+}
+
+
+.price-box
+{
+    background: #fff;
+    color: #555555;
+    list-style-type:none ;
+    border: 1px solid #555555;
+    margin: 0;
+    padding: 0;
+    transition: 0.3s;
+    
+   
+    
+}
+
+.price-box:hover , price-box.best
+{
+    box-shadow: 5px 5px 5px 5px white
+}
+
+.price-box .header
+{
+    background: lightskyblue;
+    color:white;
+    font-size :25px;
+    
+}
+
+.price-box li
+{
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+
+.price .emph
+{
+    background-color: lightgray;
+    font-size: 20px;
+}
+
+.btn
+{
+    background-color: lightskyblue;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 18px
+}
+
+@media(max-width:1000px)
+{
+    .col
+    {
+        width: 100%
+    }
+}
