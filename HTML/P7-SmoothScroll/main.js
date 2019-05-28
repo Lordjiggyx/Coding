@@ -19,6 +19,6 @@ $('.navbar a').on('click', function (e) {
     $('html, body')
       .animate({
         scrollTop: $(hash).offset().top
-      },1600);
+      },100);
   }
 });
