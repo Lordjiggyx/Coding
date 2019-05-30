@@ -1,0 +1,297 @@
+img
+{
+    width: 100%;
+}
+
+.container
+{
+    margin: auto
+}
+
+body
+{
+    margin: 0;
+    font-family: "lato" , sans-serif;
+    font-size: 17px;
+    line-height: 1.5em;
+    padding: 0;
+
+}
+
+/*Common classes*/
+.primary-text
+{
+    color: lightgreen
+}
+
+.primary-background
+{
+    background: lightgreen
+}
+
+
+
+/*headerr*/
+#mainheader
+{
+    border-bottom: 1px solid lightgreen
+}
+
+/*navbar*/
+
+
+#navbar
+{
+    text-transform: uppercase;
+
+}
+
+#navbar li
+{
+    display: inline;
+    padding-right:20px;
+    list-style: none;
+}
+
+#navbar a
+{
+    text-decoration: none;
+    color: lightgray
+}
+
+
+#navbar li.current ,#navbar a:hover
+{
+   color: lightgreen;
+   border-bottom: 3px solid lightgreen;
+   padding: 3px
+}
+
+#showcase
+{
+    background-image: url(https://source.unsplash.com/1600x900/?cherry,blossoms) ;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: center;
+    background-position-y: center;
+    border-bottom: 1px solid lightgreen;
+    margin-bottom: 30px;
+
+}
+
+
+#showcase .row
+{
+    height: 600px;
+}
+
+
+#showcase h1
+{
+    font-size: 40px;
+    margin: 0;
+    padding-bottom: 20px;
+}
+#showcase p
+{
+    color: lightgray;
+    margin: 0;
+}
+#showcase .showcase-content
+{
+    background: gray;
+    color:white;
+    border-radius: 90px;
+    padding: 40px;
+    opacity: 0.9;
+}
+
+/*Features*/
+
+#features h2
+{
+    font-size: 35px;
+    margin:0;
+    padding-bottom: 10px;
+}
+#features p
+{
+    color: lightgray;
+    margin: 0;
+    margin-bottom: 40px;
+}
+#features .fa
+{
+    color: lightgreen;
+    font-size: 60px;
+    transition-property: transform;
+    transition-duration: 1s ;
+    animation-name: icons;
+    animation-duration:1.5s;
+    animation-fill-mode:forwards;
+    position: relative;
+}
+
+
+#features .fas
+{
+    color: lightgreen;
+    font-size: 60px;
+    transition-property: transform;
+    transition-duration: 1s ;
+    animation-name: icons;
+    animation-duration:1.5s;
+    animation-fill-mode:forwards;
+    position: relative;
+}
+
+#features .fa:hover ,#features .fas:hover
+{
+    transform: rotateY(180deg)
+}
+
+@keyframes icons
+{
+    0%{left :-10000px;}
+    100%{left:0px;}
+}
+
+
+/*Info*/
+#info
+{
+    background-image: url(https://source.unsplash.com/1600x900/?dark) ;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+   
+}
+
+#info h2
+{
+    font-size: 35px;
+    margin: 0;
+    padding-bottom: 10px
+}
+
+#info ul 
+{
+    list-style: none;
+    padding: 0;
+}
+
+#info li
+{
+    line-height: 2rem;
+    font-size: 20px
+}
+
+#company
+{
+    background: darkseagreen;
+    color: white;
+    padding: 10px 0
+}
+
+#company h1
+{
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
+#company ul
+{
+    padding: 0;
+    list-style: none;
+    line-height: 2em
+}
+
+#company input[type='text']
+{
+    padding: 7px;
+}
+
+#company button
+{
+    background: #222222;
+    color: white;
+    padding: 10px;
+    border:0;
+}
+
+#main-footer
+{
+    background: black;
+    color: white;
+}
+
+#page
+{
+    margin-bottom: 40px
+}
+
+.services ul li 
+{
+    list-style: none;
+    padding: 10px;
+}
+
+.services ul li:nth-child(odd)
+{
+    background: darkgray;
+    color: white
+}
+.services ul li:nth-child(even)
+{
+    background: lightgreen;
+    color: white
+}
+
+.contact form
+{
+    background: darkgray;
+    color: white;
+    padding: 20px
+}
+.contact form input[type='text']
+{
+   width: 50%;
+   height: 30px;
+   margin-bottom: 10px
+
+}
+.contact form textarea
+{
+    width: 50%;
+    height: 100px;
+}
+
+.contact form button
+{
+    width: 50%;
+    padding: 10px 0 ;
+    border: 0;
+    background: #222222;
+    color: white
+}
+
+.contact form label
+{
+    text-transform: uppercase;
+
+}
+
+
+@media(max-width:800px)
+{
+    #showcase h1
+    {
+        font-size: 30px
+    }
+}
+@media(max-width:500px)
+{
+    #showcase .showcase-content
+    {
+        font-size: 40px 10px
+    }
+}

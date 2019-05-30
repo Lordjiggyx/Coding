@@ -1,0 +1,23 @@
+Flex Box grid is esstentially the same as the bootstrap classes
+
+for example div row & div cloumn
+
+it works on a 12 column base grid
+
+can use flex properties and offest
+
+there are nested grids
+
+more info:http://flexboxgrid.com/
+
+
+You must install flex box grid first
+
+https://github.com/kristoferjoseph/flexboxgrid
+
+
+to align the columns we must use the alignment properties and add it to the row class
+
+
+You must donwnload font awesome and extact the fontsawesome.css file to your css file an dthen then 
+the web fonts folder to the root of the project
