@@ -127,8 +127,8 @@
     border-radius: 50%;
     /*We want it to go out the screem so when the transition occurs it comes
     intp view */
-    width: 200vh;
-    height: 200vh;
+    width: 300vh;
+    height: 300vh;
     display: flex;
     flex: none;
     align-items: center;
