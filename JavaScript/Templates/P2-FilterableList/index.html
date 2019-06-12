@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Filterable List</title>
+    <!--Materilze css for front end framework-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.css">
+</head>
+
+<body>
+    <div class="container">
+        <!--Aligns content tot the center-->
+        <h1 class="center-align">
+            My Contacts
+        </h1>
+
+        <!--Filetrable input-->
+        <input type="text" id="filterinput" placeholder="Search Names..">
+
+        <!--Collection i.e a fancy way of styling a ul-->
+        <ul class="collection with-header" id="names">
+            <!--List items-->
+            <!--Letters-->
+            <li class="collection-header">
+                <h5>A</h5>
+            </li>
+            <!--Names-->
+            <li class="collection-item">
+                <a href="#">Abe</a>
+            </li>
+            <li class="collection-item">
+                <a href="#">Adam</a>
+            </li>
+            <li class="collection-item">
+                <a href="#">Alan</a>
+            </li>
+            <li class="collection-item">
+                <a href="#">Anna</a>
+            </li>
+            <li class="collection-item">
+                <a href="#">Anderson</a>
+            </li>
+            <!--Letters-->
+            <li class="collection-header">
+                <h5>B</h5>
+            </li>
+            <!--Names-->
+            <li class="collection-item">
+                <a href="#">Beth</a>
+            </li>
+            <li class="collection-item">
+                <a href="#">bob</a>
+            </li>
+            <li class="collection-item">
+                <a href="#">Ban</a>
+            </li>
+            <li class="collection-item">
+                <a href="#">bodi</a>
+            </li>
+            <li class="collection-item">
+                <a href="#">boulder</a>
+            </li>
+            <!--Letters-->
+            <li class="collection-header">
+                <h5>C</h5>
+            </li>
+            <!--Names-->
+            <li class="collection-item">
+                <a href="#">Carl</a>
+            </li>
+            <li class="collection-item">
+                <a href="#">Cathy</a>
+            </li>
+            <li class="collection-item">
+                <a href="#">cleo</a>
+            </li>
+            <li class="collection-item">
+                <a href="#">clemins</a>
+            </li>
+            <li class="collection-item">
+                <a href="#">cunt</a>
+            </li>
+        </ul>
+    </div>
+</body>
+
+<script>
+//Assigning input to a variable
+let filterinput = document.getElementById('filterinput')
+
+//adding a listener
+filterinput.addEventListener('keyup' , filterNames)
+
+//Function for filterting the names
+function filterNames()
+{
+    //Get value of input
+    let filterVaule = document.getElementById('filterinput').value.toUpperCase()
+    
+    //Get names ul 
+    let ul = document.getElementById('names')
+    //Get ii from the ul
+    //querySelectorAll lets you select anything by its class name and place in an array
+    let li = ul.querySelectorAll('li.collection-item')
+
+
+    //Loop through Collection items li's
+    for(let i = 0; i < li.length; i++)
+    {
+        //Grab all the links
+        let a = li[i].getElementsByTagName('a')[0];
+
+        //if matched 
+        //inner html grabs what ever is inside the a tag
+        //The minus one means that there is a match
+        if(a.innerHTML.toUpperCase().indexOf(filterVaule) > -1)
+        {
+            //Set the css style property nothing
+            li[i].style.display = ''
+        }
+        //If there is no match
+        else
+        {
+            li[i].style.display = 'none'
+        }
+    }
+}
+</script>
+</html>
