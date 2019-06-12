@@ -1,0 +1,6 @@
+Made using  the Fetch API, Async/Await, Regex and high order array methods. 
+
+Useing bootswatch which are custom boostrap themes
+
+also using font awesome to use font awesome refer to line given by font awesome in email
+<script src="https://kit.fontawesome.com/e9c92827ca.js"></script>
