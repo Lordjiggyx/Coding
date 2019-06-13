@@ -1,0 +1,178 @@
+@import url('https://fonts.googleapis.com/css?family=Dosis');
+
+
+
+
+$primary: lightgreen;
+$secondary: darken($primary , 30%);
+$light : grey;
+$progress-height:10px;
+$error:coral;
+
+body
+{
+    background: $primary;
+    font-family: 'Dosis' , cursive;
+    margin:0;
+}
+
+h1.logo
+{
+    color: white;
+    font-family: 'dosis';
+    font-size: 4em 
+}
+
+h1.end {
+    position: relative;
+    color: #fff;
+    opacity: 0;
+    transition: 0.8s ease-in-out; }
+
+#container
+{
+    height :100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+    align-items: center
+}
+
+#form-box
+{
+    background: white;
+    position: relative;
+    width: 600px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    box-shadow: 0px 6px 20px 2px rgba(0, 0, 0, 0.265);
+    /*Transition wil be changed with javascript*/
+    transition:transform 0.1 ease-in-out
+}
+
+/*called through javascript*/
+#form-box.close
+{
+    width: 0;
+    padding:0 ;
+    overflow:hidden;
+    transition: 0.8s ease-in-out;
+    box-shadow: 0px 6px 20px 2px rgba(0, 0, 0, 0.265);
+}
+
+#next-btn
+{
+    position: absolute;
+    right: 20px;
+    bottom: 10px;
+    font-size: 40px;
+    color: $primary;
+    float: right;
+    cursor: pointer;
+    z-index: 2;
+    
+    &:hover
+    {
+        color:$secondary;
+     
+    }
+}
+
+
+
+#prev-btn {
+    position: absolute;
+    font-size: 18px;
+    left: 30px;
+    top: 12px;
+    z-index: 2;
+    color: $light;
+    float: right;
+    cursor: pointer;
+  
+    &:hover {
+      color: $secondary;
+    }
+  }
+
+  #input-group 
+  {
+    position: relative;
+    padding: 30px 20px 20px 20px;
+    margin: 10px 60px 10px 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  
+    input {
+     position: relative;
+    width: 100%;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    outline: 0;
+    background: transparent;
+    box-shadow: none;
+    }
+
+    #input-label {
+        position: absolute;
+        pointer-events: none;
+        top: 32px;
+        left: 20px;
+        font-size: 20px;
+        font-weight: bold;
+        transition: 0.2s ease-in-out;
+      }
+      /*Once the input is valid it makes the label transition beside the arrow*/
+      input:valid + #input-label {
+        top: 6px;
+        left: 42px;
+        margin-left: 0 !important;
+        font-size: 11px;
+        font-weight: normal;
+        color: $light;
+      }
+   
+  }
+
+  #input-progress {
+    border-bottom: 3px solid $primary;
+    /*This is set to 0 as we want js to chnage the width to 100%*/
+    width: 0;
+    transition: width 1s ease-in-out;
+  }
+
+
+
+  #progress-bar {
+  position: absolute;
+  background: $secondary;
+  height: $progress-height;
+  /*This is set to 0 as we want js to chnage the width to 100%*/
+  width: 0;
+  transition: width 0.5s ease-in-out;
+}
+
+.close
+{
+    #next-btn , #prev-btn
+    {
+        color: white
+    }
+}
+
+.error {
+    #input-progress {
+      border-color: $error;
+    }
+  
+    #next-btn {
+      color: $error;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    #form-box {
+      width: 80%;
+    }
+  }
