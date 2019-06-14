@@ -1,0 +1,28 @@
+body
+{
+    background: lightslategray;
+    
+}
+
+.container
+{
+    background: white;
+    font-family: 'lato'
+    
+}
+
+
+#main-header
+{
+    background: lightgreen;
+    color:white;
+    
+}
+
+#Tabletitle
+{
+    background: lightgreen;
+    color:white;
+}
+
+
