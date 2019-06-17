@@ -32,33 +32,39 @@
               <label>Book Author</label>
               <div class="row">
                   <div class="input-field col s12 center-align">
-                      <input type="text" placeholder = "Enter Book Author..." id="" style="text-align: center">
+                      <input type="text" placeholder = "Enter Book Author..." id="author" style="text-align: center">
                   </div>
               </div>
               <label>Book ISBN</label>
               <div class="row">
                   <div class="input-field col s12 center-align">
-                      <input type="text" placeholder = "Enter Book ISBN..." id="" style="text-align: center">
+                      <input type="text" placeholder = "Enter Book ISBN..." id="isbn" style="text-align: center">
                   </div>
+              </div>
+              <div class="row">
+                  <div id = 'submit' class="btn col s12 center-align">Submit</div>
               </div>
           </form>
       </div>
     </section>
+</div>
 
-
-    <section id="table">
+<section id="table">
         <table>
             <thead ></thead>
                 <tr id='Tabletitle'>
                     <td class="center-align">Book Name</td>
                     <td class="center-align">Book Author</td>
                     <td class="center-align">Book ISBN</td>
-
+                    <td class="center-align"></td>
                 </tr>
             </thead>
+
+        <tbody id="table-body">
+            
+        </tbody>
         </table>
     </section>
-</div>
     <script src="main.js"></script>
 </body>
 </html>
