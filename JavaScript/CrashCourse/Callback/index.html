@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <script>
+    //A call back esstentially is 
+    //allowing a variable to equal a  
+    //function and then pasing as an argument into another function
+
+    //as a user you can create any function and pass it into the library
+
+    let add = function(a , b)
+    {
+        return a+b
+    }
+
+    let multiply = function(a , b)
+    {
+        return a*b
+    }
+
+    let dowhatever = function(a,b)
+    {
+        console.log(`here are your two numbers ${a} , ${b}`);
+    }
+
+
+    let calc = function(num1, num2 , callback)
+    {
+        //Ensuring an actual function callback is being called
+        if(typeof callback == "function")
+        {
+        //This returns the value of the method being passsed in
+        return callback(num1 , num2)
+        }
+        else
+        {
+            console.log('Pass in a function please')
+        }
+    }
+
+    console.log(calc(10,10,dowhatever))
+
+
+
+
+
+    //Practical example
+
+    var myArr = [
+        {
+            num:10,
+            str:'apple'
+        },
+        {
+            num:6,
+            str:'yellow'
+        },
+        {
+            num:7,
+            str:'pear'
+        }
+    ]
+
+//You can pas a callback function into the sort function
+
+    myArr.sort(function(val1 , val2)
+    {
+        if(val1.num < val2.num)
+        {
+            return -1
+        }
+        else
+        {
+            return 1 ;
+        }
+    })
+
+    console.log(myArr)
+    </script>
+</body>
+</html>
