@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    //Tradtionally we have objects with their own ,ethods and properties
+    //but in javascript we can allow objects to have their own properties but also
+    //call differnet methods for diferent objects
+    
+
+
+    var obj = {num:2}
+
+    var addToThis = function(a , b ,c)
+    {
+        return this.num + a + b +c
+    }
+
+    //if i want to use the method on this object i can do so using a cal function
+
+    //take the mehtod and us ethe call method passing in two arguments
+    //The first argument is the object that you want ti use the function
+    //The second one  being the argument of the the method itself
+    console.log(addToThis.call(obj , 1 , 2, 3))//function_name.call(obj , function_arguments)
+
+    //or you can just do it with an array and switch to apply
+    var arr =[1,2,3]
+   
+    var bound = addToThis.bind(obj)
+
+    //in order to run the function we must use the function bound
+
+    console.log(bound(1,2,3))
+
+    //bind returns the object with the method attached to it esstentially binding it to it
+
+
+
+
+
+
+    </script>
+</body>
+</html>
