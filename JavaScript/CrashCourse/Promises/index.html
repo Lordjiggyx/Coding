@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+<!--
+<script>
+/*A promise is like a promise in real life 
+the promise is either completed or not completed
+*/
+
+
+//Promise definition
+/*The promise takes in a callback function this takes in two parameters
+resolve-Fulfilling the promise
+reject - Promise not fulfilled */
+let cleanRoom = new Promise(function(resolve , reject)
+{
+    //Clean room functionality
+
+
+    //After the code is completed we resolve it 
+
+    //This means thta the promise was completed
+    let isClean = false
+
+    if(isClean)
+    {
+        //call the resolve method
+        resolve('clean')
+    }
+    else
+    {
+        //if the promise was not resolved call the reject method
+        reject( 'not clean')
+    }
+})
+
+//The method that is called when the promise is resloved it is called .then
+
+//Within this method you can have a callback function
+//we can recieve the status back from this resolve 
+//If hthe room is clean we can pass in clean to the resolve method and clal it into .then call back
+cleanRoom.then(function(fromResolve)
+{
+    console.log('The room is ' + fromResolve)
+})
+//if the promise is rejected we can use .catch
+//it can also take in a callback
+.catch(function(fromReject)
+{
+    console.log('The room is ' + fromReject)
+
+})
+
+
+</script>
+-->
+
+<!--Fectching before doing another thing-->
+<script>
+
+//You must clean the room first before removing the rubbish
+//once both are done you can get ice cream and only if both are done
+//so this shows that there is eleements of dependency
+
+//These functions straight away resolve the promises
+let cleanRoom =function()
+{
+return new Promise(function(resolve , reject)
+{
+    
+    resolve('Cleaned Room')
+})
+}
+
+let removeGarbage = function(message)
+{
+    return new Promise(function(resolve , reject)
+    {
+        //The messages from each promise can be concatenated onto the follwoing result
+        //by passing the result from the last promise into the actual method
+        resolve(message + ' remove rubbish')
+    })
+}
+
+let winIceCream = function(message)
+{
+    return new Promise(function(resolve , reject)
+    {
+        resolve(message +' won ice cream')
+    })
+}
+
+//We can create a nested promise to handle the dependancy
+
+//The function is called which returns the promise 
+//we can then use the .then to run the other promise as the first one 'cleaning' has been completed
+//so in the .then we create a callback returning the next function which return a promise and so on
+//at the end we can use the last function to call a function that indicates all tasks are completed
+
+//we can then cache this message into the functions as a result
+
+// cleanRoom().then(function(result)
+// {
+//     return removeGarbage(result)
+// })
+// .then(function(result)
+// {
+//     return winIceCream(result)
+// })
+// .then(function(result)
+// {
+//     console.log('finished ' + result )
+// })
+
+
+//What if you want to do these asynchronously and allow a response when they are all complete
+//We can use promise.all then pass in an array with all 3 promises
+
+Promise.all([cleanRoom(),removeGarbage(),winIceCream()]).then(function()
+{
+    console.log('Finished Everything')
+})
+
+//What if you wanted an even to happen on the completeion on one of then promises
+//you would use promise.race instead
+
+Promise.race([cleanRoom(),removeGarbage(),winIceCream()]).then(function()
+{
+    console.log('Finished Everything')
+})
+
+</script>
+</html>
