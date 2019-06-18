@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        //3 ways/ptterns of creating objects
+
+        //If creating one object use constructor
+        //if creating many objects use dynamic proptyping
+
+    ///////////////Factory Pattern////////////
+
+    //in this method the objects behave more like classes
+
+    //we create a factory function
+    //Then inside we create the object and then attcah the properties
+    // then we return the entire object being temp
+
+
+    var peopleFactory = function(name , age , state)
+    {
+        var temp ={}
+
+        temp.age = age;
+        temp.name = name;
+        temp.state = state
+
+        temp.printPerson = function()
+        {
+            console.log(this.name + this.age + this.state)
+        }
+
+        return temp
+    }
+    var person1 = peopleFactory('john ' , 23 , ' CA')
+
+    person1.printPerson()
+
+
+    //////////////////Constructor Pattern///////////
+
+    //similar to the factory pattern
+    //instead of creating a temp object we will create a property for the constructor itslef
+    //unlike the factory pattern we are not returming an object we must create an object from
+    //the peopleConstructor function itself
+    var peopleConstructor = function(name , age , state)
+    {
+        this.name = name;
+        this.age = age;
+        this.state = state
+
+        this.printPerson = function()
+        {
+            console.log(this.name +" "+ this.age+ " " + this.state)
+        }
+    }
+
+    //To do this you must use the constructor pattern
+    var person2 = new peopleConstructor("BOB" , 19 , "LA")
+
+    person2.printPerson()
+
+
+
+    /////////////Prototype Pattern//////////////
+
+    //This is a completly empty object
+    //we will add propeties and functions into this object making it a shared space
+    var peopleProto = function()
+    {
+
+    }
+
+    //Creting defualts
+    peopleProto.prototype.age = 0;
+    peopleProto.prototype.name= " "
+    peopleProto.prototype.city = " "
+
+    peopleProto.prototype.printPerson = function()
+    {
+        console.log(this.name+" " + this.age + " " + this.city)
+    }
+
+
+    //Create the object
+
+    var person3 = new peopleProto();
+
+
+    //attcah properties to the object
+
+    //This is esstenially overriding these attributes
+    person3.name = "louis"
+    person3.age = 43
+    person3.city= "DC"
+
+    person3.printPerson()
+
+
+
+
+
+
+    </script>
+</body>
+</html>
