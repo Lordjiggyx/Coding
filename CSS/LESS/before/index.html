@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="./3rdparty/audioplayer/audioplayer.css">
+  <link rel="stylesheet" href="./css/site.css">
+</head>
+
+<body>
+  <header>
+    <h1>
+      <a class="fa fa-music"></a> Shawn Twain</h1>
+    <ul class="menu">
+      <li>
+        <a href="/index.html">Home</a>
+      </li>
+      <li>
+        <a href="/about.html">About</a>
+      </li>
+    </ul>
+  </header>
+
+  <div class="container">
+    <section id="main">
+      <img src="img/IMG0007.jpg" class="info-img" alt="Shawn" />
+      <h2>Music from the 90's</h2>
+      <div class="">
+        <p>
+          This is a selection of hits from Shawn's early years as a busker and musician. The best you can find from an old 4-track
+          Tascam recorder and a $200 guitar.
+        </p>
+
+      </div>
+      <hr/>
+      <div>
+        <h3>Songs</h3>
+        <p>These are songs that I wrote when I was playing music full-time.</p>
+        <div class="song">
+          <div class="title">Dirty Little Secret</div>
+          <audio src="dls/01-Dirty Little Secret.mp3" preload="auto" controls></audio>
+        </div>
+        <div class="song">
+          <div class="title">Anne</div>
+          <audio src="dls/02-Anne.mp3" preload="auto" controls></audio>
+        </div>
+        <div class="song">
+          <div class="title">Bridges and Ghosts</div>
+          <audio src="dls/03-Bridges and Ghosts.mp3" preload="auto" controls></audio>
+        </div>
+        <div class="song">
+          <div class="title">In the Night</div>
+          <audio src="dls/04-In the Night.mp3" preload="auto" controls></audio>
+        </div>
+        <div class="song">
+          <div class="title">I Am Not Well</div>
+          <audio src="dls/05-I am not Well.mp3" preload="auto" controls></audio>
+        </div>
+      </div>
+    </section>
+
+  </div>
+  <footer>
+    <p>&copy; 2018 Twain Tracks</p>
+  </footer>
+</body>
+
+<script src="node_modules/jquery/dist/jquery.slim.min.js"></script>
+<script src="3rdparty/audioplayer/audioplayer.min.js"></script>
+<script src=/js/site.js "></script>
+</html>

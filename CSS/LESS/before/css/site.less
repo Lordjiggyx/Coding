@@ -1,0 +1,192 @@
+
+@primaryColor:#e6af2e;
+@secondaryColor:#222;
+@minWidth:1024px;
+@mainColor:#90ee90;
+
+@import "extend.less";
+
+
+
+
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,400,700');
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+p {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.font-info()
+{
+  font-weight: 400
+}
+
+
+html,
+body {
+  .font-info();
+  margin: 50px;
+  padding: 0;
+  background: @secondaryColor;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+}
+
+/* Override the .audioplayer properties */
+
+.info-img {
+  max-width: 100%;
+  border: 1px @secondaryColor solid;
+  @box-shadow();
+  margin: 1px;
+  border-radius: 2px;
+}
+
+.container {
+  font-weight: 100;
+  width: 100%;
+  margin: 0 auto;
+  color: @secondaryColor;
+  background-color:@primaryColor;
+  padding: 5px;
+}
+
+header,
+footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  background: #001514;
+  color: #ccc;
+  clear: both;
+  margin: 0;
+}
+
+header {
+  margin-bottom: 2px;
+}
+
+footer {
+  justify-content: center;
+  margin-top: 2px;
+}
+
+footer {
+  display: flex;
+}
+
+ul.menu {
+  list-style-type: none;
+  display: flex;
+  
+  li {
+    margin: 5px 2px;
+    background: @mainColor;
+    border-radius: 2px;
+    line-height: 1.7;
+    padding: 5px;
+    cursor: pointer;
+
+    //Parent selcetor
+    &:hover {
+  
+      background:darken(@mainColor , 30%)
+      }
+
+      a {
+        text-decoration: none;
+        color: #ddd;
+      }
+  }
+}
+
+
+
+
+
+
+#main {
+  display: block;
+}
+
+.song //when(isunit(@minWidth, "px"))
+{
+  .box-me(10px);
+  width: 175px;
+  border-radius: 10px;
+  padding: 6px;
+  margin: 2px 0;
+  background-color: rgba(255, 255, 255, .25);
+  border: 1px @secondaryColor solid;
+  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.25);
+
+  .title {
+    font-weight: 700;
+  }
+  
+}
+
+
+.audioplayer .audioplayer-bar {
+  display: none;
+  width:0;
+
+}
+
+.audioplayer .audioplayer-time.audioplayer-time-duration {
+  display: none;
+}
+
+
+@media only screen and (min-width: 480px) {
+  .container {
+    width: 480px;
+  }
+}
+
+@media only screen and (min-width: 767px) {
+  .info-img {
+    float: right;
+    max-width: 80px;
+  }
+  .song {
+    width: 95%;
+  }
+
+  .audioplayer .audioplayer-bar {
+    display: block;
+    width: auto;
+  }
+
+  .audioplayer .audioplayer-time.audioplayer-time-duration {
+    display: block;
+  }
+
+}
+
+@media only screen and (min-width: 989px) {
+
+  .container {
+    width: 989px;
+  }
+  .song {
+    width: 600px;
+  }
+}

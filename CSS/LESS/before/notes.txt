@@ -1,0 +1,301 @@
+to use less you must downlpoad through terminal line
+
+npm intstall less -g
+
+the you must go into the specified folder where you will keep your less file and
+in the terminal enter
+
+ lessc nameOflessFile.less naemOfCssFile.css
+
+ this will create a css file that will render what has been writeen in your cs file
+
+ then you must tell vsCode to compile less everytime we cretae a build
+
+ you must go to the package .json and create a new script in the script section
+
+ using "less": " lessc FilePathOfLessFile.less FilePathOfCssFile.css
+
+
+
+---Variables
+
+To centralize values we can create variable
+
+a varibale is made using the @ symbol
+
+@_variableName we can use this all over the file
+
+
+--scope---
+works the same as any language
+if you change what is in a nested block
+it will only affect the variable in that block
+
+
+--Variable interpolation-- 
+
+esstentially we can use variables to name other variables
+
+for example 
+
+we create a variable called 
+@prefix: ps-prefix
+
+then in the less file 
+
+we can use it saying 
+
+.@{prefix}-info-img
+{
+    ....
+    ....
+    ....
+    ....
+}
+
+in the css fie this will be rendered as 
+
+ps-prefix-info-img
+
+
+
+----Use less maps----
+
+we can create maps using name value pairs for example
+this variable holds the diffenrt platform screen sizes
+
+@screenSize:
+{
+    desktop:989px;
+    tablet:768px;
+    phone:480px
+};
+
+so for example we can change a media query from
+
+@media(min-width:480px)
+{
+    width:480px
+}
+
+to 
+
+@media(@screenSize[phone])
+{
+    width:@screenSize[phone]
+}
+
+--functions in less---
+there are plenty of functions in less
+logical
+string 
+list
+math
+tyoe
+misc
+etc
+
+most of them are the same as any other  lanhuages
+
+for example color functions
+two of the more popular ones are lighten and darken
+
+these can be used in conjuction with variables
+e.g
+
+background:lighten(@mainColor , 10%)
+background:darken(@mainColor , 30%)
+
+
+
+--GUards---
+
+The ability to emit something if something is true 
+kind of like an if statement
+
+however this is started with when instesd of if
+
+.song when(isunit(@minWidth, "px")){
+  ....
+  ....
+  ....
+}
+
+---Imports----
+merges in any import unless it's a css file
+
+
+---nested rules----
+all that nesting means is that rather than constantly referring
+to a parent element when trying to get edit a specific element
+we can just indent and place the child element inside
+
+for example
+
+ul.menu li
+{
+    .
+    ..
+    ...
+    ....
+}
+
+becomes
+
+ul.menu
+{
+    li
+    {
+        ....
+        .....
+        ......
+    }
+}
+
+
+----Parent Selectors----
+
+a parent selector allows the parent element of a certain element
+to be specified when nesting elements
+
+this can be with an '&'
+
+ &:hover {
+  
+      background:darken(@mainColor , 30%)
+      }
+
+we can do this for multiple elements for example
+
+&:hover , &visited
+{
+    color:blue;
+}
+
+
+--Detached Rulesets are variables--
+we can import a file and then call a style like a method
+in the main .less file for example in 
+
+extend.less we have
+
+@box-shadow:
+{
+    box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.25);
+};
+
+and then in the site.less we can call this ruleset almost like
+calling a method
+
+
+.info-img {
+  max-width: 100%;
+  border: 1px @secondaryColor solid;
+  @box-shadow();
+  margin: 1px;
+  border-radius: 2px;
+}
+
+---Sharing rulesets could be any rule as long as it is id or class based-----
+
+you can call the styles from one element to another one
+in this case allowing you to share styles across a multitude of elements
+
+this can be done creating a shared ruleset and calling it in other parts of the less file
+They must be class or Id based
+
+e.g.
+
+#shared
+{
+ font-weight: 100;
+  width: 100%;
+  margin: 0 auto;
+  color: @secondaryColor;
+  background-color:@primaryColor;
+  padding: 5px;
+}
+
+.container
+{
+    #shared()
+}
+
+
+----Mixin---
+Mixins are like detached rulesets
+
+they start with a '.'
+
+
+.font-info()
+{
+    font-family: 'Open Sans', Verdana, Geneva, Tahoma, sans-serif;
+}
+
+this is the same as the previous that are just not emitted
+
+A mixin can not be overwritten only extended
+
+
+---Parameterizing mixins----
+
+so we can create another mixin called box me
+
+.box-me(@width)
+{
+    border:@width black solid;
+}
+
+and this takes in a variable so in the main less file
+
+we can jsut call it like so 
+
+.song
+{
+.box-me(2px)
+}
+
+
+we can make defaults by using a colon and the value
+
+.box-me(@width:1px)
+
+
+---mixins as functions----
+
+we csn createa mixin as such
+
+.multi(@x , @y)
+{
+    @result @x * @y;
+}
+
+the new variable '@result' just is the variable that will be returned
+
+when using the mixins with parameters rather defining all the elements 
+like so
+
+.box-me(@width:1px)
+{
+    border:@width black solid;
+}
+
+
+you can just say 
+.box-me(@width:1px)
+{
+    border:@arguments
+}
+
+and this will place all the arguments into the border mixin
+
+
+----Guards in mixins-----
+
+the same concept of guards for example
+
+.fore-color() when (lightness(@primaryColor > 50%))
+{
+    color: white
+}
