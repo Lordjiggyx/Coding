@@ -299,3 +299,17 @@ the same concept of guards for example
 {
     color: white
 }
+
+
+---Plugins----
+
+There are a number o plugins that can help us make better less code 
+you can go to the actual less website and import the pulgins or you can make your own through 
+javascript and then importing it into your less page by calling it like a method to a property for example
+
+z-index:ten()
+
+
+this method will return 10 thus making the css file return
+
+z-index:10;
