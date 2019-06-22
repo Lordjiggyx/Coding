@@ -143,3 +143,99 @@ the most common being wrap
             }
 
 Much More Practice needed when you try this yourself
+
+
+
+---justify---
+
+flex items are distributed using axis
+
+the justify content property is used to distribute space along the axis
+
+it thas a number of variavles e.g, flex-start flex-end center etc
+
+
+---Changing the order of a flex item---
+we can use the property order and use a number 
+e.g
+
+order:1 = display element after 
+order:-1 = display element before
+
+
+---distributing flex items of a cross axis---
+
+the cross axis is perpendicular to the main axis
+
+so in a column direction the cross axis is Horizontal
+
+and in a row direction the cross axis is vertical
+
+align items is used to distribute space on the cross axis 
+
+it takes in values such as 
+
+strech - default
+flex start
+flex end 
+center
+baseline
+
+items strech to fill the wifth of the container they are in
+
+
+---Sizing flex items---
+
+The flex-grow property is used to specify the ratio of space an items should flill in the
+mina axis . it accepts numbers with 0 as a default
+
+This space is the space of the container - the space required for the remaining flex items
+
+The flex-shrink propert is used to specify the shrink factor of a flex iten . it accepets numbers and the feafult is 1
+    
+
+--Mananging widths---
+
+The flex-basis property is used to specify the initial size of a flex item .It defaults to auto and current;y supports CSS units:% px em rem etc
+
+e.g:
+
+flex-basis:50%
+flex-basis:3 rem
+
+---Aligning content in edge cases---
+
+The align-self property isused to align individula 
+flex items by overriding the align-items value.
+
+This can make an item take up all avaliable height in it's container
+
+The default value is strecth and it accepts flex-start flex-end center baseline
+
+align-items does not control wrapped itens
+
+
+align-content property is used to align wrapped flex items
+
+--Grouping  multiple flex propertoies into one
+
+flex is a shorthand property used to sewt values for flex-grow flex shrink and flex absis.The default is 0 1 auto
+
+.flex
+{
+    flex:
+    0 - grow
+    1 - shrink
+    auto - basis
+} 
+
+if you see flex with a number and a percentage thats setting the grow and basis values
+
+The lsex flow shorthand is used to set the values for flex-direction and flex wrap
+the default is row nowrap
+
+.flex{
+    flex-flow:
+    row = flex-direction
+    nowrap- flex-wrap
+}
