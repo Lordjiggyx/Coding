@@ -1,0 +1,187 @@
+6 key elements in the Head tag:
+
+title-page title
+meta - allows us to provide metadata
+script - write ir link to other script adding interactivity to the page
+style - allows us to edit the style of the page
+link - provide link to a page;
+base-a base where all our links will point ot
+
+5 key elements to the Body tag
+Text
+lists
+links
+Tables
+images
+
+
+----Headings----
+
+The h1 tag is the most important heading while h2-h6 are secondary
+
+-----Block vs inline --------
+refers to how the browser will render the page
+
+a block element is like a div or p tags
+
+inline elements are inline with text e.g span
+
+
+-----Reference text tags----
+
+sup
+sub
+cite - italic text for citation
+abbr - abbreviation
+blockquote - a block of text used ofr quotes
+q = used for quotes
+
+help make text render more specificallky
+
+
+-----Semantic------
+
+used to replace any divs and add semantic meaing for processing
+
+header
+footer
+section
+article
+etc
+
+
+------Lists------
+
+There are three types of lists 
+
+unordered list
+ordered list
+Definition list = a list of pairs of item with the defintion term and the definition of the term
+
+a defintion list is made using 
+the dl declares the definition list
+
+the dt is for the definiton item
+and the dd is used for the defintion
+
+<dl>
+    <dt>...</dt>
+    <dd>...<dd>
+</dl>
+
+you can use styles to a list in order to make it more modern and interactvie
+
+-----Linking documents-----
+
+There are three types of anchor tags
+
+
+source - <a href> this means the content inside the anchor is a clickable link taht the browser will find
+
+target - <a name =" "> - This provides a target in the docunent that can be linked again
+
+implicit anchor- <div id = "article"> id's can be used as targets as you can call on the id
+
+
+There are two types of hyperlinks taht can be used when linking documents
+
+absolute - The full specific url 
+relative - This is an impartial url used when the documents are together on a particlur server or file
+e.g.
+
+href = "./content/locations.html"
+
+
+To link within a document all you have to do is link it to the id or sematic tag
+e.g.
+
+<a href = "#loc2>Location 2 </a>
+
+<div id = "location">
+    <div id= "loc1>First</div>
+    <div id= "loc2>Second</div>
+</div>
+
+if the div a tag with location is clicked it will bring you to the point in the page where the id is equal to loc 2
+
+
+These can be combined using the relative and hash symbol
+
+<a href = "locations.htmll#loc2">
+
+You can also just use an empty a name tag near the part of the document you want to direct a link to
+
+e.g.
+
+<a href = #cocoa>Hot Cocoa</a>
+
+<a name = "cocoa">
+
+
+----Link meta deta attributes---
+
+Lnaguage - language version -hreflang
+Relationship - how pages are related - rel
+Content type - type
+Acesss Key - refernece a link using key board shortcuts
+Target -Allows you to find where th link will open - target
+
+
+---Tabels-----
+
+Tables are used purely ffor data 
+they have important attributes
+
+Caption - Tells user what the table is showing them
+Header - Hleps user understand data that falls below content
+
+body - where data will be displayed
+
+footer - where totals and other like information will be displayed
+
+
+Tbale structure
+
+TR - Table row
+TH - Table Header
+TD - Table Data
+colspan/rowspan - allows the rows and columns to span a number of rows or columns
+
+
+-----Images---- 
+
+Alternate image sizes
+
+The srcset attribute allows us to use differnebt images for differnet sizes of the page
+
+e.g.
+
+srcset = "logo.png 500 , logo-250.png 250w
+
+sizes attribute acn be used to tell the browser to make an imag erelative to the viewport
+
+sizes = "(max-width:30em) 25vw , 33vw
+
+The picture element allow sus to select whatever image is best suited for rendering
+
+essentially it allows the browsser to decide image based on media queries or supporrted image formats
+
+
+<picture 
+
+<source type = "image/jpeg" srcset=" " sizes= " " />
+<source type = "image/jpeg" srcset=" " sizes= " " />
+<img src = "" alt ""/>
+/>
+
+
+
+---Accessibility-----
+
+ARIA attributes
+
+
+
+Accesible Rich Internet Applications
+
+You can use properties like Roles states , Alternate text , tramscripst captions
