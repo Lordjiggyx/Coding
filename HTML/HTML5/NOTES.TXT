@@ -1,0 +1,310 @@
+New HTML5 API
+
+new elements examples
+
+article - signals to system what is most important giving semantic inforation
+aside - side content/ info of less importance
+audio - allows audio
+bdi - by direction isolated element , used to cahneg the horizontal direction of a words
+canvas - if you want to draw on the page
+datalist - define a list of elementss shown an as options in an input field
+details - adds a little interactivy to page by making a mini dropdown
+embed - host container for external plugins
+figcaption -semantic meaning for images
+figuren -semantic meaning for images
+footer
+header
+main - used to wrap main context of a page
+math - allows you define equations on the page and render them
+mark - wrap text in search results adding semantic meaning
+meter - visually between a threshold of values e.g batter a rating
+nav - site navigation
+output - semantic tag to hold the results of a calculation
+progress - progress bar 
+section
+source
+aummart
+svg
+time - helps specify time
+track
+video - allows video
+wbr - word break used ot break a really long word
+
+
+New Javascript API's
+
+
+----Graphics and typography---
+caanvas allows you to draw on a page now
+the web animations api allows you to create animations on a page
+
+----interaction , events & messaging----
+
+battery status - allows appliaction to aware of battery life
+clipboard - gives you to the clipboard
+cross document messaging - allwos you to send messages between pages
+Device asnd screen orientation - allows for adatpability
+Fullscreen - allows you to use the Fullscreen
+Geolocation - allows you to access the user location
+media capture - allows you to use native cameras for capturing pictures or video or audipo
+notfications - allows you to make toast like notfications for the user
+touch events - use of touch
+vibration - you can make the user device vobrate
+
+
+Storage & Files
+Blob urls - represents bytes
+File api - represents actual files in the browsers file system
+file reader - allows you to read in-browser file 
+indexddb - document database can be used for large amounts of data
+local storage -allows you to store data for long periods of time or just a session
+
+Real-Time Communication
+push api - push data from server to the clients
+server sent events - one way Communication
+web sockets - two way Communication
+
+
+--------------Web components------------
+custom elements - alloes you to change normal elements an dchange the name of generic elements
+shaodw Dom = is a method of encapsulating element trees in the DOM
+Templates - creating a pattenr of html and easily filling it with data
+
+
+------------Performance Analysis-------------
+
+High resoultion time - allows you to load time
+navigation timeing - measuring page load time and events 
+page visibilty allow you to change how to page behaves when the tab is not active or active
+web worker - Allows you to use diff threads in thhr browser
+
+
+----Security & privacy----
+Content security policy  - allows you to create a whitelist for sources of a page
+referrer policy - give you tight contorl on the amount of data that flows in and out of your page
+web cryptography - provides a way to encrypt and decrypt data for the client
+
+
+----Miscellaneous Features----
+async - allows script to run in an asynchronous  , defer means that a page will wait until the page loads
+contentEditable - allows any part of your page to be editable
+drag & drop - allows parts of th epage to use drga or drop
+serviceWworkers- replaced application cache allows for website to work offline
+
+HTML 5 is pretty much new html elements and javascript elements 
+
+
+----Html 5 boilerplate---
+This can be used to make writing html easier
+
+htmlboilerplate.com
+
+
+----Fallbacks and polyfills-----
+
+Used when there are api's unavaliable
+
+html5please can be helped to be used to help with these polyfills
+and fall backs gvinh us possible fallbacks and polyfills
+
+
+-----Selection API-----
+
+document.getElementByClassName = allows you to get the element by class name returns a live result
+
+
+document.querySelector =query selector take in a CSS3 selector returning the first match it finds in the page this returns a static result
+
+e.g. document.querySelector (.page-headers)
+
+document.querySelectorAll = returns all the matches of the css3 selector passed in
+
+****Query selector all will alwys return an array if no results it will return an empty array
+
+however it doesnt't exactly return an array intead it returns a nodelist 
+this means it does not contain the same capabilities of an array for example
+you cant iterate through it with a for loop
+
+---Iterate through a nodeList---
+
+you can do this using a for loop
+
+done the same way as usual
+
+for(int i = 0 ; i < nodelist.length; i++)
+{
+    console.log(nondelist[i].innerText)
+}
+
+or can be done using the for each method
+
+first you must set access to the method
+
+var forEach = Array.prototypr.forEach
+
+var items = document.querySelectorAll(#page-headers li)
+
+you must them call the method taking in two paramenters
+
+the first being the list and the second is the function you want to happen as you iterate thtough
+
+forEach.call(items , item=>()
+{
+    console.log(item.innerText)
+})
+
+
+
+-----User Input------
+new input elements
+color  - allows you to select form a set of colors
+datalist - creates predefined oprtions for a textbox with 
+date - creates a date picker
+datetime -  creates a date picker
+datetime-local  creates a date picker in local time
+email - makes it easier to enter na email
+month - makes it easier to enter a month
+number - gives spinners for numbers at the side
+range - renders out a slider 
+search - text input with an "x" that will be used to clear text
+tel - used for phone numbers
+time - choose time
+url -  make sit easier to enter a url
+week - make sit easierto enter a week
+
+
+-----Form Vlaidation----
+
+required -becomes true if an input field has na empty value
+value - becomes through if the value is not matched to the declared type
+pattern - true when value in the input field does not match the regEx expression given
+maxlength = true when a value lenght is longer than the set maxlength attribute
+
+range:
+min&max = when a range is declared "min" & "max" attributes can be attcahed in order
+to state what is the minimum and what is the maximum
+
+step = the step attribute can be used to increase the value of a slider in desired 
+
+
+Autofocus -- only allows one element to use the Autofocus attribute at a time 
+which creates focus on a certain element
+
+
+-----HTML5 MEDIA----
+ 3 parts:
+ media element - audio or video
+ media types 
+ speech api - application responding to text
+
+
+if you do not serve the video files with the matching content type then browser will not know how to
+proces the video
+
+
+To allow video or audi can be controlled you must add the controls attribute to use them
+
+
+<video controls wdith "900">
+    .....
+    .....
+    .....
+    .....
+</video>
+<audio controls wdith "900">
+    .....
+    .....
+    .....
+    .....
+</audio>
+
+You can add the loop attribute to these elements to automatically restart
+<video loop controls wdith "900">
+    .....
+    .....
+    .....
+    .....
+</video>
+<audio loop controls wdith "900">
+    .....
+    .....
+    .....
+    .....
+</audio>
+
+
+You acn use poster to add a specialised image for the first frame of a video
+
+<video loop controls wdith "900" poster ="img/kitcehn.jpg">
+    .....
+    .....
+    .....
+    .....
+</video>
+
+
+
+------Drawing states , charts etc-----
+
+canvas is drawing surface in the web page
+
+canvas is a merge of the html element and a javascript api
+
+it is based off a grid system
+
+positive values are in the east and south of the axis 
+ehile negative are in the north and west
+
+
+YOU MUST FIRST SPECIFY THE CANVAS ELEMENT IN THE HTML ASSIGNNING A WIDTH AND A HEIGHT
+
+then you use the javascript
+
+To use canvas the first thing to do is to use the 
+
+
+****context.beginPath()**** method
+
+next you tell it where to start of using context.moveTo(x,y) x nad y being the coordinates
+
+then you specify where you want the line context.lineTo(x,y )
+
+then you can use the context.fill() method this connects the firrst point ot the last point
+and fills it with a colour
+
+you can also use context.fillstyle to set the color of the object before you use the context.fill()
+
+paint an image onto the canvas you 
+must get the context and set it to 2d
+then create a new image object
+then onload the image in the function stating where you want the img drawn
+then you must point to the img sourc location
+
+context = canvas.getContext("2d")
+
+var img = new Image();
+img.onload = function()
+{
+    context.drawImage(img , 0 , 0)
+}
+
+img.src=img.home.jpg
+
+to scale the image you must use the 
+
+context.scale() method and pass in the zoom size you want to scale the image to
+
+if you use decimals it will make the image smaller 
+if you use whole numbers it will make the image bigger snd zoom in
+
+
+to rotate an image all you have to do is to us ethe context.rotate method this takes in radians
+and if you want to use degrees you must use a helper function to convert radians to degrees
+
+you can animate the canvas search this online
+
+
+Brad traversy does drag and drop in 19 mins do this one instead of pluralsight and then come back 
+
+
+***************************COME BACK AND DO THIS DRAG AND DROP***************
