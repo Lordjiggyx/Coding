@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Shadow DOM</title>
+    <style>
+    h1
+    {
+        color: red;
+    }
+    </style>
+</head>
+<body>
+        <h1>Hello from the Shadow DOM</h1>
+    <!--This will be our shadow host-->
+        <div id="host">
+            
+        </div>
+
+        <template>
+                <h1> Hello from the Shadow DOM</h1>
+                <style>
+                        h1
+                        {
+                            color: green;
+                        }
+                        </style>
+        </template>
+
+        <script>
+        /*Part 1 - normal shadow Dom
+        //reference to shadwo host
+        var host = document.getElementById("host");
+        //create shadoe root
+        var root = host.createShadowRoot();
+        //add elements to the root
+        root.innerHTML = "<h1> Hello from the Shadow DOM</h1>"*/
+
+        //Part 2 Shadow Dom with Templates
+          //reference to shadwo host
+          var template = document.querySelector("template");
+        //create shadoe root
+        var root = host.createShadowRoot();
+        //add elements to the root
+        root.appendChild(document.importNode(template.content , true))
+
+
+
+        //This only gets the element in the light DOM
+        console.log(document.querySelectorAll('h1'))
+
+        //To get from the shadown DOM we must use the shadwo root
+        console.log(root.querySelectorAll('h1'))
+
+        </script>
+</body>
+</html>

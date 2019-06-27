@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Web Components:HTML5</title>
+</head>
+<body>
+    <!--Template Tag-->
+    <template  id="header">
+      <!-- Part 1&2 <p>I'm <span class="adjective">coming from a template</span> I have been copied <span class="number_of_copies"></span> times</p> --->
+          <div>HEADER</div>
+        <template id="body"><div> body </div>/template>
+      </template>
+
+  
+
+
+    <!--Button used to copy the template -->
+    <button onclick="copyTemplate()">Copy Template</button>
+
+    <!--Getting the template-->
+
+    <script>
+      /* Part one -using the template
+    //Getting a reference to the template
+    var template = document.querySelector('template')
+    //Clone the template
+    var clone = document.importNode(template.content , true)
+    //insert the clone onto the page
+    document.body.appendChild(clone);
+    */
+
+    /*Part 2 - injetcing data to template
+    //Variable used to count number of copies
+    var copies = 0;
+        function copyTemplate()
+        {
+            //Getting a reference to the template
+            var template = document.querySelector('template')
+            //Clone the template
+            var clone = document.importNode(template.content , true)
+            //replace the plaholders
+            clone.querySelector('.adjective').textContent =' Awesome'
+            clone.querySelector('.number_of_copies').textContent = ++copies
+            //insert the clone onto the page
+            document.body.appendChild(clone);
+    */
+    
+    //Part 3 - Nesting templates
+
+    //To specify which template you wnat to be used you must use the id
+
+            //Getting a reference to the template
+            var template = document.querySelector('#header')
+            //Clone the template
+            var clone = document.importNode(template.content , true)
+            //insert the clone onto the page
+            document.body.appendChild(clone);
+            //Getting a reference to the template
+            var template = document.querySelector('#body')
+            //Clone the template
+            var clone = document.importNode(template.content , true)
+            //insert the clone onto the page
+            document.body.appendChild(clone);
+
+
+  
+    </script>
+</body>
+</html>

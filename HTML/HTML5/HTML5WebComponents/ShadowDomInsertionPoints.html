@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ShadowDomInsertionPoints</title>
+</head>
+<body>
+    <!--Creating a shadow host-->
+        <div id = "host">
+            Light DOM
+        </div>
+
+        <script>
+        //Creating the shadow root
+        var host = document.querySelector('#host');
+        var root1 = host.createShadowRoot()
+        var root2 = host.createShadowRoot()
+        root1.innerHTML =" <div>Root1</div> "
+        root2.innerHTML =" <div>Root2</div>"
+        //CREATING ANOTHER SHADOW ROOT TO BE USED AS THE SHADOW TAG
+        //only the last shadow root will render
+       
+        </script>
+</body>
+</html>

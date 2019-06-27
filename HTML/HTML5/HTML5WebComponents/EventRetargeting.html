@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> event retarget</title>
+</head>
+<body>
+    
+    <button id="light-dom-button">Light DOM Button</button>
+
+    <div id="host">
+
+    </div>
+        <template>
+        <button id="shadow-dom-button">Shadow DOM Button</button>
+        </template>
+   
+        <script>
+               //Creating the shadow root
+        var host = document.querySelector('#host');
+        var root = host.createShadowRoot()
+        var template =document.querySelector("template")
+        root.appendChild(document.importNode(template.content , true))
+
+        document.addEventListener('click' , function(e)
+        {
+            //You get host being clicked when you click shadow button because the 
+            //shadow dom is encapsulatoing the dom sub tree 
+            console.log(e.target.id + 'clicked')
+        })
+        </script>
+    
+</body>
+</html>

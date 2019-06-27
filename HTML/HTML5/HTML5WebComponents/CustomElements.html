@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Custom Elements</title>
+</head>
+<body>
+    
+    <!--Method 1 place tag in
+    <Tomi-element></Tomi-element>-->
+
+
+
+
+    <!--YOU NEED A SCRIPT TO DO SO-->
+    
+    <!--This is for normal elements
+    <script>
+
+    //These steps are necessary to create a custom element
+    //CREATING A PROTOTYPE
+    var TomiProto = Object.create(HTMLElement.prototype)
+    //CREAT A CLALBACK FUNCTION
+    TomiProto.createdCallback = function()
+    {
+        this.innerHTML = "<h2>Tomi Ilori Element</h2><textarea></textarea></br> <input type = 'submit'>"
+    }
+    //Register the element
+    var Tomi = document.registerElement('Tomi-element',
+    {
+        prototype:TomiProto
+    });
+
+    /*Method 2 - new operator
+    var comment = new Tomi()
+    document.body.appendChild(comment)*/
+
+    /*Method 3 - create element method
+    var comment = document.createElement('Tomi-element')
+    document.body.appendChild(comment)*/
+
+    //Method 4 - inner html
+    document.body.innerHTML = "<Tomi-element/>"
+
+    </script>
+    -->
+
+
+    <!--This is for extending existing objects
+
+    Method 1 - placing the tag in
+    <button is= "Tomi-Button"></button>
+
+
+    <script>
+        //Extending the button element
+    var proto = Object.create(HTMLButtonElement.prototype);
+    //Define the call back
+    proto.createdCallback = function()
+    {
+       this.innerHTML = "Tomi's Button";
+       this.value = "Default Value";
+       this.style.color = "white";
+    }
+
+    //register the element
+    var TomiButton =document.registerElement('Tomi-Button',
+    {
+        prototype:proto,
+        //We need to use extends to exnetd the button
+        extends:'button'
+    })
+
+    //Method 2 -using new operator
+    document.body.appendChild(new TomiButton())
+
+    //Method 3 - create element
+    var custombutton = document.createElement('button' , 'Tomi-Button')
+    document.body.appendChild(custombutton);
+
+    //Method 4 - inner html - this deletes the rest so the rest do work
+    document.body.innerHTML = "<button is= 'Tomi-Button'></button>"
+    </script>
+
+    -->
+    
+
+    <!--This is using the callback methods-->
+
+    <!--Define the custome element-->
+    <hello-world></hello-world>
+
+    <script>
+     var proto = Object.create(HTMLElement.prototype);
+
+     proto.createdCallback = function()
+     {
+         this.innerHTML = '<h1> Hello World</h1>';
+     }
+
+     proto.attachedCallback = function()
+     {
+         console.log("Element attached")
+     }
+     proto.detachedCallback = function()
+     {
+         console.log("Element detached")
+     }
+     proto.attributeChangedCallback = function(attrname , oldVal , newVal)
+     {
+         console.log(attrname + " ," + oldVal + " ," +newVal)
+     }
+
+     var Hello = document.registerElement('hello-world',
+     {
+         prototype:proto
+     })
+
+     document.querySelector('hello-world').setAttribute('test' , 1)
+
+     document.querySelector('hello-world').remove()
+    </script>
+</body>
+</html>

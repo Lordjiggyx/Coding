@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Shadow DOM and Insertion Points</title>
+</head>
+<body>
+    <comment-form>
+        <h1>Tell me what you want!</h1>
+        <p class="instructions">Fill out this form</p>
+
+        <p class="footer">Privacy Lorem, ipsum dolor.</p>
+
+        <input type="button" value="Reset">
+    </comment-form>
+
+
+    <template>
+        <fieldset>
+            <legend>
+                <!--invitting any h1 it finds in the shadow host-->
+                <content select = "h1"></content>
+            </legend>
+           <content select = "p.instructions"></content>
+            <textarea style = "width: 400px; height: 200px;"></textarea>
+        </br>
+
+        <input type="submit" value="Submit Comment">
+        <content select = "input[type=button]"></content>
+
+        <content select = ".footer"></content>
+            </fieldset>
+       
+        </fieldset>
+    </template>
+
+
+
+    <script>
+    var commentProto = Object.create(HTMLElement.prototype)
+    
+    commentProto.createdCallback = function()
+    {
+        var template = document.querySelector('template')
+        var shadow = this.createShadowRoot()
+        shadow.appendChild(document.importNode(template.content , true));
+    }
+    
+    document.registerElement('comment-form',
+    {
+        prototype:commentProto
+    })
+    </script>
+</body>
+</html>

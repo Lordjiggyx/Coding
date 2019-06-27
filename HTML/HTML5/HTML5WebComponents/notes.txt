@@ -1,0 +1,298 @@
+Big Web developer problems
+
+#1 - Undescriptive markup - less div's more semantics 
+
+
+#2 - Style Conflicts - creates bloat to markup as highly specific selectors are used
+no gurantee another style wont break current styles
+
+#3 - No Native Templates - no way to natively import html which can lead to cross site scripting issues
+we store html in hidden DOM elemnts and manually extract
+
+#4- No bundling - you can't bundle dependices in a single line you must link each and every one every tie you wnat to use one
+
+#5 - No standard - no standard for creating web components
+
+
+The solution to these problems is html 5 web components
+
+These web components work of using
+
+Templates - allow us to define inert reusable markup
+Custom elemnts - allow us to define our own elemnts
+shadow DOM - encapsulated markup and styling
+imports - bundling html js and css into one packaage
+
+always think about the level of abstraction with your application
+
+
+
+**********Templates*************
+
+
+A Template is a way to define a preset format for reuse
+
+with the <template> tag you can you can declare a chunk of markup that you dont want 
+the broser to render or manipulate
+
+--Template Characterisctics---
+Inert-Does nothing until cloned
+Hidden from selectors - javascript and css cant be used to select any elements in this tamplate tag
+flexible placement - you cna place a template tag anywhere on the page
+
+
+--Template Activation--
+#1 - you need to get a refernece to the template e.g.
+
+var template = document.querySelector("#mytemplte")
+
+#2 - you need to use the import node method to create a clone of the templates content
+
+var clone = document.importNode(template.content , true)
+
+the contentproperty returns everything between the opening and closing tags the second paramtert
+determines wheteher to do a depe copy in other words deciding if the descendents will eb copied
+
+#3 - add the content to the page as desired 
+
+document.body.appendChild(clone)
+
+the content of a template is unde rthe content property of the template
+
+
+--Inject Data into Template--
+
+#1 - you need to get a refernece to the template e.g.
+
+var template = document.querySelector("#mytemplte")
+
+
+#2 - you need to use the import node method to create a clone of the templates content
+
+var clone = document.importNode(template.content , true)
+
+#3 you can now change any data placeholder within the template
+
+clone.querySelector('.verb').textContent = "awesome"
+
+#4 Append elemnt to the page
+
+document.body.appendChild(clone
+
+--Nesting Tmeplates--
+If you nest templates each one must be cloned and added manually
+
+
+
+**********Custom elements************
+
+Custom elements must always have a dash e.g.
+
+<my-component>
+
+these can provide a high level of abstraction
+
+custom elements can extend existing elements using the is attribute
+
+for example
+<input type = "text">
+would return a simple text field
+
+whereas extending search
+
+<input type = "text is="search">
+
+returns a text field with search capabilities
+
+--Registering and Using Elements--
+
+#1 create a prototype
+here you will often efine a callback function
+you will create the shadow root and and the template to populate it
+
+var slickTabs = Object.create(HTMLElement.prototype)
+
+****If you are ecxtending an existing element you must name it e.g.
+    var slickTabs = Object.create(HTMLButtonElement.prototype)
+****
+
+#2 You must register the element using document.registerEleement() pasing the name of the lement
+
+document.registerEleement('slick-tabs')
+
+#3 Utilise it by andding it to the DOM or placing the Tag on the page
+
+dcoumnet.body.appendChild(new slickTabs)
+
+
+You can extend custom elements too
+
+var xfooProto = Object.create(HTMLElement.prototype)
+....
+
+var xfooExtend = document.registerEleement(x-foo-extended , 
+{
+    prototype:xfooProto,
+    extends:'x-foo'
+})
+
+
+--instantiating a custom element
+
+#1 - create a tag in the markup
+
+<Tomi-element/>
+
+#2 - create a new operator
+
+var element = new TomiElement()
+
+#3 createElement
+
+var element = dcoumnet.createElement("Tomi-element")
+
+#4 using inner Html
+el.innerHTML = "<Tomi-element/>"
+
+
+--instantiating an extemded element--
+
+#1 - use the is attribute
+
+<button is  = "super-buttonm"
+
+
+#2 - javascript
+
+var = document.createElement("button" , "super-button")
+first paramter is the element you want to create
+second paramter is the extension to  it
+
+
+#3 - New operator
+
+document.body.appendChild(new SuperButton())
+
+#4 -  inner HTML
+
+
+--Lifecycle Callback Methods--
+
+There are four lifecycle callback Methods
+createdCallback-Instance is created
+attachedCallback - Instance inserted into DOM
+detachedCallback- Instance removed from DOM
+attributeChnagedCallBack - attributes are added removed or updated 
+
+no exact need unless necessary
+
+
+*****************Shadow DOM*********************
+
+shadow Dom - the dom hdes away the complexity of the page
+
+on elements such as input and video you can right click and press inspect
+
+to see the shaodw dom
+
+The shaodw DOM encapsulates DOM subtress and styles
+
+and <iframe> is commonly used to ensure separate scope and styling
+but they are clunky to read and undescriptive , excessive encapsulatation
+no clean API
+
+--Creating the shadow DOM--
+
+#1 - select a shadow host this is a element in the light dom that will wrap the shadow root
+#2 - create a shadow root
+#3 - add elements to the shadowDom
+
+--Shadow Host--
+This is an element in the light DOM that is hosting the shadow Dom
+
+--Shadow Boundary--
+Ordinary Css selectors inside shadow root only match/style the Shadow DOM
+encapsulates DOM subtree
+
+the benefits include:
+simple selsctors
+simple markup
+enhanced readability
+
+--ShadowRoot Dom Methods--
+same as usual
+
+just you must use the root 
+
+
+******Javascript is not encapsulated in the shadow DOM*****
+
+
+********Shadow DOM insertion Points & Events***********
+
+This allows certain markup in the light DOM to render in Shadow DOM
+
+This can be done using the content tag <content>
+
+this tag allows you to declare markup your willing to display alongside the shadow dom at a given location
+you can use the select attribute to select an element
+
+<content select = "img>
+
+
+--Content selectors--
+
+Type selector  = <content select = "p"> </content>
+Class selector  = <content select = ".target"> </content>
+attribute selector  = <content select = "input type=[text]"> </content>
+id selector  = <content select = "#target"> </content>
+negation pseudi selector  = <content select = ":not(.ugly)"> </content>
+universal selector  = <content > </content>
+
+
+select only retrievs immediate children of the shadow host node
+
+
+***it's the point of where we define the content tag thta defines where the leement is placeholder
+
+
+--Shadow insertion points---
+
+The shadow tag is a place for content
+The shadow tag alklows you to declare shadow dom insertion points within the shadow DOM
+
+The youngest shadow tree is the last one added . Previous trees are called older trees
+
+Only the first shadoww insertion point in a shadow tree is recognized meaning
+only the first one will render
+
+--list of insertion points---
+If you want to get a list of distributed nodes or insertionpoints use
+getdistributednodes for the nodes
+getinsertionpoints for the insertion points
+
+
+--Event retargeting--
+
+When events in the shadow dom they are retargetd to appear to come from the shadow host
+
+Some events are actuslaly just stoopped examples include
+
+abort
+error
+select
+change
+load
+reset
+resize
+scroll
+selectstrat
+
+
+*******Imports*******
+
+The value of the href is called the import location
+The link must be in the head tag
+html is initially inert until called
+Javascript and CSS run and apply immediately
+imports from separate domains must support cross - orgign resource sharing enabled
