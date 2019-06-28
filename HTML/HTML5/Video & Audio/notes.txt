@@ -1,0 +1,105 @@
+2 methods
+
+#1 - include video from root folder
+#2 - include video from another web link using embed video
+
+
+Method 1 -source folder
+
+First use a video tag
+
+<video>
+
+lead the src to the path of the required video
+
+There are a number of attributes that we can include in the tag
+
+for example
+
+autoplay = Decides whetether the vidoe starts when the page is entered
+
+poster - Decides on a thumbnail for the video
+
+controls- adds the video controls 
+
+loop - allows for repeating of a video
+
+mute - mutes the video
+
+preload - gievs the brbowser a hint on how the page should load
+there are three options :
+preload ="auto" - video should load with the page
+preload = "none" - video should not load when the page is rendered
+preload = "metadata" - believes the video should only load metadada
+
+there is also a track attribute that can be used to add captions
+the video however must be .vtt to stream the video text file
+
+<track default
+                src="./Video/16 How to Create HTML5 Videos and Embed Videos  Learn HTML and CSS  HTML Tutorial  Basics of CSS.vtt"
+                kind="captions"
+                srclang="en"
+                label="English Captions"
+                
+                />
+
+To check the vido format that is allowed we can use the source tag insid ethe video tag
+
+inside this source tag with the type attribute we say video with a "/" and the type of format
+then writing a message for the user
+ e.g.
+
+ <video controls>
+            <!--Checking if the source file format is supported-->
+            <source src="./Video/16 How to Create HTML5 Videos and Embed Videos  Learn HTML and CSS  HTML Tutorial  Basics of CSS.mp4" type="video/mp4">
+        BROWSER DOES NOT SUPPORT MP4 
+        </video>
+
+
+        we can change the width of the video by using our css selectors and adjusting the width
+
+
+Method 2 - link to video
+
+
+we do this using embedding 
+
+to take a video from youtube we can just go to the share button on it and choose embed
+
+and then take the given code
+
+and put it in your container class
+
+
+to change the width and height of an iframe tag we must place the iframe in a div 
+
+then set the postion of this div to relative
+
+we then set the padding bottom to a % thena dd the hight of the container which sclaes to it's own width. by setting the padding to 56.25% we then have a 16:9 scalling for the video size
+
+.videowrapper
+{
+ position: relative;
+ padding-bottom: 56.25%;
+ padding-top: 25px;
+ height: 0;;
+}
+
+then we take the i frame and set the postion to absolute
+we then must set its postion 0 on all 4 sides to strech it to fit the container
+
+and set the height and width to 100%
+
+.videowrapper iframe
+{
+ position: absolute;
+ top:0;
+ bottom: 0;
+ left: 0;
+ right: 0;
+ width: 100%;
+ height: 100%;
+}
+
+To add closed captions you must use a trcak tag 
+and 
