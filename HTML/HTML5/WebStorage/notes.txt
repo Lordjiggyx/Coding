@@ -1,0 +1,58 @@
+There are two types of web storage
+
+Session storage 
+Local storage
+
+They have same methods and properties the only differnece is session storage 
+gets deleted when you close the browser or log out delete the tab etc
+
+Local storgae will stay until you go into the browser settings and delet it 
+or you use a method to delete the information
+
+*****Done Within A javascipt file*****
+
+They both exist the window object so you can use the metjod localStorgae or SessionStorage attached to the window object
+
+to see the storage right click and press inspect 
+Then go to the application tab
+
+Local storgae and session storagecan be seen on the side bar
+
+These are estentially like key value pairs
+
+they can take any type of object
+
+the only probelm however is that the value being placed into local storage must be a string
+
+That's where the JSON Object comes in they allow us to convert objects to strings and vice versa
+
+
+
+---How to put something into local storage----
+
+There is a setItem() method
+
+it asks for a key and a value setItem('user' , 'Tomi Ilori')
+
+
+There is also a get item method that will allow us to retrieve information from local storage but must be a variable first
+
+let user = window.localStorgae.getItem("user")
+console.log(user)
+
+when saving an array to local storage we must use the JSON object
+
+we let a variable equal the JSON object
+this object has two methods
+parse - Takes a string and extracts the objects 
+Stringify - Takes an object and turns it into a string
+
+in this case we will use Stringify
+and then pass in the variable
+
+let usersString = JSON.stringify(users)
+
+window.localStorage.setItem("user" , usersString)
+
+
+to retrieve the orginal information we let a variable equal the string and then use JSON.parse to create the object
