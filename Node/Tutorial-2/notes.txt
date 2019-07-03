@@ -1,0 +1,705 @@
+======Modules=====
+
+Modules are used to seperate concerns for our application
+
+To export a function we use the module object for example
+
+a function sum has been defined in th tutorial.js file 
+
+we then say module.exports = sum to say that we want to make  this function
+accessible to other files
+
+then in the file we want to use the function being app.js we can declare it as a variable
+
+and then point to the loctaion of the file using the require keyword e.g.
+
+const tutorial = require('./tutorial') the extension is not required in this case
+
+we can then use this variable and pass in the paramenters e.g.
+
+tutorial(1,1)
+
+
+----How do you export multiple things from modules-----
+
+To do this we can add properties to the modules.export object
+
+so as you can see in the tutorial.js we wamt to export the PI and the clsss as well as the sum
+
+so we just add the properties to the modules.exports
+
+
+module.exports.sum = sum
+module.exports.PI = PI
+module.exports.SomeMathObject = SomeMathObject
+
+You can then use the console.log of tutorual to see what is held
+
+{ sum: [Function: sum],
+  PI: 3.14,
+  SomeMathObject: [Function: SomeMathObject] }
+
+  as you can see an object is returned containing the functions and also
+  the variable point
+
+  Then to access this it is like accessing from a normal object
+
+  console.log(tutorial.sum(1,1))
+  console.log(tutorial.PI)
+  console.log(new tutorial,SomeMathObject())
+
+  To shorthand these exports we can just export an object literal and tag along the properties
+
+module.exports =
+{
+    sum:sum,
+    PI:PI,
+    SomeMathObject:SomeMathObject
+}
+
+====Events Module and Emitter Class====
+
+Events modules just allows us to bring event driven programming to node.js
+
+First we muat require the events module
+this module is built in to node.js already 
+
+so we must create the variable and let it equal events an dthen create an instance if this
+
+const EventEmitter = require('events')
+const eventEmitter = new EventEmitter()
+
+To use the object we must attach a listener to it by using the 'on' method
+This method takes on two arguments the lisstener and then the function you want to execute when the tutorial event occurs
+
+eventEmitter.on('tutorial' , ()=>
+{
+    console.log("Event has occured")
+})
+
+we must then emit the tutorial event using the emit method passing in the event that you want to act upon being tutorial
+eventEmitter.emit('tutorial')
+
+you can give arguments to these events 
+
+eventEmitterParam.on('addition' , (num1,num2)=>
+{
+    console.log(num1 + num2)
+})
+
+eventEmitterParam.emit('addition' , 10 , 23)
+
+
+----How would you create a custom object---
+
+We can do this by inheriting from the eventEmitter Class
+
+class Person extends EventEmitter
+{
+    .....
+}
+
+we then continue on as usual by adding the listner and then emitteing the object
+
+p1.on('display' ,() =>
+{
+    console.log(p1.name)
+})
+
+p1.emit('display')
+
+====Readline module======
+
+The readline module allows us to prompt the user as well as get user input
+
+to start we must require the modulle
+
+const readline = require('readline');
+
+we must then create an instance of the read line interfcae by using the create interface method
+readline.createInterface({})
+
+This method takes an object its basically our configuration file
+
+the first property we will give is input letting relate to process.stdin meaning this is the input stream
+the second being output and relating it to std.out which is the output stream
+
+readline.createInterface
+(
+    {
+        input:process.stdin,
+        output:process.stdout
+    }
+)
+
+when thihs method is executed it will return our readline interface object
+so it is best to svae it as a variable to use it
+
+const rl = readline.createInterface
+(
+    {
+        input:process.stdin,
+        output:process.stdout
+    }
+)
+
+
+the readline interface has a me called question and it takes in two arguments
+1.The question
+2.The function that gets the user input
+
+num1 = 20;
+num2 = 30;
+
+rl.question(`What is ${num1} + ${num2}?`,
+    (userInput)=>
+    {
+        console.log(userInput)
+    })
+
+
+in this case we are asking what 20 + 30 is to the user and storing there answer in the 
+variable userInput
+
+when your done using the readline interface you must then close it
+using the .close method
+
+rl.question(`What is ${num1} + ${num2}?\n`,
+    (userInput)=>
+    {
+        //If the answer the quetsion correctly we will close the application
+       if(userInput.trim() == answer)
+       {
+        rl.close()
+       }
+    })
+
+
+=====File System Module - files=====
+
+This allow sus to work with the file System for example
+
+create files
+read files
+create folders
+etc.
+
+To start we must require the file module using fs
+
+const fs = require('fs')
+
+To create a file we use the writeFile method that takes in a few arguments
+1.Name of the file 
+2.What you want to write to the file
+3. A callback for errors incase something goes wrong
+
+fs.writeFile('example.txt' , 'This is an example' , (err) => 
+{
+if(err)
+{
+    console.log(err)
+}
+else
+{
+    console.log('File successfully created')
+}
+})
+
+To read a file we must use the readFile() method and this takes in a few paramenters aswell
+1. File name
+2. The encoding type - without this we get the buffer stream usually utf-8
+3. callback - this takes two paramenters error and the name of the file you want to read
+
+fs.readFile('example.txt' ,'utf-8' ,(err,file)=>
+{
+    if(err)
+{
+    console.log(err)
+}
+else
+{
+    console.log('File successfully  \n (file)')
+}
+})
+
+to rename a file use the rename method this takes in three arguments
+1. The name if the file you want to rename
+2.The name you want to chnage it to
+3. a callback for errors
+
+fs.rename('example.txt' , 'example2.txt' , (err)=>
+{
+  if(err)
+{
+    console.log(err)
+}
+else
+{
+    console.log('File successfully  \n (file)')
+}
+
+You can also append data onto the end of a file using the appendFile method
+this takes in 3 arguments
+1.File name
+2.The data you want to append 
+3.the callback function
+
+
+fs.appendFile('example2.txt' , 'Appended Data' , (err)=>
+{
+    if(err)
+    {
+        console.log(err)
+    }
+    else
+    {
+        console.log('File name successfully change')
+    }
+})
+
+You can delete a file using the Unlink method this takes two paramenters
+
+1.The file name;
+2.The err callback
+
+=====File System Module - folders=====
+
+To create a folder you need to first require teh file system module
+
+then use the mkdir method
+
+This takes in two arguments
+1. The folder name
+2. the error callback
+
+fs.mkdir('New Folder', (err) =>
+{
+    if(err)
+    {
+        console.log(err);
+    }
+    else
+    {
+        console.log('Folder created')
+    }
+})
+
+
+To delete a folder you must use the rmdir method takes in the same paramenters
+as the mkdir method 
+
+fs.rmdir('New Folder', (err) =>
+{
+    if(err)
+    {
+        console.log(err);
+    }
+    else
+    {
+        console.log('Folder Deleted')
+    }
+})
+
+*********RMDIR CAN ONLY BE USED ON A FOLDER WITH NOTHING IN IT**********
+
+--Creating a file within a folder---
+
+When creating a file within a folder esstentially you can just place it
+within the the error call back and inside you just use the wirtefile method however in
+this case you must give it the full path 
+
+
+fs.mkdir('New Folder', (err) =>
+{
+    if(err)
+    {
+        console.log(err);
+    }
+    else
+    {
+        console.log('Folder created Now Writing File.....')
+        fs.writeFile('./New Folder/example.txt' , 'This was created in a file' ,(err)=>
+        {
+            if (err)
+            {
+                console.log(err)
+            }
+            else
+            {
+                console.log("File Created")
+            }
+        })
+
+    }
+})
+
+
+---deleting a folder and a file----
+as rmdir can only be used when the folde ris empty you must use the unlink method to 
+delete the relevant files befire deleting the folder usually deleting the folder in the else block
+
+---deleting multiple files---
+To delete the files in a folder you must read the files in the folder 
+using the readdir method this takes in two arguments the folder name and then a call back function
+however thihs call back function will have two paramenters one being the error and the 
+second being an array containing the list of files in the folder
+
+fs.readdir('New Folder', (err , files) =>
+{
+    if(err)
+    {
+        console.log(err);
+    }
+    else
+    {
+        console.log(files)
+    }
+})
+
+This will return an array of files just for demonstration
+
+now we can use a loop to delete each file within the else condition
+fs.readdir('New Folder', (err , files) =>
+{
+    if(err)
+    {
+        console.log(err);
+    }
+    else
+    {
+        for ( let file of files)
+        {
+            fs.unlink('./example/' + file , (err)=>
+            {
+                if(err)
+                {
+                    console.log(err)
+                }
+                else
+                {
+                    console.log(File Deleted)
+                }
+            })
+        }
+    }
+})
+
+then you can delete the folder
+
+=====Working with readable and writable streams=====
+
+These streams allow us to read and write data more efficently
+
+to start we must requre the fs 
+const fs = require('fs')
+
+we must then create a readable stream and point to the loction of the file
+
+fs.createReadStream('./example.txt' , 'utf-8')
+
+this returns a readable stream
+but it's better to save this as a vafriable as we can can listen for events as the readstream object inherits for the eventemitter class
+
+we will be making it listen to the 'data' event
+again we will use the 'on' methohd to listen for the event
+
+There will be a 'data' event and a 'chunk' callback will be called
+with whatever you want to happen to it 
+
+readStream.on('data' , (chunk)=>
+{
+    ....
+    .....
+    ....
+})
+
+
+We can also send the data to a new file
+to do that we can create a writable stream using the writeStream method
+
+we can also save this as a variable 
+
+this mwthod follows the same format as the createReadStream just takes in the new file name 
+
+const writeStream = fs.createWriteStream('example2.txt')
+
+you can then call the write method on the varibale storing the writeStream
+
+writeStream.write(chunk)
+
+in this case we have done it inside the readstream utilising the chunk of data
+
+
+===Pipes and Pipe streams====
+A pipe allows us to take a source stream and send it over to it's destination
+
+rather then using the 'on' method we can just the 'pipe' method on 
+our read stream variable
+
+This takes the contents of our read stream nd pump it into our write stream
+
+readStream.pipe(writeStream)
+
+THIS IS JUST A SHORTHAND METHOD OF USING THE STREAMS
+
+****IN ORDER TO USE A PIPE WE NEED 2 STREAMS A SOURCE STREAM NAD A DESTINATION STREAM******
+
+--Pipe Chaining--
+There is a module called zlib
+zlib is used for compressing files 
+This is module must be required
+
+const zlib = require('zlib')
+
+A transform stream takes input from a read stream and changes the data into something else in this case we will compress the data this stream is made using the createGzip method on the zlib variable
+
+this returns our transform stream
+
+we can then pipe our read stram into the transform stream to compress it then use pipe again to create the file 
+
+readStream.pipe(gzip).pipe(writeStream)
+
+however in this case you must change the file extenstion in the write stream to be 'file_extension.gz' e.g.  txt.gz
+
+const writeStream = fs.createWriteStream('example2.txt.gz')
+
+
+//////////////////UNZIP -> ZIPPED////////////////
+// requiring the file system module and storing in a local varibale
+const fs = require('fs')
+//requiring a Zlib module for file compression and storing in a variable
+const zlib = require('zlib')
+
+//Creating transform stream
+const gzip = zlib.createGzip()
+
+//Create a readble stream
+const readStream=fs.createReadStream('./example.txt' , 'utf8')
+//Creating a writable stream
+const writeStream = fs.createWriteStream('example2.txt.gz')
+
+
+
+//Using a listener rather then a pipe
+// readStream.on('data' , (chunk)=>
+// {
+//     console.log(chunk)
+//     writeStream.write(chunk)
+// })
+
+//Using the pipe method instead
+readStream.pipe(writeStream)
+
+//We can then compreess this by first piping it into the gzip and then into our write stream
+
+readStream.pipe(gzip).pipe(writeStream)
+//////////////////////////////////////////////////////////////
+
+We can also do the reverse and unzip a file
+
+intead of saying create gzip instead we will say createGunzip
+
+const gunzip = zlib.createGunzip()
+
+this is our transform stream and then we place it inside the pipe
+
+readStream.pipe(gunzip).pipe(writeStream)
+
+we then get rid of the encoding in the read stream
+
+const readStream=fs.createReadStream('./example.txt')
+
+we also change the file name in th read stream to the zipped file being read in
+
+we then change the file naem in the write stream to whatever we want ot call it
+
+const writeStream = fs.createWriteStream('uncompressed.txt')
+
+There should be text in this kust didmt it properly when you did it tomiu
+
+//////////////////ZIPPED -> UNZIPPED////////////////
+const fs = require('fs')
+//requiring a Zlib module for file compression and storing in a variable
+const zlib = require('zlib')
+
+//Creating transform stream
+const gunzip = zlib.createGunzip()
+
+//Create a readble stream
+const readStream=fs.createReadStream('example2.txt.gz')
+//Creating a writable stream
+const writeStream = fs.createWriteStream('uncompressed.txt')
+
+readStream.pipe(gunzip).pipe(writeStream)
+
+//////////////////////////////////////////////////////////////
+
+
+
+
+
+
+==========Creating a HTTP Server using the HTTP module==========
+
+The HTTP module allows us to create a web Server
+
+to start we must require the HTTP module
+
+//require http module
+const http = require('http')
+
+We can then use a method called createServer we must store this in a 
+this method takes a call back which gives us a request and response object
+
+1. The request object is what the client requests from us 
+2. The response is the servers response to the client
+
+To send out text we can use the res.write method
+to actually send the request we need to use the res.end method
+
+//Creating a web server with a response
+const server = http.createServer((req , res)=>
+{
+    res.write("Hello World")
+    res.end()
+})
+
+Lastly we must tell the server whta port we want to listen to requests on
+
+server.listen('3000')
+
+
+===Serving Static Files with Http and File System Module ===
+
+To start require http and fs modules
+
+//require http module
+const http = require('http')
+
+//requiring the file system module and storing in a local varibale
+const fs = require('fs')
+
+
+Then create the server
+
+//Creating a server
+const server = http.createServer((req , res)=>
+{
+    ......
+    ......
+    ......
+
+}).listen('5500')
+
+
+
+--Reading in an HTML file--
+
+First create a read stream and pass in the path to the html file
+
+//Creating a server
+const server = http.createServer((req , res)=>
+{
+    //Reading in an html file
+    const readStream=fs.createReadStream('./static/index.html')
+
+
+}).listen('5500')
+
+
+Then write a header for the response letting the client know what kind of data
+is being expected
+
+we use the writeHead() method and it takes two arguments
+1.The status code e.g. 200 or 404
+2. The content type 
+
+const server = http.createServer((req , res)=>
+{
+    //Reading in an html file
+    const readStream=fs.createReadStream('./static/index.html')
+    res.writeHead(200 , {'Content-type':'text/html'})
+
+}).listen('5500')
+
+we can then pipe the read stream into where we want to send the file being the user res is also a writable stream
+
+const server = http.createServer((req , res)=>
+{
+    //Reading in an html file
+    const readStream=fs.createReadStream('./static/index.html')
+    res.writeHead(200 , {'Content-type':'text/html'})
+    readStream.pipe(res)
+}).listen('5500')
+
+This returns the index file onto tht local server
+
+the process is the same for the other files the only thing is that 
+you must change the file name being read in and then the content type
+
+e.g.
+
+const server = http.createServer((req , res)=>
+{
+    //Reading in an html file
+    const readStream=fs.createReadStream('./static/example.json')
+    res.writeHead(200 , {'Content-type':'application/json'})
+    readStream.pipe(res)
+}).listen('5500')
+
+
+===Create a package.json file===
+
+This file is responsible for holding al our metdata
+
+we use npm init then either change name or dont change it 
+enter in the fields that are asked
+
+The entry point is where the server knows where the server knows when to start the application
+
+This createe the package.json file
+
+
+===Node Package Manager===
+folder of reusable code that we can include in our folder with more then one modules 
+
+npmjs.com can be used to find new packages 
+
+once you find a package you vcan just copy the insdtallation line into the terminal window
+
+we then cna look into the package.json to see the pode package has been installed
+
+also a node modules folder is Created containing the installed package
+
+to actually use the package we can just require it
+e.g. const lo = require('lodash')
+
+you can also say npm uninstall to remove a package
+
+
+===Semantic versioning=====
+
+Semantic Versioning allows us to know what changes have occured in a package and used for npm packages 
+
+for example
+
+lodash : "^4.17.11" makor.minor.patch
+
+Each number has its own meaning
+
+patch updates measn a bug was fixed
+minor updates adds new functionality and deprecate some old funstionality esstentially a non breaking updates
+major updates means that there was a breaking changing meaning past versions are not compataiable
+
+the carat '^' means the following rules
+so in this case ^4 means no major updates can be made but minor an dpatch updates can be freely installed
+
+the tota symbol '~' means you only want patch updates
+
+you can remove eitehr symbols to ensure only the current version is kept
+
+
+=====Express JS=====
+
+Express Js is a web framework for Js
+

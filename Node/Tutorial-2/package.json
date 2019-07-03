@@ -1,0 +1,22 @@
+{
+  "name": "tutorial-2",
+  "version": "1.0.0",
+  "description": "Pkanned tutorial to learn about node",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lordjiggyx/Coding.git"
+  },
+  "author": "Tomi Ilori",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lordjiggyx/Coding/issues"
+  },
+  "homepage": "https://github.com/Lordjiggyx/Coding#readme",
+  "dependencies": {
+    "lodash": "^4.17.11"
+  }
+}

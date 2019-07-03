@@ -1,0 +1,129 @@
+
+===Getting started=====
+Express js is a web framework for node js
+to start we must create the package.json file using npm init --yes
+
+Then  install express
+npm i -g Express
+
+working like node we must use require to bring express into our project
+
+This module returns a function that must be called 
+express()
+
+This function will return an object with plenty of uasble methods
+so it's best to store in a variable
+const app = express()
+
+the get method is then used 
+
+This takes 2 arguments
+1. Route
+2. req,res call back
+
+app.get('/' , (req,res)=>
+{
+    res.send('Hello World')
+})
+
+we then need to give it a port to listen too
+
+app.listen(5500)
+
+
+if you use localhose:5500 it works
+
+
+ ===Working with express get requests===
+
+--Route Parameters---
+can be used ot get data from the user
+
+Yo can pass Parameters into the route of the get method 
+and when This occurs you can then pass these Parameters into the url adn tey are sent back to the server
+
+app.get('/example/:name/:age', (req , res)=>
+{
+    console.log(req.params);
+    res.send('example with route params')
+})
+
+This returns an object with the values of age and name
+
+however the req becomes an object itself with the propertty of params
+which in turn store the Parameters passsed into the url
+
+app.get('/example/:name/:age', (req , res)=>
+{
+    console.log(req.params);
+    res.send(`Your name is ${req.params.name} and you are ${req.params.age} old`)
+})
+
+
+--Query string Parameters--
+A query string can be used to create a new Parameters and assifn a value to it 
+
+to do so you need to add a '?' to your url and then the naem of the property and then an '=' to assgin the value nad press enter
+
+http://localhost:5500/example/Tomi/21?Adress=269
+
+
+if you want to add multiple values you can use the '&' symbol
+
+http://localhost:5500/example/Tomi/21?Adress=269&street=mtEustace
+
+
+Route paramaters should be used when you must have the data being used query string paramaters are only to be used when you want to give and optional data
+
+
+
+===Serving static file susing express==
+
+To start we will require the oath module this helps make life easy
+const path = require('path)
+
+You must tehn use the use method this method means you are using middleware
+
+This method takes on a few arguments
+1.The alias - to hide the folder name
+2.A middleware function called static  that express provides us that leads you to the folder and this takes in the directory name and actual name of the folder in this case being static
+3.
+
+app.use('/public', express.static(path.join(__dirname , 'static')))
+
+This is the same process with images video mtEustace
+
+
+====HTTP POST Request with express and body parser module===
+
+This is usally done with forms
+
+The form action requires a route and the form method should be post
+jsut like using struts2
+
+in the app.js we msut use ther body parser module to parse the information for us
+
+we must first install using npm intsall body-parser
+
+then we must require it into or app
+
+then use the app.use method with the following statement
+
+bodyParser.urlencoded({extended:false})
+
+this becomes
+
+app.use(bodyParser.urlencoded({extended:false}))
+
+it parses the data to us and attaches it to the request body
+
+however the data being parsed onto this body must have a name attribute in the html file 
+
+app.post('/' , (req , res)=>
+{
+    console.log(req.body)
+    res.send("Data Saved")
+})
+
+
+====EJS Templates with express==

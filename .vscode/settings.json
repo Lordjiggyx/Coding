@@ -1,5 +1,5 @@
 {
     "git.ignoreLimitWarning": true,
     "emmet.extensionsPath": "",
-    "debug.node.autoAttach": "on"
+    "debug.node.autoAttach": "off"
 }
