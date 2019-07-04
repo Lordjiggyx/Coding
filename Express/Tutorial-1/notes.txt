@@ -127,3 +127,99 @@ app.post('/' , (req , res)=>
 
 
 ====EJS Templates with express==
+
+EJS is a template language that can help write more dynamic websites
+
+We want to be able to use nay html file and use it as a template for serving dynamic data
+
+The way we get this done is by setting the view of our express application using app.set() method
+
+this takes two parameters 
+1.The view-egine
+2. The Template you want to use being "ejs"
+
+app.set("view engine" , "ejs")
+
+
+We must create a folder called views and this helps us store our ejs Templates
+
+in this folder the files being used for templates take an .ejs extension
+
+You can take the code in the relevant html file and then paste it into the .ejs file
+
+you can write html in this file
+
+What we do with templates is that we render them to the user
+
+so instead of sending a static file we will use 
+res.render() with the name of the file needed to be rendered you do not need to specify the extension this is done withing the get method
+
+app.get('/' , (req,res)=>
+{
+
+    res.render('index')
+})
+
+if you ever get cannot find module ejs error it means you need to install the module into your project folder 
+
+The server will then search for ejs code and then will execute it amd sedn back an html file
+
+ - Send Data -
+
+ To send data 
+ we can give a route paramater in the app.get method
+
+ app.get('/:UserQuery', (req , res)=>
+{
+   ...
+   ...
+   ...
+})
+
+
+then within the render mwthod we can pass in an object and this is the data we want to display this data should have a propertty called data which in turn has a property of an object and this object can have variables but must have a propertty matched to it that is gotten from the req object
+
+app.get('/:UserQuery' , (req,res)=>
+{
+
+    res.render('index' , 
+    {data:
+    {UserQuery:req.params.UserQuery}
+    })
+})
+
+==Express Routers==
+What this allows us to do is seperate our routes innto different files
+
+
+To do this we can create a folder ot store all our routes
+and then a file to store the routes
+
+then we must include the express module
+
+const express = require('express')
+
+Then create an express router object and store it within a variable
+
+const route = express.Router();
+
+then we must set up our route using this variable
+
+route.get("/" , (res , req)=>
+{
+    res.send('/ being hit)
+})
+
+we must then make it exportable using module.exports
+
+module.exports = route
+
+Then your main appp file you should require the people route
+
+const people = require('./routes.people')
+
+now we need to tell the express apploication that were using the people route by using the app.use method passing in the file nad the people variable in
+
+app.use('/people' , people)
+
+Using "/people " makes that your base page

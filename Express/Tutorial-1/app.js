@@ -13,6 +13,9 @@ const path = require('path');
 //Requirung the body parser
 const bodyParser = require('body-parser')
 
+//Requiriung the people module where our routes are stored
+const people = require('./Routes/people')
+
 //Calling the get method
 //This will send a response of hello world
 // app.get('/' , (req,res)=>
@@ -45,7 +48,7 @@ const bodyParser = require('body-parser')
 
 
 
-/////Serving static files//////
+/*Serving static files
 
 
 
@@ -74,4 +77,35 @@ app.post('/' , (req , res)=>
 
 //Then we msut have the object leisten on a port
 app.listen(5500)
+*/
 
+
+/*Express Templates and EJS*/
+
+app.use('/public', express.static(path.join(__dirname , 'static')))
+
+
+//Setting the application view to ejs
+app.set("view engine" , "ejs")
+
+/*
+app.get('/:UserQuery' , (req,res)=>
+{
+
+    res.render('index' , 
+    {data:
+    {
+    UserQuery:req.params.UserQuery,
+    searchresults :['Book1' , 'Book2', 'Book3'],
+    loggedIn:true,
+    username:"Tomi Ilori"
+
+    }
+    })
+})
+*/
+
+app.use('/people' , people)
+
+
+app.listen(5500)

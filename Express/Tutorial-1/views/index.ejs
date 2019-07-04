@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Express Template</title>
+
+
+    <style>
+    body
+    {
+        margin: 0 auto;
+        display: block;
+    }
+    </style>
+</head>
+
+
+<body>
+
+    <main>
+        <!--This <%= data.UserQuery%> means that the page will look in our app.js and then grab the userquery parameter from the data object if you want to output use the = sign else it wont displar-->
+        <h1>You searched for:<%= data.UserQuery%> </h1>
+        <% if(data.loggedIn){%>
+            <h2>You are Logged in as : <%=data.username%></h2>
+            <% } %>
+        <ul>
+            <% data.searchresults.forEach(result=>{ %>
+            
+                <li><%=result%></li>
+           <% });%>
+
+        </ul>
+    </main>
+    
+</body>
+</html>
