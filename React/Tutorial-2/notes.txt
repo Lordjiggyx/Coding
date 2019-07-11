@@ -1,0 +1,478 @@
+====Getting Started===
+
+The best way to start an app with react is using the 
+
+create-react-app method
+
+This method ia a toolchain and uses a lot of different cdn files to give you a good start
+at creating your app 
+
+To do create a new folder and go to it then type in the terminail
+
+npx create-react-app app_name
+
+This will take a few mins to complete. 
+At the moment we wil continue to delete all files in the src folder given until all concepts are fully understood 
+
+
+In the source folder we will now create 2 files 
+
+
+index.js
+style.css
+
+Now in the Html file you can just use emmet and then insert the following line
+
+
+ <div id="root">
+        
+    </div>
+
+This is where all the code rnedered by react will be placed 
+
+do not foreget to attach your index.js in a script tag
+
+
+In the index.js file you must now import react and reactDom 
+
+import React from "react";
+import ReactDom from "react-dom"
+
+
+react dom has a render method attached to it
+this method takes in two parameters
+
+1.What do youb wnat rnedered
+2. Where you want this code rendered to
+
+The secon parameter can be obtained by using the document.getElementById() method and pointing to the root id in the html file
+
+for example 
+
+ReactDOM.render(<h1>Hello World</h1> , document.getElementById("root"))
+
+The to get the application actually working you can gi into the terminal and type in npm start
+
+The individuals who created react created a language called JSX 
+this language is a javscript version of html with a few slight diffrences
+
+It is important to note that you can not render two jsx eleemnts beside eachother . To combat this you can wrap this in an element 
+
+ReactDOM.render(<div><h1>Hello World</h1> <p>This is a paragraph</p></div>, document.getElementById("root"))
+
+
+===ReactDOM & JSX Practice===
+
+objective- fill in the boilerplat react code in order to render an unordered list to the page The list should contain 3 list items with anything you want
+
+
+ReactDOM.render
+(<div>
+    <ul>
+        <li>Item 1 </li>
+        <li>Item 2 </li>
+        <li>Item 3 </li>
+    </ul>
+</div>
+, document.getElementById("root"))
+
+
+===Functional Components===
+You do not want to place your whole application in a render method
+
+we can create functions that will take all of the necessary code to dreate the app
+
+you just need to make sure to return the jsx Component you want rendered
+e.g.
+
+function MyApp()
+{
+    return
+    (
+        ....
+        ....
+        ....
+    )
+}
+
+We can then creat an instance of our function in the ReactDOM.render() method bt placing the name of the Component in the method and wrapping it in a self closing jsx tag or a normal jsx tag
+
+ReactDOM.render
+(
+    <MyApp/>,
+    document.getElementById("root")
+)
+
+****When making JSX Components you must use pascal case which means a captial letter at the start of a new word***
+
+same principle that if you want to return more than one element we can just wrap them in divs
+
+
+Practice excersiese
+
+Create a Functional Component called MyInfo and do the following
+    1.An h1 with your name
+    2.a paragraph with a blurb about yourself
+    3. An ordered or unordered list of the top 3 places you wnat to visit
+    4.rebder an instance of this Component onto your browser
+
+
+===Moving Components to different files===
+
+We can move Components into thier ownb seprarte files 
+its a good convention to have each file have one Component
+
+To do this we create a file with the same name as the Component and give it a js extenstion and copy the function into this file  however we must alos import react so that the computer will recognise the JSX code
+
+FINALLY WE MUST EXPORT THIS Component USING EXPORT DEFAULT
+
+export default MyInfo
+
+then carry on as usaul
+
+Another good convention is to have a folder with all the Components inside it
+
+This folder must be inside the src folder however
+
+You must then import this into your index.js file and call it in the ReactDOM.render method
+
+ import MyInfo from "./Components/MyInfo"
+
+ ReactDOM.render
+(
+    //This how we call the functional component
+    <MyInfo/>,
+    document.getElementById("root")
+)
+
+
+===Parent/Child Components===
+Manyy components can render other components
+for example in the Parent&Child folder
+
+we are using app.js as our entry for our application
+then we will render footer.js in this file
+
+in order to render the footer file into our app.js
+
+we should import it to create an instance of it
+
+import Footer from "./Footer"
+
+Then in the app.js app function we can 
+create an instance of this app by creating a JSX component using JSX tags
+
+function App()
+{
+    return(
+        <div>
+        <h1>Tomi</h1>
+        {/**Creating a JSX component of footer */}
+        <Footer></Footer>
+        </div>
+    )
+}
+
+****NOTE THAT JSX Components MUST GET CAPITAL LETTER AND WHEN BEING CALLED MUST ALSO HAVE A CAPITAL LETTER ASWELL****
+
+
+===Parent Child Practice===
+Render an app component
+inside app render 
+1. A navbar component
+2. A maincontent Component
+3. A footer Component
+
+can be found in the parents&child folder
+
+
+===Todo Phase 1===
+render an app component
+have the app component render 3/4 checkboxes with paragraphs next to it
+have some hard coded items 
+
+
+===Styling===
+
+*****The first thing you must do is import the css file into your index.js file or whatever file you are using a a main entry point
+
+
+
+
+Using class as a property name in jsx does not run 
+instead we use className 
+
+To starta we will use normal css like selectors on the classnaem of the components we want to style
+
+function Navbar()
+{
+    return(
+        <header
+        className = "Navbar"
+        >
+            This is the header
+        </header>
+    )
+}
+
+you can only apply the className attribute to react elements not components created by you
+
+
+
+The we can go to our style.css and select this class and style it like usaul
+
+body
+{
+    margin: 0;
+}
+
+.navbar
+{
+    height: 100px;
+    background-color: black;
+    color: white;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+===JSX to javascript and back===
+
+How to use javascript while using JSX??
+
+If you want to use javascript in a JSX function all you need to do is wrap the javascript in curly braces
+
+e.g.
+
+function JS()
+{
+    const firstname = "Tomi"
+    const Secondname = "Ilori"
+
+    return(
+        <div>
+
+            <h1>Hello{firstname + " " + Secondname}</h1> or  using es6
+            <h1>Hello    {`${firstname} ${Secondname}`} </h1>
+        </div> 
+    )
+}
+ReactDOM.render(<JS/> , document.getElementById("root"))
+
+
+===Inline styles with the style property===
+
+JSX Expects that the style being called should be an object instead of a string a javascript object
+
+This style object must be wrapped in curly braces again as we are in jsx smd to us any js we need to wrap our js in curly braces
+
+ <h1 style = {{color:"red"}}>Hello Good {`${timeOfDay}`}</h1>
+
+ We can not hvae dashes in the the braces so for example background-color changes 
+ to a camel case version of backgorundColor
+
+ To make multiple styles we just nedd to add another key value pair
+
+      return(  
+         <h1 style = 
+         {{
+             color:"red",
+             backgroundColor:"blue"
+        }}
+        >
+            Hello Good {`${timeOfDay}`}</h1>
+         )
+
+or you can create a variable and place the styles inside it and then call it in the style attribute tag e.g
+
+because styles is property we can access properties using the . for example
+styles.color = "green"
+
+
+===Todo list phase 2====
+place each item in its own todo component and then style it
+
+To do this we created a component called todo item 
+this took the basic form of one todo 
+
+Then in our todo application we created multiple instances of this todo item
+
+Then we gave both the todo and todoitems a classname for it to be styled 
+
+
+===Props===
+
+We can use props to modify how a component acts similarly to in html where certain elements have attributes to modify theyre behaviour
+
+Ecah contact card has three pieces of dynamic information and we want to treat them as parameters in a function
+
+We can name the properties ourselves 
+e.g.
+
+<ContactCard
+            name="Tomi Ilori"
+            img = "https://source.unsplash.com/1670x900/?dragon"
+            phone = "08725891"
+            email = "BobToss@Gmail.com"
+        />
+
+We need to be able to access the data being passed down 
+to do this the actual contacxt card function or any function should take in a parameter called props
+
+onec you pass in the props parameter you can now set the certain values to these properties that you create din the main application of the app
+
+
+function ContactCard(props)
+{
+    console.log(props)
+    return(
+        <div >
+            <img src = {props.img}/>
+            <h3>{props.name}</h3>
+            <p>Phone:{props.phone}</p>
+            <p>Email:{props.email}</p>
+        </div>
+    )
+}
+
+****NOTE THAT THE NAMES IN THE PROPS. STATEMENT MUST BE THE SAME AS THE VALUES PASSED IN THE Component******
+
+You can also do this using an object in the case that there are still a lot of values 
+
+sp we can create the object using double curly braces and then place all the properties we wnat to use 
+
+   <ContactCard
+           contact =
+           {{
+               name:"Tomi Ilori",
+               img: "https://source.unsplash.com/1670x900/?dragon",
+               phone: "08725891",
+               email:"BobToss@Gmail.com"
+           
+           }}
+        />
+
+as we are now passing an object into the contact card we cannot use the props. style of manipulating properties
+
+so we must now say props.contact.name etc 
+
+function ContactCard(props)
+{
+    console.log(props)
+    return(
+        <div >
+            <img src = {props.contact.img}/>
+            <h3>{props.contact.name}</h3>
+            <p>Phone:{props.contact.phone}</p>
+            <p>Email:{props.contact.email}</p>
+        </div>
+    )
+}
+
+===Todo app Phase 3===
+We will use mapping to make teh todos application more dynamic
+
+we must import the data from the todosdata file in order to produce the todos
+and assign it toa variable 
+The rest you can rfeer to the video 
+
+
+===Class based Components====
+
+When cretaing a class we use The class keyword
+then the nam eof the class and then let it extend 
+React.Component and then place the render method inside od it along with our required code
+
+class TheAppClass extends React.Component
+{
+    render()
+    {
+        return(
+            
+        )
+    }
+}
+
+export default TheAppClass
+
+You must import and export ths classes in the same manner you would do with a functiona
+
+any kind of diaply logic or cinditions can be placed in the render method 
+
+You can also create your own methods within a class and call them from within the render method 
+
+
+and you can call this methid by using the this.method_name
+e.g.
+
+class TheAppClass  extends Recat.component()
+{
+
+    yourMethodName()
+    {
+        ...
+        ...
+        ...
+    }
+
+
+    render()
+    {
+        this.method_name()
+
+        OR IF YOUR METHOD RETURNS SOMETHING
+
+        const method = this.method_name
+        return(
+            ....
+            ....
+            ....
+        )
+    }
+}
+
+===State===
+
+State is the data a component maintains which can be chnaged by value
+
+ANy time we intoriduce state into a component it needs to be class based
+
+To start we must add a constructor method to our class this will be a place where we will be initialising some values
+
+
+and then we must make a call to the global function called super this goes to the parent class and brings down a few methods for exapmle setState
+
+The final thing to do is to add a property called state and this state is an object that can be referneced anywhere
+
+class StateApp extends React.Component
+{
+    constructor()
+    {
+    super()
+    this.state = {
+
+        answer : "yes"
+    }
+
+
+    render()
+    {
+        return(
+            <div>
+                <p>Is state important to know</p>
+            </div>
+        )
+    }
+}
+
+This state can be referneced by saying 
+this.state.answer in the div 
+
+ <p>{this.state.answer}</p>
+
+ Note that it is wrapped in braces cause it's in JSX
+
+ If we ever change the state of a properties react will automatically update ay child component recieveing that state
