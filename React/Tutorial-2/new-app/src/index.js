@@ -7,6 +7,11 @@ import Props from "./Props/Props"
 import ContactCard from "./Props/ContactCard";
 import TheAppClass from "./ClassComponents/App"
 import StateApp from "./State/App"
+import Event from "./EventHandling/events"
+import ChangeStateApp from "./State/ChangeState"
+import ConditionalApp from "./ConditionalRendering/ConditionalApp"
+import Conditional from "./ConditionalRendering/Conditional";
+import Fetch from "./Fetch/Fetch";
 //JSX
 
 
@@ -252,4 +257,134 @@ ReactDOM.render(<TimeApp/> , document.getElementById("root"))
 
 /**State */
 
-ReactDOM.render(<StateApp/> , document.getElementById("root"))
+
+
+//Practic Excercises
+
+//This extends the react component bare in mind () are not needed after React.componenet as it's a class
+
+
+// class StateAppPractice extends React.Component
+// {
+//     //The constructor is called which takes in a super eiht the react component methods
+//     //
+//     constructor()
+//     {
+//         //Super takes react component methods
+//         super()
+//         //This is our state which is esstenially where are properties are stored this is done in an object
+//         this.state =
+//         {
+//             name:"Tomi",
+//             age:20
+//         }
+//     }
+
+//     //This render method returns the display the logic to the wbepage
+//     render()
+//     {   
+//     return(
+//         <div>
+//         {/**this.state.name allows you to grab the value of the property specfied */}
+//         <h1>{this.state.name}</h1>
+//         <h3>{this.state.age} years old</h3>
+//         </div>
+//     )
+// }   
+    
+// }
+
+
+
+
+// class  StateAppPractice2 extends React.Component
+// {
+//     constructor()
+//     {
+//         super()
+//         this.state = 
+//         {
+//             loggedIn: false,
+//             userState: "in"
+//         }
+
+//         if(this.state.loggedIn == true)
+//         {
+//             this.state.userState = "out"
+//         }
+//         else
+//         {
+//             this.state.userState = "in"
+//         }
+//     }
+    
+    
+    
+    
+//     render()
+//     {
+//     return(
+//         <div>
+//             <h1>You are currently logged {`${this.state.userState}`}</h1>
+//         </div>
+//     )
+//     }
+// }
+
+
+
+
+/**Condtional practice
+ * Given a stateless functional component
+ * add state to it 
+ * haev the satte keep trak of whether the user is logged in/out
+ * add button that logs the user in/out
+ * make button display log in if theyre logged in and out if theyre logged out 
+ * display logged in/out 
+ */
+
+
+// class ConditionalAppPractice extends React.Component
+// {
+//     constructor()
+//     {
+//         super()
+//         this.state =
+//         {
+//             loggedIn : false,
+            
+            
+//         }
+//         this.log = this.log.bind(this)
+//     }
+
+
+//     log()
+//     {
+//         this.setState(prevState =>
+//             {
+//                 //You must refer to the state of the previosu state when you want to change it
+//                 return{
+//                     loggedIn: !prevState.loggedIn
+//                 }
+//             })
+//     }
+
+
+
+//     render()
+//     {
+//         //Ternary operators if user is logged in or out the display and button text will change
+//         let buttonText = this.state.loggedIn ? "Log Out" : "Log In"
+//         let display = this.state.loggedIn ? "Logged In" : "Logged Out"
+
+//     return(
+//         <div>
+//             <h1>User is  {`${display}`}</h1>
+//             <button onClick = {this.log}> {`${buttonText}`}</button>
+//         </div>
+//     )}
+
+// }
+
+ReactDOM.render(<Fetch/> , document.getElementById("root"))

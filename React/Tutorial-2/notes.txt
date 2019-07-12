@@ -476,3 +476,499 @@ this.state.answer in the div
  Note that it is wrapped in braces cause it's in JSX
 
  If we ever change the state of a properties react will automatically update ay child component recieveing that state
+
+ ==STATE PRACTICE==
+ 
+ Given an incomplete class-based component without a constructor, add a constructor and initialize state to fix the brokem component
+
+
+*****Solution*****
+ class StateAppPractice extends React.Component
+{
+    //The constructor is called which takes in a super eiht the react component methods
+    //
+    constructor()
+    {
+        //Super takes react component methods
+        super()
+        //This is our state which is esstenially where are properties are stored this is done in an object
+        this.state =
+        {
+            name:"Tomi",
+            age:20
+        }
+    }
+
+    //This render method returns the display the logic to the wbepage
+    render()
+    {   
+    return(
+        <div>
+        {/**this.state.name allows you to grab the value of the property specfied */}
+        <h1>{this.state.name}</h1>
+        <h3>{this.state.age} years old</h3>
+        </div>
+    )
+}   
+
+
+==State Practice 2===
+
+Given a stateless functional component add state to it 
+state should haev a property called loggedIn ehich is a boolean
+true if logged in false otherwise
+then render hte word in if the user is logged in or out if the user is logged out
+
+
+***before solution****
+
+function StateAppPractice2()
+{
+    return(
+        <div>
+            <h1>You are currently logged (in/out)</h1>
+        </div>
+    )
+}
+
+
+**Solution**
+class  StateAppPractice2 extends React.Component
+{
+    constructor()
+    {
+        super()
+        this.state = 
+        {
+            loggedIn: false,
+            userState: "in"
+        }
+
+        if(this.state.loggedIn == true)
+        {
+            this.state.userState = "out"
+        }
+        else
+        {
+            this.state.userState = "in"
+        }
+    }
+    
+    
+    
+    
+    render()
+    {
+    return(
+        <div>
+            <h1>You are currently logged {`${this.state.userState}`}</h1>
+        </div>
+    )
+    }
+}
+
+***Todo App part 4***
+We will want to modify the data in the todo app so we must have it exist in state
+
+To do this we must change the function into a class as you usally do
+
+Then we must add the state and refernece to the todosdata array by creating a property called todos also we must change todosdata.map to this.state.todos as this is where the information for the todos resides
+
+
+class Todo extends React.Component
+{
+    constructor()
+    {
+        super()
+        this.state = 
+        {
+            todos:todosData
+        }
+    }
+  
+    
+    render()
+{
+     //We will map the inofrmation from todos data into a new array returning a new item at the same time we will make a new todoitem passing in the todos that are read from this array as a prob to the todo component as an object hence te use of curly braces
+    const todoitems = this.state.todos.map(item => <TodoItem key = {item.id} item = {item}/>)
+    return(
+        <div className = "todo-list">
+            {todoitems}
+        </div>
+    )
+}
+}
+
+
+
+***Event Handling***
+
+Allows user interactivity 
+
+event handlers are the javascript ones e.g. onClick
+
+
+https://flaviocopes.com/react-events/ react event list
+
+remeber that javascript must be in curly braces as you are using JSX 
+
+function Event()
+{
+    return(
+        <div>
+            <img onMouseOver={() => console.log("Hovered over image")} src = "https://source.unsplash.com/1670x900/?mouse"></img>
+            <br/>
+            <br/>
+            <button onClick = {()=> console.log("Button Clicked")}>Click Me</button>
+        </div>
+    )
+}
+
+***Todo phase 5***
+correcting the checked prop by adding a onchange to the checkbox
+
+function TodoItem(props)
+{
+    console.log(props.item.title)
+    return(
+        <div className = "todo-item">
+        <span> {props.item.title} </span>
+            <input type = "checkbox"
+            checked ={props.item.completed}
+            onChange = {()=> console.log("Checked")}/>
+        </div>
+    
+    )
+}
+
+
+===Changing State - ChangeStateApp===
+
+To chaneg the state we must again use veent handlers 
+
+You do not want to ever directly modify the state you replace values using 
+setState method from React Component 
+
+
+Any time you create a class that you want to change state on you need to bind the method to the clas using the bind method 
+
+This is done inside the constructor for example
+
+this.handleClick = this.handleClick.bind(this)
+
+
+
+    constructor()
+    {
+    super()
+    this.state = {
+        count :0
+    }
+    //Binds the method to the class makeing it usable
+    this.handleClick = this.handleClick.bind(this)
+    }
+
+
+
+
+this method can take in two ways of changing state 
+
+1. You can pass a new version of state as this is just a object you can pass a new object with new values
+
+
+
+2.A function that takes the previous state as a parameter and returns the object literal that returns the new version of state this is the better way of doing things
+
+you can use prevState which will kepp the previous state and allow it to be an arrow function that returns the desired action within the braces
+
+   handleClick()
+    {
+        this.setState(prevState =>
+            {
+            return{
+                count:prevState.count + 1
+            }
+            })
+        
+    }
+
+
+You are aslos allowed to pass state to other components down as props e.g.
+
+<ChildComponents count{this.state.count}/>
+
+===Todo Phase 6==
+
+Lets make it so our checkboxs can actually mark our todo as complete or incomplete
+
+1. create an event handler in the todo component for when the checkbox is clicked 
+2. pass the method down to the do todoitem component
+3. in the todoitem component make it so when the on chnage event happens it calls the handle change method and passes the id of the todo into the function 
+
+
+First you must create the handleChange method this takes in an id property fo the tasl
+
+handleChange(id)
+{
+    
+}
+
+
+
+
+Second you must bind this method in your class component
+
+class Todo extends React.Component
+{
+    constructor()
+    {
+        super()
+        this.state = 
+        {
+            todos:todosData
+        }
+
+        this.handleChange = this.handleChange.bind(this)
+    }
+
+
+
+third You must add the handleChange method to the todoitem being created when the array is mapped using this.handleChange
+
+<TodoItem 
+        key = {item.id} 
+        item = {item} 
+        //Passing in the handle change
+        **handleChange = {this.handleChange}***
+    />)
+
+Fourth in todoitem it now receives a prop called handleChange
+
+events when they fire give an event object so instead we create a function that callkes this handleChange prop and inside this we can pass in the task id
+
+
+ onChange = {()=> props.handleChange(props.item.id)}/>
+
+ Fifth To update the state we need to deal with the entire array 
+
+ we must return a brand new array apart from the item that is being changed 
+
+ to do this the .map method is the best approach
+
+ all this must be within a set state method
+
+ this.setState(prevState =>
+        {
+            //This will be the old version of the todos and look through it howvwer using the map method we are creating an updated array
+            const updatedTodos = prevState.todos.map(todo =>
+                {
+                    //Here we are sying if we have an item that matches the id of the item clicked we will change the completed value to the opposite of its current value
+                    if(todo.id===id)
+                    {
+                        todo.completed = !todo.completed
+                    }
+                    //We will retun the todo which will be  in the same index as the previous state
+                    return todo
+                })
+
+                //The set state actually need to return the todos but will equal the new verison of todos that we cretae
+                return{
+                    todos:updatedTodos
+                }
+        })
+
+
+
+
+
+
+ sixth
+ inside this map method we must checj if the todo item being selected has a matching item in the array and if there is we chage its completed state and return it to the position that is was orginally in
+
+
+  if(todo.id===id)
+                    {
+                        todo.completed = !todo.completed
+                    }
+
+  //We will retun the todo which will be  in the same index as the previous state
+                    return todo
+
+
+ seventh
+ finally we need to just return the updated todos list
+
+                //The set state actually need to return the todos but will equal the new verison of todos that we cretae
+                return{
+                    todos:updatedTodos
+               
+
+
+===Lifecycle Methods===
+
+https://engineering.musefind.com/react-lifecycle-methods-how-and-when-to-use-them-2111a1b692b1
+
+
+
+1. render() method - Getting dressed for the day , its job is to determine what gets rendered to the screen creating the display for a component. It can be called as many times as possible
+
+2. componentDidMount - you were just born , this runs when a component is rendered to the screen , it only renders the one time the most commmon use is for an API call for getting data from an extenral source
+
+3. componentWillReceiveProps - when someone gives you a gift , everytime a component receives props this method will be ran . it will run whena component is rendered and also when -deprecated
+
+
+4. shouldComponentUpdate - making a decision to change clothes , if react has a question as to wheteher a component needs to be re-rendered it will alwways re render it 
+this can take two parameters 1.incomingProps , 2.nextState and in the body we can return true if we do want it to updata and return fa;se if we don't want it to
+
+5. componentWillUnmount - all good things must come to an end , the main use of this is to reduce clutter before the component disappears
+
+
+
+
+
+ new Lifecycle methods
+
+1. getDerivedStateFromProps -  this is a static method needs static beofrehand , takes in two variabls props and state and returns a new updatetd state acording to the props - used if rare cases where a component takes props from a parent and sets its own state with these props 
+
+2.getSnapShotBeforeUpdate - This method allows you to create a backup o fthe way things are with the application , it saves an object with multiple points of data in it
+
+
+===Conditional Rendering===
+
+used to display something on the screen to tell the user that something is loading in the background
+
+Explained in the code of the conditional rendering folder
+
+
+You can also use tenray opertors for these methods
+
+condition ? statement : else statement
+
+The & operator can be used to render somthing if a condition is true or render nothing if it is false
+
+
+/**Condtional practice
+ * Given a stateless functional component
+ * add state to it 
+ * haev the satte keep trak of whether the user is logged in/out
+ * add button that logs the user in/out
+ * make button display log in if theyre logged in and out if theyre logged out 
+ * display logged in/out 
+ */
+
+
+function ConditionalAppPractice()
+{
+    return(
+        <div>
+            Code Goes here
+        </div>
+    )
+}
+
+
+===Fecthing Data from an APi===
+
+To start we must create a class to manage and use state
+
+
+class Fetch extends React.Component
+{
+    constructor()
+    {
+    super()
+    this.state = {
+        
+        Users:[]
+    }
+   
+  
+    }
+
+
+The state in this this class has a Users property this property is set to equal the data type that will be read in , in ythis case we will be reading in an array
+
+
+
+We will use the Fetch method for getting http requests 
+Also using the json placeholderfor dta collectiuon
+https://jsonplaceholder.typicode.com/users
+
+
+We will start in the componentDidMount mwthod 
+
+we will use fetch this is a global function so it should just work
+going inside the parentheses is the url to where the data is located
+
+fetch("https://jsonplaceholder.typicode.com/users2")
+you must then resolve the promise by using a .then() 
+this .thn has a response parameter that must be converted to either a js object or string
+then we can use another .then and then console.log or do whatever with thw data obtained ,
+in this case we will set the Users property state in our class to the data that is being brought in useing this.setState
+
+fetch("https://jsonplaceholder.typicode.com/users")
+.then(response => response.json())
+.then(data=> console.log(data))
+
+
+ componentDidMount()
+    {   
+        
+        fetch("https://jsonplaceholder.typicode.com/users")
+        .then(res => res.json())
+        .then((data)=>
+        {
+            this.setState(
+                {
+                    Users:data
+                }
+            )
+        })
+       
+
+    }
+
+In our render method we use return our data seeing as we can only return one element it is best to return everything within a div tag
+
+to access the array we must create a new array mapping across the array in our class 
+the .map() returns an element in this case we will return a object along with a function each time an object is read
+
+***When going through an array of  elements in React we must give each element a key this is why the div has a key value of User.id a key is used by react to dentify which items have changed, are added, or are removed.
+
+You cann then refer to eaach property in this object doing it the same way you would usaully through dot notation
+
+
+
+    render()
+    {
+        
+       console.log(this.state.Users)
+        return(
+            <div>
+              {this.state.Users.map(User=>
+                <div key ={User.id}>
+                    
+                   User Id: {User.id}
+                   <br/>
+                   User Name: {User.name}
+                   <br/>
+                   User Username: {User.username}
+                   <br/>
+                   User email: {User.email}
+                   <br/>
+                   User phone: {User.phone}
+                   <br/>
+                   <hr/>
+                </div>
+                )}
+            </div>
+        )
+    }
+
+
+
+
+
+****WHEN YOU USE CONSOLE.LOG(THIS.STATE.USERS) YOU GET TWO VALUES PRINTED OUT THIS MAY LOOK LIKE YOU HAVE TWO VALUES BUT YOU ONLY HAVE ONE componentDidMount WILL CALL THE RENDER METHOD EVERYTIME STATE HAS BEEN CHANGED THAT'S WHY YOU WILL GET AN EMPTY ARRAY AND THEN AN ARRAY WITH 10 ELEMENTS*****
+
+I also included a loading feature 
