@@ -1,0 +1,26 @@
+import React from "recat"
+
+
+
+class class_name extends React.Component
+{
+
+    constructor()
+    {
+        super()
+        this.state = {}
+    }
+
+
+    render()
+    {
+        
+        return(
+            <div>
+
+            </div>
+        )
+    }
+}
+
+export default class_name

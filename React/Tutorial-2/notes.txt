@@ -971,4 +971,138 @@ You cann then refer to eaach property in this object doing it the same way you w
 
 ****WHEN YOU USE CONSOLE.LOG(THIS.STATE.USERS) YOU GET TWO VALUES PRINTED OUT THIS MAY LOOK LIKE YOU HAVE TWO VALUES BUT YOU ONLY HAVE ONE componentDidMount WILL CALL THE RENDER METHOD EVERYTIME STATE HAS BEEN CHANGED THAT'S WHY YOU WILL GET AN EMPTY ARRAY AND THEN AN ARRAY WITH 10 ELEMENTS*****
 
-I also included a loading feature 
+I also included a loading feature which is explained in the code
+
+===Forms===
+
+
+
+
+In react we listen for every change of state on the form 
+
+As state is involved the function relating to this form must be a class function
+
+the form is called similarly to html by using the form tag
+
+To listen for change within a form each input has an event listener called onChnage and every time this is called we will have afunction run 
+
+
+ return(
+           <form>
+               <input type ="Text" placeholder = "Enter First Name..." onChange = {Handle}/>
+           </form>
+        )
+
+
+In this handlw method we want to do two things
+
+ //1. we want to grab the current value of the input box
+        //2. update state to reflect the current value of the input box is 
+
+
+To start we must go back to our state object and add a property of firstname
+
+ this.state = {
+            Firstname: ""
+        }
+
+        To update we then go into the handle method and use this.setState
+
+        we can let first name be set to evemt.target.value
+
+in javascript when events happen an event is triggered which has valuebale information for example the vlaue of the element being targeted when his change occurs 
+
+****You must passs in the Event into the funciton to make use of it******
+
+
+Handle(event)
+{
+    this.setState({
+        firstname:event.target.value
+    })
+}
+
+***You must also Bind the handle method to your constructor ***
+
+this.Handle = this.Handle.bind(this)
+
+If you have multiple fields that you want to manage the state of you can just add a name property in the inputs taht match waht the state is 
+
+The event that is being shot off can also grab the name property of the input object as the event has the event.target which grabs the name property of this input and sets it in our this.setState method to match this input object
+
+adding the name property
+
+<input type ="Text"  name = "firstname"placeholder = "Enter First Name..." onChange = {this.Handle}/>
+               <h4>{this.state.firstname}</h4>
+
+
+getting the name of the targeted input field and changeing its value 
+    this.setState({
+    [event.target.name]:event.target.value
+    })
+
+
+    This works on any text based input fields
+
+in react the textarea element is self closing tag 
+if you want a default value just add the value attribute
+
+
+Chcek boxes are either checked or unchecked this has a property called checked which is a boolean esstenially meaning that checkboxes use booleans when messing with state
+
+To make the checbox intercatable we can still use the same handle method but must check that is a checkbox we are working with 
+
+To this we can pull the type from the event.target and then use a condtion to check if it is a checbox or not if it is we grab the name of the checkbox and then allow the state property to be the current value of checked
+
+
+if(event.target.type ==="checkbox")
+{
+    this.setState({
+        
+    [event.target.name]:event.target.checked
+    })
+}
+
+Done within the handle method
+
+Radio buttons use a checked property and a value property
+
+You can give the same name to multiple radio buttons to tell the DOM that is one or the other one
+
+radio buttons jobs arent to maintain a truth or false value
+
+They are checked if by manipulating the state in the class
+
+<input 
+                    type = "radio" 
+                    checked={this.state.gender === "female"}
+                    name = "gender"
+                    onChange = {this.Handle}
+                    value = "female"
+                />Female
+
+                where the state poseses a property called gender
+
+Select box can use the value attribute to manage state and can determine what is chosen
+
+ <select
+                value = {this.state.favColor}
+                onChange={this.Handle}
+                name = "favColor"
+                >
+                    <option value = " Pink">Pink</option>
+                    <option value = " Yellow">Yellow</option>
+                    <option value = " Black">Black</option>
+                    <option value = " Red">Red</option>
+
+                </select>
+
+
+Works the same as the other input types 
+
+buttons within a form automatically becomne a submit button that call an onsubmit method this method needs a function to call
+
+Go back and do the forms example in this video
+Then do the meme project
+
+==Container/Component Architecture===
