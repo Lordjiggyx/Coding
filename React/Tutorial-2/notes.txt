@@ -1105,4 +1105,3 @@ buttons within a form automatically becomne a submit button that call an onsubmi
 Go back and do the forms example in this video
 Then do the meme project
 
-==Container/Component Architecture===

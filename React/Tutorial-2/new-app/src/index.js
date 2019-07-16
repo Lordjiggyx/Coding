@@ -13,6 +13,7 @@ import ConditionalApp from "./ConditionalRendering/ConditionalApp"
 import Conditional from "./ConditionalRendering/Conditional";
 import Fetch from "./Fetch/Fetch";
 import FormApp from "./Forms/Forms";
+import TravelForm from "./TravelForm/TravelForm";
 //JSX
 
 
@@ -388,4 +389,4 @@ ReactDOM.render(<TimeApp/> , document.getElementById("root"))
 
 // }
 
-ReactDOM.render(<FormApp/> , document.getElementById("root"))
+ReactDOM.render(<TravelForm/> , document.getElementById("root"))
