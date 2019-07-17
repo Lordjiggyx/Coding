@@ -114,7 +114,7 @@ class TravelForm extends React.Component
                     <option value = " Tokyo">Tokyo</option>
                     <option value = " USA">USA</option>
                     <option value = " UK">UK</option>
-                    onChange={this.handle}
+                 
 
                 </select>
 
