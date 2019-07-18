@@ -1,0 +1,293 @@
+Mongo is a NoSql database theres loads to it and effort of writing it here so just look it up 
+
+NoSql databases store data in documents of collections like JSON but it is called BSON
+
+
+Local install form the website you dwonload mongoDB server from the products class and go through the msi can be set to run in the background
+
+If you want to go to the mongoDB shell you can go to the location of where it is saved
+and in the bin folder and run mongo
+
+Compass is just a GUI to use the database 
+
+all documents have an _id fieild which is the unique identifier for it 
+
+To start youb can go in MongoDb shell snd use the following markdown
+
+https://gist.github.com/bradtraversy/f407d642bdc3b31681bc7e56d95485b6
+
+This contains many commmon mongo commands
+
+show dbs -can show databases
+
+use db_name - allows you to switch to a database ***The name has to be exact it wont tell you a db does not exist***
+
+show collections - lets you see the collections present
+
+you can use db to tell you what database your in
+
+to drop a database you must use it hthen say db.dropDatabase()
+
+To create a databsae you can just say use new_dbname and then it will switch to it you need to create a collection for this database to be shown in the show dbs command
+
+To create a collections you must use the db.createCollections('Collection_name')
+
+
+To insert data/documents/rows we can use db.Collection_name.insert({}) and in this goes an object with the paramaetres you require
+
+we can have multiple type sin this object strings number embedded objects dates arrays etc
+
+e.g.
+
+db.items.insert({
+    title:"Tomi's Airpods",
+    price:22,
+    color:"yellow",
+    release_data:Date(),
+    airpods: {
+        airpod_1:"Left",
+        airpod_2:"Right"
+    }
+})
+
+
+**Watch for commas**
+
+
+if you want to insert more then one you can use the db.Collection_name.insertMany() command and insert each object in an array along with  each object
+
+
+db.items.insertMany([
+    
+    {
+        title:"Tomi's Airpods",
+        price:22,
+        color:"yellow",
+        release_data:Date(),
+        airpods: {
+            airpod_1:"Left",
+            airpod_2:"Right"
+                 }
+    },
+    {
+        title:"Tobi's Airpods",
+        price:22,
+        color:"red",
+        release_data:Date(),
+        airpods: {
+            airpod_1:"Left",
+            airpod_2:"Right"
+                 }
+    },
+    {
+        title:"Temi's Airpods",
+        price:22,
+        color:"blue",
+        release_data:Date(),
+        airpods: {
+            airpod_1:"Left",
+            airpod_2:"Right"
+                 }
+    }
+   
+
+])
+
+
+To query the data we can use db.Collection_name.find()
+
+This is hard to read so we can tag on .pretty to make it more visible
+
+
+if we want to find a certain one object we can just use the find command along with a condition the conditions are simple you have the parameter and then a colon and then the vakue that you are looking for 
+
+e.g.
+
+db.items.find({title:"Temi's Airpods"}).pretty()
+
+
+you can use sort by sticking on the sort() command and inside the condition is simple it is the parameter and 1 for ascending or -1 for descending
+
+ db.items.find().sort({color:1}).pretty()
+
+ You can use the count() command to see how many of somehting you have
+
+ e.g.
+
+ db.items.find({color:"red"}).count()
+
+ we can limit the results of a query by using the limit command
+
+ db.items.find().limit(2)
+
+ we can also use a for each to perform something everytime an item is found this takes a function where you can manipulate the document items as the doc in the function is the item returned
+
+
+ db.items.find().forEach(function(doc){
+     print("Airpods Owner:" +doc.title)
+ })
+
+ we can use findOne to return a single row and this returns the first one
+
+ db.items.findOne({price:22})
+
+
+ To update there are many ways 
+
+ 1:Replace the entire object 
+
+usually we want to grab the ID but in this case we will use the title
+
+we can use db.items.update this takes 2/3 paramaetres
+
+1.The object being manipulated
+2.The data that is being updtated and the new values
+3. ***OPTIONAL** options upsert is one option which means if this object is not found it will be created instead
+
+ db.items.update(
+     {title:"Temi's Airpods"},
+        {
+            title:"Tami's Airpods",
+            price:120,
+            color:"pink"
+        },
+        {
+        upsert:true
+        }
+     
+     )
+
+This get rid of the other fields that were present for example the date and airpods fields are gone
+
+to update fields we can use the set operator 
+
+$set:
+    {
+        
+    }
+
+e.g.
+
+
+
+ db.items.update(
+     {title:"Tomi's Airpods"},
+     {
+        $set: {
+                price:189.99,
+                color: "orange"
+            }
+     }
+     
+     )
+
+
+We have other operators like increment  $inc
+
+for example if i want to tobis airpods proce by 50 
+
+db.items.update(
+    {title:"Tobi's Airpods"},
+    {
+        $inc:
+            {
+                price:50
+            }
+    }
+)
+
+now the price is 72
+
+we can rename fields using the rename operator $rename
+
+
+db.items.update(
+    {title:"Tobi's Airpods"},
+    {
+        $rename:
+            {
+                release_data:"release_date"
+            }
+    }
+)
+
+we can now see a change in the name of the field
+
+
+To delete we can use the remove command this takes in the condition in relation to the object that you want to delete
+
+db.items.remove({title:"Airpods"})
+
+
+to link tables we can embed them within collections
+
+we can do this by using the $set operator nad then passing in an array , which reprenst a new table with the objects within it
+
+
+ db.items.update(
+     {title:"Tomi's Airpods"},
+     {
+        $set: {
+                reviews:
+                    [
+                        {
+                        user:"Bob Marley",
+                        review: "Great Airpods",
+                        review_date:Date()
+                        },
+                        {
+                        user:"John Doe",
+                        review: "Bad Airpods",
+                        review_date:Date()
+                        }
+                    ]
+            }
+     }
+     )
+
+
+we can filter and find objects within this embedded collection using elemMatch operator
+
+$eleMatch
+
+db.items.find(
+    {reviews:
+    {
+        $elemMatch:
+        {
+            user:"Bob Marley"
+        }
+    }}
+)
+
+
+To search we can create indexes useing db.items.createIndex({title:"text"})
+
+This creates an index on the title name 
+
+then in our find command we need to use th $text operator and within this operator we must use the $search and within this the value were loking for
+
+db.items.find(
+        {
+            $text:
+                {
+                    $search:"\"Tomi\""
+                }
+        }
+).pretty()
+
+
+This finds any object where the text matches tomi
+
+
+We can do a greter or less than using gt or gte for greater or equal to
+
+
+
+db.items.find({price:{$gt:0}}).pretty()
+
+To use atlas you need a mongodb account
+
+You then need to create a cluster
+
+follow the steps and connect through compass
