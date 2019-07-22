@@ -267,3 +267,232 @@ In the app.get() note thatwe also add another slash taking in the id paramter it
 We then calle the getBookById method and in this method we will pass in the id from the request obkject req this object has a params object containing many fields one of these being the ID which we return along eith the same function we were using earlier
 
 note**
+
+
+==Adding an object==
+
+Starting with genere object
+
+To add an object we add another module in the generes.js file called addGenere
+
+In the function for this module it will take in a genere object which will be obtainable data from the form
+
+we will also change the command for the genere object from find to create which will make a new genere object in this case it will take in a callback
+
+note that we aso remove the limit
+
+
+module.exports.addGeneres = function(callback)
+{
+    genere.create(callback)
+}
+
+Then back in the main app.js 
+
+and esstenially crete a new route for adding a book , the URL can be the same as long as the request is different in this case it is app.post
+
+
+first we create a variable that will allow us to acces evrything that comems through the form and through body-parser we will be able to put it in a generes object
+
+let genere = req.body
+
+We will then call the addGenere method from the genere.js class
+then we will pass in this genere object into the function and use the same conditional
+
+ Genre.addGenere(genere, function(err , genere)
+
+
+ final code looks like
+
+ app.get("/api/books/:_id" , function(req,res)
+{
+    let genere = req.body
+    Genre.addGenere(genere, function(err , genere)
+    {
+        if(err)
+        {
+            throw err
+        }
+        else
+        {
+            res.json(genere)
+            
+        }
+    })
+})
+
+
+
+To test this we will have to make a post request using the rest easy chrome extension
+
+to use this you must first copy your application url and insert it in the url field
+
+change the method to post
+
+Then in the headers you must add in the content type being "application/json"
+
+and in the body we will send an object ***Key must have quotes***
+
+we must also initialise the body parser 
+
+
+app.use(bodyParser.json())
+
+then you can call the post request in the rest easy app
+
+It is the same procedure with the book
+
+
+app.post("/api/books"  , function(req,res)
+
+module.exports.addGenere =function(callback)  {
+	genere.create(callback);
+}
+
+{
+    var genere = req.body
+    Genre.addGenere(genere, function(err , book)
+    {
+        if(err)
+        {
+            throw err
+        }
+        else
+        {
+            res.json(book)
+            
+        }
+    })
+})
+
+The object in being added
+{
+	"title":"Harry Potter",
+    "generes":"Thriller",
+    "Description":"A book aabout a wizard orphan",
+    "Author":"j.k.rowling",
+    "Publisher":"Warner",
+    "pages":"1550",
+    "image_url":"https://www.google.com/imgres?imgurl=https%3A%2F%2Fcdn.shopify.com%2Fs%2Ffiles%2F1%2F0221%2F1146%2Fproducts%2FPhilosophers_Stone_Paperback_large.png%3Fv%3D1554383918&imgrefurl=https%3A%2F%2Fwww.harrypotterplatform934.com%2Fproducts%2Fnew-edition-harry-potter-and-the-philosophers-stone-paperback&docid=iBMfRL2sI_UIDM&tbnid=TI_aWefOW4ArmM%3A&vet=10ahUKEwir7ee5lsjjAhUiDmMBHZY0BQQQMwiDASgCMAI..i&w=422&h=480&bih=852&biw=959&q=harry%20potter%20books&ved=0ahUKEwir7ee5lsjjAhUiDmMBHZY0BQQQMwiDASgCMAI&iact=mrc&uact=8",
+    "buy_url":"https://www.harrypotterplatform934.com/products/new-edition-harry-potter-and-the-philosophers-stone-paperback"
+     
+    
+}
+
+
+To update data we will start with the generes model
+
+we need to create a new genere module to update the genere and we will do this using the id
+
+This module will take 3 paramters the id  , a genere Object and return a callback
+
+inside the module we must create a query variable being the id value of the object we want to change
+
+Then we must create a variable called update this variable will esstentially contain the paramters that we want to chnage in this case being the name and we want it to be changed to the name value of the incoming object
+
+module.exports.updateGenere =function(id, genereObject, callback)  
+{
+    let query = {_id:id}
+    let update = {
+        name:genereObject.name
+    }
+
+Then we can use the mongoose command findOneAndUpdate on the genere object being exported
+
+this command will take in the query update and callback
+
+genere.findOneAndUpdate(query , update ,  callback);
+
+
+final code piece looks like this
+
+module.exports.updateGenere =function(id, genereObject, callback)  
+{
+    let query = {_id:id}
+    let update = {
+        name:genereObject.name
+    }
+	genere.findOneAndUpdate(query , update ,  callback);
+}
+
+
+Then we go to the main app.js and create a new route this route howeever instead of post we use put on the app object
+
+The main differecnes with this route is that we need a vraiable for the id of the genere object we want to change 
+
+var id = req.params._id
+
+and secondly the updateGenere method takes in the id the genere object and the call back just like the module
+
+Genre.updateGenere(id,  genere, function(err , genere)
+
+
+the remaindder of the code is the same
+
+app.put("/api/generes/:_id"  , function(req,res)
+{
+    var id = req.params._id
+    var genere = req.body
+    Genre.updateGenere(id,  genere, function(err , genere)
+    {
+        if(err)
+        {
+            throw err
+        }
+        else
+        {
+            res.json(genere)
+            
+        }
+    })
+})
+
+in rest easy we change the method to put and then send the following object with paramters we would like to chnage in this case being the name 
+
+{
+	
+    "name":"Horror"
+}
+
+
+The same follows from book im just too tired to add this part
+
+
+To delete 
+
+we will create a new module for deleteing generes which will delete based on the id 
+
+esstenially it's the same as the last module just that we wil not be taking in any genere object 
+
+this will still taje in the id and use the query variable
+
+
+module.exports.deleteGenere =function(id , callback)  
+{
+    let query = {_id:id}
+	genere.remove(query , callback);
+}
+
+In the app.js we will create a route for deleting generes howeever in this case we will use app.delete()
+
+again the only difference is the name of themodule being called and the fact that we are not using the genere object 
+
+app.delete("/api/generes/:_id"  , function(req,res)
+{
+    var id = req.params._id
+    Genre.deleteGenere(id, function(err , genere)
+    {
+        if(err)
+        {
+            throw err
+        }
+        else
+        {
+            res.json(genere)
+            
+        }
+    })
+})
+
+
+finally in the rest easy chrome app we will change the method to delete pass in the id of the genere we wish to delte and then press send 

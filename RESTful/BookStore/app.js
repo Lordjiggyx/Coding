@@ -12,6 +12,9 @@ Book = require("./Mongooe_Models/books")
 const app = express()
 
 
+//init the body parser
+app.use(bodyParser.json())
+
 //Connecting to mongoose
 mongoose.connect("mongodb://localhost/bookstore")
 
@@ -29,7 +32,7 @@ app.get("/", function(req , res)
 
 app.get("/api/generes" , function(req,res)
 {
-    Genre.getBooks(function(err , generes)
+    Genre.getGeneres(function(err , generes)
     {
         if(err)
         {
@@ -76,6 +79,85 @@ app.get("/api/books/:_id" , function(req,res)
         }
     })
 })
+
+//Route for add a genre 
+
+app.post("/api/generes"  , function(req,res)
+{
+    var genere = req.body
+    Genre.addGenere(genere, function(err , genere)
+    {
+        if(err)
+        {
+            throw err
+        }
+        else
+        {
+            res.json(genere)
+            
+        }
+    })
+})
+
+
+//Route for adding a book 
+
+app.post("/api/books"  , function(req,res)
+{
+    var book = req.body
+    Book.addBook(book, function(err , book)
+    {
+        if(err)
+        {
+            throw err
+        }
+        else
+        {
+            res.json(book)
+            
+        }
+    })
+})
+
+
+//Route for updating a genre 
+
+app.put("/api/generes/:_id"  , function(req,res)
+{
+    var id = req.params._id
+    var genere = req.body
+    Genre.updateGenere(id,  genere, function(err , genere)
+    {
+        if(err)
+        {
+            throw err
+        }
+        else
+        {
+            res.json(genere)
+            
+        }
+    })
+})
+
+//route for deleting generes
+app.delete("/api/generes/:_id"  , function(req,res)
+{
+    var id = req.params._id
+    Genre.deleteGenere(id, function(err , genere)
+    {
+        if(err)
+        {
+            throw err
+        }
+        else
+        {
+            res.json(genere)
+            
+        }
+    })
+})
+
 
 
 app.listen(3000)
