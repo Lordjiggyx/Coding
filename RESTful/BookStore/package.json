@@ -1,0 +1,22 @@
+{
+  "name": "BookStore",
+  "version": "1.0.0",
+  "description": "Simple backend restful web api",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app",
+    "dev": "nodemon app"
+  },
+  "dependencies": {
+    "body-parser": "*",
+    "express": "*",
+    "g": "^2.0.1",
+    "mongoose": "*"
+  },
+  "keywords": [],
+  "author": "Tomi Ilori",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}

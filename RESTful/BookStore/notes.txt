@@ -1,0 +1,269 @@
+This is a restful web api
+
+This is the backend purely 
+in this i want to make requests to get data
+
+The project is modelled after a book store
+
+kind of requests that we want ot make 
+get 
+put 
+post 
+delete
+
+This is done from scratch
+
+This will be using Node.js ,express.js and MongoDbnn
+
+To interact wth the database we will use mongoose
+This is a node npm module 
+
+The app.js will serve as the main gateway for our application
+
+as we are using mongoose it is best we create models for our data i.e a models folder
+
+We must also create a package.json file cam create this going ot the project directory and say npm init -yes
+
+in the package.json file we need to specify our dependicies wihc are the nodemodules we want ot use in the app this is an object 
+
+ "dependencies": {
+    "body-parser": "*",
+    "express": "*",
+    "mongoose":"*"
+  }
+
+  body parser allows us to submit formas and make post requests and get values from the form
+
+  To install the dependencies we can just use "npm i"
+
+  Next we will go into App.js and require the things we need being express 
+
+const express = require("express")
+const bodyParser = require("body-parser")
+const mongoose = require("mongoose")
+
+express needs an object to represent it beinf the app object in the file
+
+
+Next we must connect to mongoose using mongoose.connect()
+in here we must pass in the location of the mongodb
+
+mongoose.connect("mongodb://localhost/bookstore")
+
+Then an object representing the database must be created 
+
+const db = mongoose.connection()
+
+You then set up a route and a port for the app to run on
+
+
+app.get takes in a request and responnse object and res.snd acn be used to send responses
+
+app.get("/", function(req , res)
+{
+    res.send("Hello Word")
+})
+
+app.listen just takes in a port number
+
+app.listen(3000)
+console.log("Runing on port 3000......")
+
+
+*****To get areound having to turn the server on and off consantly you can just use nodemon  to di this you must first use npm i g nodemon and then go to your package.json in this file you must create a scripts object and create one called "dev" and let it be assigned to "nodemon app_name" then in the command line you type "npm run dev"
+
+We will then create our database in mongodb you can do this through command line or through compass i will do command line 
+
+To do this you must go to the location of where mongodb is stored and then go to the following directory
+
+mongodb/server/4.0/bin 
+
+and then run mongo
+
+to create a new database allo you have to do is say use database_name in this case
+
+use bookstore
+
+
+we must then create collections books and generes using the db.creatCollection() function
+
+ db.creatCollection("books")
+ db.creatCollection("generes")
+
+we can now create generes
+These generes will be JSON objects 
+The Id will be generated automatically
+
+for exmaple a suspense genre
+
+db.generes.insert(
+    {
+        name:"Suspense"
+    }
+)
+
+To add a book we must change to db.books thenuse the insert command
+
+db.books.insert(
+    {
+        title:"The Murder House",
+        generes:"Suspense",
+        description:"A scary tale about a murder scene in a murder house",
+        Author:"James Patterson",
+        Publisher:"Brown & Company",
+        Pages:"480",
+        Image:"https://www.googleadservices.com/pagead/aclk?sa=L&ai=DChcSEwiOzo7zz8XjAhVBsO0KHSwfBHUYABACGgJkZw&ohost=www.google.com&cid=CAESEeD2XjIC5rhvmcF7mlgj19pP&sig=AOD64_1LIL8z8yJBScUTPGcXdtCmL85acg&ctype=5&q=&ved=0ahUKEwj0_4bzz8XjAhWOh1wKHQT9AmYQ8w4I1QE&adurl=",
+        PurchaseFrom:"https://www.amazon.co.uk/Murder-House-James-Patterson/dp/0099594889/ref=sr_1_1?adgrpid=64054071971&gclid=CjwKCAjwmtDpBRAQEiwAC6lm46h179R73yU6sfYMZ51_A47g2RlMYWa4iYPHxPg5rvKmszma9x2RRhoCt4wQAvD_BwE&hvadid=291319618479&hvdev=c&hvlocphy=1007850&hvnetw=g&hvpos=1t1&hvqmt=e&hvrand=10524570076384761575&hvtargid=kwd-317386764855&hydadcr=1234_1846193&keywords=james+patterson+the+murder+house&qid=1563698868&s=gateway&sr=8-1"
+    }
+)
+
+db.books.insert(
+    {
+        title:"Truth Or Die",
+        generes:"Suspense",
+        description:"Truth or die",
+        Author:"James Patterson",
+        Publisher:"Brown & Company",
+        Pages:"480",
+        Image:"https://images-eu.ssl-images-amazon.com/images/I/51fKWIFTcUL.jpg",
+        PurchaseFrom:"https://www.amazon.co.uk/Truth-Die-James-Patterson-ebook/dp/B00SPIK8FG/ref=sr_1_1?adgrpid=58281152597&gclid=CjwKCAjwmtDpBRAQEiwAC6lm42P3bxvE_2g636vELCn4psjFJfuovbPtEJv8SDZLVZfzEf51zsVXdhoCBWAQAvD_BwE&hvadid=291385348703&hvdev=c&hvlocphy=1007850&hvnetw=g&hvpos=1t2&hvqmt=b&hvrand=8030840858208674006&hvtargid=kwd-305661519543&hydadcr=1209_1846145&keywords=truth+or+die+james+patterson&qid=1563699063&s=gateway&sr=8-1"
+    }
+)
+
+Now we want to create a route to our generes
+
+
+app.get("/api/generes" , function(req,res)
+{
+    
+})
+
+We must create our models in in the mongoose_models folder
+
+in this folder we create a books.js and generes.js
+
+
+in both files we must require the mongoose api
+
+we must then cretae the mongoose schema 
+
+a schema is just for the application 
+
+This takes in objects with all the fields we want to use 
+
+const generesSchema = mongoose.Schema(
+    {
+        name:
+        {
+            type:String,
+            required:true
+        },
+        create_date:
+        {
+            type:Date,
+            default:Date.now
+        }
+    }
+)
+
+we then make it exportable using module.export
+we must also let it equal to the mongoose_model which takes in the name of the schema and also the schema ojeect we created 
+const genere = module.exports = mongoose.model("Genere" ,generesSchema)
+
+We can then create a function to get generes or books 
+it needs to be exportable as well
+
+but at the same time we cna also let it equala a function and this function will take a callback and optional limit
+
+module.exports.getGeneres = function(callback , limit)
+{
+    
+}
+
+
+inside we can call the genere.find() method which will take in a call back and the limit objetcs specified in the function paramters
+
+note ****The genere.find is being called on the exportableobject we created***
+
+Now we can access this function from the route
+
+Going back to the app.js file we must now include the file through a variable
+
+Genre = require("./Mongooe_Models/generes")
+
+now in the app.get hthat point to our generes page we can now use the genere object
+
+Now using the Genre object we can call the getGeneres method that we created for it This method will return a callback whihc is just a function this function will take in two paramters err and the name of the collection you wish to return in this case generes
+
+ Genre.getGeneres(function(err , generes)
+
+Then we can say if there is an error ist should throw the error message
+
+  if(err)
+        {
+            throw err
+        }
+
+but if there is not an error we will use the responnse objetc res to send us the JSON object being the generes collection
+
+ else
+        {
+            res.json(generes)
+        }
+    })
+
+Final method call looks like this 
+
+app.get("/api/generes" , function(req,res)
+{
+    Genre.getGeneres(function(err , generes)
+    {
+        if(err)
+        {
+            throw err
+        }
+        else
+        {
+            res.json(generes)
+        }
+    })
+})
+
+The structure is the same for books we just have extra fields
+
+We now want to grab a single book so we want ot be able to grab the book by book id from the url by using /book_id
+
+To do this we can write the model function in the book model
+
+Seeing as we are only grabbing one book and also grabbing it by id we can remove the limit paramter and include an id paramter
+
+**Mongo actually has a commmandcalled findById ***
+
+module.exports.getBookById = function(id,callback )
+{
+    book.findById(id , callback) 
+}
+
+we will now go back to app.js and then create another route for this method
+
+app.get("/api/books/:_id" , function(req,res)
+{
+    Book.getBookById(req.params._id , function(err , book)
+    {
+        if(err)
+        {
+            throw err
+        }
+        else
+        {
+            res.json(book)
+        }
+    })
+})
+
+note**
+In the app.get() note thatwe also add another slash taking in the id paramter it is _id because that is what it is in the database we then also change anything that is books to book as we are returning a single book object
+
+We then calle the getBookById method and in this method we will pass in the id from the request obkject req this object has a params object containing many fields one of these being the ID which we return along eith the same function we were using earlier
+
+note**
