@@ -1,0 +1,199 @@
+THis will be a demo on the steps taken when creating a react/express application
+
+
+To start go to the terminal and create a package.json just using npm init -yes
+
+we will then install express concurrently using npm i express concurrently
+
+Then thing to installwll be nodemon using npm  i nodemon --save-dev
+
+Then you should add your scripts one to start the server for nodemon and the other to start youe application
+
+  "scripts": {
+    "start": "node app",
+    "dev": "nodemon app"
+  },
+
+We then must create the file that will be used as your main point for using the application
+
+The first thing we will do in our file i include express using the require function
+
+const express = require("express")
+
+then create an object to repersent the express object 
+
+
+const app = express();
+
+Then we will create a variable called port and set it to 5000
+
+const port =5000
+
+
+We then need to tell the object to listen on this port
+
+app.listen(port , ()=>
+{
+    console.log(`Server Started on port ${port}`)
+})
+
+then we will create a route pointing to what we want in this case being an array of customers using the app.get methhod this takes in the route as a string and a callback with a request and response parameter
+
+app.get("/api/customers" ,(req , res)=>
+{
+
+})
+
+in this case we will just create a hardcoded array of users
+
+const customers=[{
+        "id":1,
+        "name":"Tomi Ilori",
+        "email":"Tomiilori123@gmail.com"
+    },
+
+    {
+        "id":2,
+        "name":"Tom Ilor",
+        "email":"Tom@gmail.com"
+    },
+
+    {
+        "id":3,
+        "name":"jim Steff",
+        "email":"jim123@gmail.com"
+    }]
+
+    we can then go onto using the response object to return an array
+
+     res.json(customers)
+
+
+We wull then run this using the script we created npm run dev
+
+as of this point the backend is complete
+
+
+Now we must create our react application
+
+we can press + on the terminal and start another powershell
+
+in this terminal we will install the create react app 
+
+using npm i -g create-react-app
+
+we can then type create-react-app client to create a client folder inside our dirctory
+
+then we shoould go to the package.json 
+
+This step is really important 
+
+we need to define our backend url as a proxy
+to do this we must define our backend server lilke so
+
+"proxy" :"http://localhost:5000"  
+
+by putting this hear we can make requests to our backend without actually using this line inside our fecth requests
+
+so we must go to the client folder and then run the react server by using npm start
+
+Now two server are running one front end and one backend 
+
+in react we will create a customers component adn thenfecth the data from the backend and then populate the component
+
+so in the client folder we create the following file path
+
+R_E_Starter--->client--->component--->Customers--->customers.js
+
+and also
+
+R_E_Starter--->client--->component--->Customers--->customers.css
+
+
+copy text form class bolier plate file 
+
+make sure that you are also changing theexport defaults to the class name
+
+we can create a tutle called customers using a h2 tag 
+
+
+then we go to the app.js and firstly import the customers class or what ever class your importing
+
+import Customers from "./components/Customers/Customers"
+
+
+then you cna get rid of the paragraph and replace it the class component in this case being <Customers/>
+
+we havent made any calls to the backend but we can see that the component is present 
+
+in the Customers.js file we haev state
+
+in our state we will create an array to hold our customer objects
+
+To populate the the array we will make a request from the backend 
+to do this we will use the componentDidMount lifecycle methhod
+
+this just means the method will run as soon as the component is created
+
+in thsi method we can make a call to the backend using the fecth method
+
+
+componentDidMount()
+        {
+            fetch('/api/customers')
+        }
+
+becuse we used the procy value we dont need to state http://localhost:5000 we can just use this wehn accessing any routes in the backend 
+
+fetch retrurns a promise so using .then we must map the result using res.json
+ through the .then method
+ .then(res => res.json())
+
+ then this gives us our data in another .then and we wil call it custiomers
+
+ .then(customers =>{})
+
+ within this promise we will return a function using es6 that will call the this.setState
+
+ methood and we will set the customers array to the custiomers data being passed in
+
+ 
+                    this.setState({
+                        customers:customers
+                    })
+
+
+final piece of code should look like
+
+ componentDidMount()
+        {
+            fetch('/api/customers')
+            .then(res => res.json())
+            .then(customers =>
+                {
+                    this.setState({
+                        customers:customers
+                    })
+                })
+        }
+
+    you can also pass a callback using arrow function to indicate that data was pulled
+
+      componentDidMount()
+    {
+        fetch('/api/customers')
+        .then(res => res.json())
+        .then(customers =>
+            {
+                this.setState
+                ({
+                    customers:customers
+                },
+                ()=>
+                {
+                    console.log("Customers Fetched......", customers)
+                })
+            })
+        
+    }
+      
