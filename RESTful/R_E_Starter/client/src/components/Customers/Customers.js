@@ -18,34 +18,48 @@ class Customers extends React.Component
 
     }
 
+   
     componentDidMount()
     {
-        fetch("/api/customers" )
-        .then(res => res.json()
-        )
-        .then(data =>
+        fetch('/api/customers')
+        .then(res => res.json())
+        .then(customers =>
             {
                 this.setState
                 ({
-                    customers:data
+                    customer:customers
                 },
                 ()=>
                 {
-                    console.log("Customers Fetched......", data)
+                    console.log("Customers Fetched......", customers)
                 })
             })
         
     }
-      
     render()
     {
         
         return(
             <div>
                 <h2>Customers</h2>
+
+                <ul>
+                    {this.state.customer.map(customer =>
+                    
+                        <li key={customer.id}>
+                            <p>
+                            {customer.name}
+                            <br/>
+                            {customer.email}
+                            </p>
+                            
+                        </li>
+                    )}
+
+                </ul>
             </div>
         )
     }
 }
 
-export default  Customers 
+export default Customers 

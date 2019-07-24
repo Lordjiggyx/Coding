@@ -90,7 +90,7 @@ This step is really important
 
 we need to define our backend url as a proxy
 to do this we must define our backend server lilke so
-
+****PLACE THIS AT THE VERY FUCKING BOTTOM AND NOT IN ANY OTHER DEPENDANCY****
 "proxy" :"http://localhost:5000"  
 
 by putting this hear we can make requests to our backend without actually using this line inside our fecth requests
@@ -196,4 +196,51 @@ final piece of code should look like
             })
         
     }
+
+
+    Next we must go to the render and then return our customers
+
+    to do this we can create an unordered list and then take our state  and map through the customers array
+
+    ****Any javascript in the render method must be in {curly braces} to render
+
+  <ul>
+                    {this.state.customer.map(customer =>
+                    
+                        <li key={customer.id}>
+                            <p>
+                            {customer.name}
+                            <br/>
+                            {customer.email}
+                            </p>
+                            
+                        </li>
+                    )}
+
+                </ul>
+
+we can then grab the values of each customer from the list of users so everytime a customer is found the name and email is displayed in a paragraph tag
+
+in react when using lists and mapping them out the li must always have a key in this case we used the customer id
       
+
+
+===To run concurrently===
+
+We stop both servers using CTRL c
+
+we go into the package.json thatis outside the client folder
+
+we can create another script to run both files
+
+"client": "npm start --prefix client"
+
+we then need to create another script to get them to run concurrently
+
+ "dev": "concurrently \"npm run server \" \"npm run client\""
+
+
+concurrently runs more then one command from one script so this runs both our server and client script
+
+we can then call npm run dev and both sevrers are started 
+

@@ -1,0 +1,13 @@
+ul{
+    list-style: none;
+    padding: 0;
+    
+    margin:auto
+}
+
+li{
+    font-size: 1.3rem;
+    line-height: 2rem;
+    border-bottom: 2px dotted lightskyblue;
+    margin:auto
+}

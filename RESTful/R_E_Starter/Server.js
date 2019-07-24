@@ -40,16 +40,6 @@ app.get("/api/customers" ,(req , res)=>
 
 
 
-
-
-
-
-
-
-
-
-
-
 ///This tells the application to listen on the value of whatwvwer we assigned to port
 app.listen(port , ()=>
 {
