@@ -1,0 +1,361 @@
+This application is a registration page using node.js exoress passport and mongoose
+
+To start creaet a cluster in MongoDB Atlas 
+
+You need to also xcreate a user as you connect through a url string
+
+To start we use npm init -y to create the package.josn file
+
+Then we must install our dependices
+
+1. Express - our framework
+2.Bcrypt.js - Encrypt our passwords
+3.Passoport for authentication
+4.Any strategy used with passport must be intsalled as a seperate package passport-local
+5.ejs - This is our template engine that were using doesn't have layouts so you need express-ejs-layouts
+6.Mongoose - to deal with the database we will also use connect-flash for flash messaging and this depends on express-session
+
+npm i express bcrypt passport passport-local passport passport-local ejs express-ejs-layouts mongoose connect-flash express-session
+
+we need to also install a dev dependancy which is nodemon for live reloading
+
+npm i -D nodemon
+
+we will also add a few scripts to run the app
+
+"start": "node app.js",
+"dev": "nodemon app.js",
+
+===Creating The Server====
+we can then create our app.js file 
+
+We then bring in express
+
+assign it to an application
+
+create a port variable this port variab;e may be deployed so we use process.env.port or local host of 5000
+
+and allow the application to listen on this port variable
+
+we can then type into the terminal and type npm run dev
+
+
+===Intorducing Routes===
+
+we can create a folder called routes to hold the files we will use for the routes
+
+we can then create two files 
+
+index.js - Home page
+users.js - User login and User registration
+
+
+-Index.js & users.js-
+
+we will be using the express router so we must bring in express
+
+
+const express = require("express")
+
+Then create a router variable amd llow it to equal the express.router module
+
+const router = express.Router()
+
+we can then use type module.exports = router to make the routers accssable across the app
+
+so now when we want ot create a route we can just use router.<method_name> e,g
+
+router.get
+router.post
+
+and the url and callback to follow after it
+
+router.get("/" , (req , res)=>
+{
+    res.send("Welcome to Browser")
+})
+
+This wont work until we make it avaliable in our app.js file
+
+to do this we go into our app.js and create a route
+
+app.use("/" , require("./Routes/index"))
+
+we use app.use and allow it to include the file that is index.js bu using require
+
+we can go to the user class and copy over the code from index.js but just cahnging the location of the page after the slash
+
+
+//Route for login page
+router.get("/login" , (req , res)=>
+{
+    res.send("Welcome to Login Page")
+})
+
+//Route for registeration page
+router.get("/register" , (req , res)=>
+{
+    res.send("Welcome to registration Page")
+})
+
+
+Then we must go back to our app.js and add another route but change it to point towards the users file 
+
+app.use("/users" , require("./Routes/users"))
+
+===Views===
+
+Views allow us to create our UI
+
+To do this we need to bring express layouts into our app.js
+
+const expressLayouts = ("express-ejs-layouts")
+
+we must then bring in our ejs bu usin the app.use and app.set methods
+
+app.use() - will take in the expressLayouts variable
+
+app.set() - will have us set the view engine to be ejs 
+
+We then create a folder called views and then we will need a layout.ejs file to handle the layout of the views
+
+Other files we need is 
+
+Welcome
+login
+registration
+dashboard
+
+
+We then go to our layout.ejs
+
+and create some boiler plate remember ejs files can read html thus our boiler plate is html
+
+we will be using bootswatch so go to bootswatch.com and pick a theme and insert the url same with fontawesome cdn 
+
+
+fontawesome code  <script src="https://kit.fontawesome.com/e9c92827ca.js"></script>
+
+--bootswatch theme--
+
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/litera/bootstrap.min.css">
+
+we also need the bootsrap javscript tags
+
+
+--bootsrap js---
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+we must then place a container in the body and outout any views that are suppossed to be displayed 
+
+to do this we use  <%-body %>
+
+this renders any sort of ejs 
+
+so we can start by going to our welcome.ejs and typing a <h1>Welcome</h1>
+
+then we must go to our index.js and specify the file through the router.get method 
+intead of using res.send we use res,,render and this takes in the name of the file we wish to render
+
+The code for the beiwpages were given by brad traversy to speed up tutorial
+
+we then go to the users.js and change the res.send to res.render() and pass in login 
+
+
+***Notice in the form the value contains ejs it states that if the validation is not passed we want to keep the remaining input values on the form rather then clearing it
+
+for example value="<%= typeof name != 'undefined' ? name : '' %>"
+
+
+ ****
+
+
+ ==Connet to database===
+
+ We go to the app.js and require mongoose
+
+const mongoose = require("mongoose")
+
+we then create a config folder and store our mongo conection url in a file called keys.js
+
+we then use modules.exports 
+
+we let this export an object containing our keys for example the mongo url
+
+module.exports = 
+{
+    MongoUrl:"mongodb+srv://Tomi:<Lordjiggy123.>@testcluster1-bsyse.mongodb.net/test?retryWrites=true&w=majority"
+}
+
+we can then bring this into our app.js file and connect to the database
+
+to do this we create a databse variable and allow it to require the keys files and we request the mongo url
+
+const db = require("./Config/keys").MongoUrl
+
+we then use mongoose.connect to connect to the database
+
+this takes in the database variable and an object called useNewUrlParser which must be set to true this returns a promise which we can just console.log the database is Connected and then a catch where we can just log the error
+
+mongoose.connect(db , {useNewUrlParser:true})
+.then(()=> console.log("Connected To Database..."))
+.catch(err => console.log(err))
+
+Then we need to create the models 
+
+create a folder called models and a file inside called User
+
+inside this file we can create a schema with all the fields the user needs
+
+so in the User.js file 
+
+we first require mongoose 
+
+then w create a varibale to store the User fields  in a schema
+using mongoose.schema
+
+const UserSchema = new mongoose.Schema()
+
+in this method we pass in an object containing the fields
+ of the user each with it's own type and whether it i required or not
+
+ const UserSchema = new mongoose.Schema(
+    {
+        name:{
+            type:String,
+            required :True
+        },
+        email:{
+            type:String,
+            required :True
+        },
+        Passowrd:{
+            type:String,
+            required :True
+        },
+        date:{
+            type:Date,
+            //This creates a default value for the date if it is not set
+            default :Date.now
+        }
+    }
+)
+
+we will put this in a variable by creating a model from the schema using mongoose.model() you pass in the model naem being user and the UserSchema
+
+const User = mongoose.model("User" , UserSchema)
+
+and then you can just export this
+
+module.exports = User
+
+
+===Registration===
+since we are garbbing data from the form we must bring in our body parser 
+
+app.use(express.urlencoded({extended: false}))
+this means we can get data fom our form using req.body
+
+we then go to our users.js file
+
+when we submit the reg form we make a post request to the /users/register so we must create a handler for this request
+
+we must use router.post("/register, (req,res)=>
+{
+
+})
+
+we can pull variabled from the body using 
+
+const {name , email , password , password2} = req.body
+
+
+we must use router.post("/register, (req,res)=>
+{
+    const {name , email , password , password2} = req.body
+})
+
+we will thhen create an array to hold our error messages called error and everytime an error occurs we will push a message into it
+
+We will check the required fields using if statements 
+
+if(!name || !email || !password || !password2)
+{
+    error.push({
+        msg: "Please fill in all fields"
+    })
+}
+
+we will then check the passwords match
+
+if(password !== password2 )
+{
+    error.push({
+        msg: "passwords dont match"
+    })
+}
+
+rest of the validation is slef explanatory
+
+if there is an error we wan to re render the register page with the information that has already been passed in
+
+when using ejs we can pass in values
+
+
+    res.render("register" , 
+    {
+        
+    }
+
+    we wnat to pass in the errors and also the data being filled in on the form we will pass this in as an object
+
+    if(error.length > 0)
+{
+    res.render("register" , 
+    {
+        error,
+        name,
+        email,
+        password,
+        password2
+
+    })
+}
+else
+{
+    res.send("pass")
+}
+
+})
+
+This if statement re renders the page passing in whatever information has been entered in the form if there is an errors
+but idf there is no error the page retuerns pass at the moment to let the user know that the form was filled out sucessfully
+
+
+    we need to include a partial message in our views 
+
+    this is just some html that we want to put inside another template file
+
+    we need to create a folder called partials in our views folder
+
+    we create a mesages file and indide this file we will check if the errors exist
+
+    using this ejs
+
+    <%if(typeof errors != "undefined"){%>
+<% errors.forEach(function(error){
+%>
+<%= error.msg%>
+<%})%>
+<%}%>
+
+then in your register.ejs file you need ot palkce the following line to include the ejs
+
+<% include ./partials/messages %>
+
+ejs is fucking bogey every line needs an open and close tag so be weary of that
+
