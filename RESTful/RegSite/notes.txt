@@ -223,19 +223,20 @@ const UserSchema = new mongoose.Schema()
 in this method we pass in an object containing the fields
  of the user each with it's own type and whether it i required or not
 
- const UserSchema = new mongoose.Schema(
+
+const UserSchema = new mongoose.Schema(
     {
         name:{
             type:String,
-            required :True
+            required :true
         },
         email:{
             type:String,
-            required :True
+            required :true
         },
         Passowrd:{
             type:String,
-            required :True
+            required :true
         },
         date:{
             type:Date,
@@ -359,3 +360,248 @@ then in your register.ejs file you need ot palkce the following line to include 
 
 ejs is fucking bogey every line needs an open and close tag so be weary of that
 
+
+We will then wrap these messages in the bootstrap alert mark up
+
+we can go to bootstrao.com find componenets and then dismissing 
+
+we can then grab that code and then plaec it in our messages file where the error.msg is  we then csn replace the line of text which the error.msg we orginally had
+
+
+so our code will look like this
+
+<%if(typeof errors != "undefined"){%>
+<% errors.forEach(function(error){
+%>
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <%= error.msg%>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+<%})%>
+<%}%>
+
+
+
+====Adding to the Database===
+
+We must now go to the users route and start to work in the elese block after the validation passes
+
+
+To do this we will use thr model 
+mongoose works by letting you createa model and then allowing you to call mehtods on that model
+
+so first thing is we bring in the user at the top of the file
+
+//user model
+const User = require("../routes/users.js")
+
+now we can call methods on the user
+
+before submitting the user we want to check that don't already exist
+
+we will use the findOne() method the query inside will check for a matching email as there cannot be the same email in any sort of a system so this will look like this
+
+
+email is the variable we cretaed at the top of the post method by pulling it from the body of the form
+
+else
+{
+    //Validation passed
+    User.findOne(
+        {
+            email:email
+        }
+    )
+}
+
+this will retuen a promise so we must use .then and this promise will gove use the user and we will call a method to check for that user that exists if we find a user then we want to do the same thing and re render the form and send an error
+
+to this we will take the code from if the passwords do not match and place it in an if statement that says "If the user exists" 
+
+
+ User.findOne(
+        {
+            email:email
+        }
+    )
+    .then(user =>
+        {
+            //User with same passwword exists
+            if(user)
+            {
+                //passing on a message to  indicate exitsting user
+                errors.push({
+                    msg: "User with this email already exists"
+                })
+                //Re rendering the form
+                res.render("register" , 
+                {
+                    errors,
+                    name,
+                    email,
+                    password,
+                    password2
+            
+                })
+            }
+
+if the a user without this email address we will create a new one in an else block i want ot Encrypt the password so we will use bcrypt
+
+//bringing in bcrypt
+const bcrypt = require("bcrypt")
+
+
+
+back to the post method in the else block we will create an ew user by creating a variable called newUser and assigning it to new User
+
+const newUser = new User({})
+
+***When haev a model and you want to create a new instance we want to use the new keyword and pass in the values***
+
+
+const newUser = new User({
+    name,
+    email,
+    password
+})
+
+now to encrpyt the password we need to generate a salt to create a hash there are two methods we will use 
+
+the bcrypt.genSalt this takes in a 10 and then a call back with an wrror and a salt this call back will call the bcrpyt.hash method this will take in our password and the salt this will also give use a call back with a possible error we will set the newuser password to the hash value 
+
+we can then call the save method on this user as this is method in the mongoose models 
+
+this will return a promise in which we will redirect the user to the login page 
+
+and then we will catch any errors
+
+
+The else final  block will look like so
+
+else
+            {
+                //Creating a new user
+                const newUser = new User({
+                    name,
+                    email,
+                    password
+                })
+               
+                console.log(newUser)
+
+                //Hash passowrd
+
+                bcrypt.genSalt(10 , (err ,salt)=>
+                {
+                bcrypt.hash(newUser.password , salt ,(err , hash)=>{
+                   if(err)
+                  throw err
+
+                  //set passowrd to hashed
+                  newUser.password =hash
+                  //save User
+                  newUser.save()
+                  .then(user=>
+                    {
+                        res.redirect("/users/login")
+                    })
+                  .catch(err =>
+                    {
+                        throw err
+                    })
+                        
+                    })
+                })
+            }
+
+
+
+
+
+===Flash method after redirect===
+
+To display a message after the redirect we need to use a flash message which stotres the message in session and then displays after the redirect 
+
+to do this we have to go to app.js and implement connect.flash
+
+we need to also bring in express session in app.js
+
+//Bringing in flash message
+const flash = require("connect-flash")
+//Bringing in express session
+const session = require("express-session)
+
+is alsos requires it's own middleware
+can be taken from express documentation
+// Express session
+app.use(
+  session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+  })
+)
+
+we need to also need middleware for connect flash which is 
+
+// Connect flash
+app.use(flash());
+
+
+we should now have acesss to request .flash we wan different colours for different messages so we will create global variables to do this we msut add our own middleware using app.use
+
+inside this will be a function taht takes in request response and next variables and then return a function
+
+we can set the global variables using res.locals.<Variable_name> and then set it to request.flash
+
+here we have done that for the error and success messages
+
+finally we need to call next 
+
+app.use((req , res , next)=>
+{
+    res.locals.success_msg = req.flash("sucess_msg")
+    res.locals.error_.sg = req.flash("error_msg")
+    next()
+})
+
+so now if we go to our users.js in thew redirect we want to clal the flash message just before it
+
+the req.flash takes two paarameters the variable name and the output you wish to display
+
+ //save User
+                  newUser.save()
+                  .then(user=>
+                    {
+                        //Showing the success message 
+                        req.flash("success.msg","You have been registered and can now log in!!!")
+                        //redirecting the user to the login page
+                        res.redirect("/users/login")
+                    })
+
+This creates the flash message we need to go into our messages.js 
+
+We will check if the success messgae exists in the first place this means that the validation must be fully passed as this is when and only when the success mesg is created
+
+<% } %> <% if(error_msg != ''){ %>
+
+and then we will copy the same information as the last message but chsnge from alert-warning to alert-success
+
+and then change the inside message to match the global variable success_msg
+
+<% } %> <% if(error_msg != ''){ %>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <%= success_msg%>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <%}%>
+
+  and then repeat for error message
+
+  we need to finally grab the partial from register.js and place it in login .js
+
+  <% include ./partials/messages %>

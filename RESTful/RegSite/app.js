@@ -7,9 +7,16 @@ const app = express();
 //Bringing in express layouts
 const expressLayouts = require("express-ejs-layouts")
 
+//Bringing in flash message
+const flash = require("connect-flash")
+
+//Bringing in express session
+const session = require("express-session")
+
 //Using EJS
 app.use(expressLayouts)
 app.set("view engine" , "ejs" )
+
 
 
 //Bringing in mongoose
@@ -25,6 +32,26 @@ mongoose.connect(db , {useNewUrlParser:true})
 
 //Bringing in body parser 
 app.use(express.urlencoded({extended: false}))
+
+// Express session
+app.use(
+    session({
+      secret: 'secret',
+      resave: true,
+      saveUninitialized: true
+    })
+  )
+
+  // Connect flash
+app.use(flash());
+
+//global variables
+app.use((req , res , next)=>
+{
+    res.locals.success_msg = req.flash("success_msg")
+    res.locals.error_msg = req.flash("error_msg")
+    next()
+})
 
 
 // we use process.env.port in the case that we deploy or we use 5000 onour local host
