@@ -13,6 +13,14 @@ const flash = require("connect-flash")
 //Bringing in express session
 const session = require("express-session")
 
+//Bringing in passport
+const passport = require("passport")
+
+
+
+//Passport config file
+require("./Config/passport")(passport)
+
 //Using EJS
 app.use(expressLayouts)
 app.set("view engine" , "ejs" )
@@ -31,7 +39,7 @@ mongoose.connect(db , {useNewUrlParser:true})
 .catch(err => console.log(err))
 
 //Bringing in body parser 
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({extended: true}))
 
 // Express session
 app.use(
@@ -42,6 +50,10 @@ app.use(
     })
   )
 
+  //Passport implementation
+app.use(passport.initialize());
+app.use(passport.session());
+
   // Connect flash
 app.use(flash());
 
@@ -50,13 +62,13 @@ app.use((req , res , next)=>
 {
     res.locals.success_msg = req.flash("success_msg")
     res.locals.error_msg = req.flash("error_msg")
+    res.locals.error = req.flash("error")
     next()
 })
 
 
 // we use process.env.port in the case that we deploy or we use 5000 onour local host
 const port =process.env.PORT||5000
-
 
 
 //Routes

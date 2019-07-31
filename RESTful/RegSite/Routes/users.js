@@ -10,6 +10,10 @@ const User = require("../Models/User")
 //bringing in bcrypt
 const bcrypt = require("bcrypt")
 
+//Bringing in passport
+const passport = require("passport")
+
+
 //Route for login page
 router.get("/login" , (req , res)=>
 {
@@ -149,6 +153,30 @@ else
 
 })
 
-//Mkaing index page accesible
 
+//Route to handle login
+router.post('/login', (req, res, next) => {
+    //Calling the authenticate method on the passport object
+    //Passing in lcila as our localStrategy
+    passport.authenticate('local', {
+    //Success redirect is the page you wnat to go to if the the login is successful
+      successRedirect: '/dashboard',
+      //Failure redirect is the page you want to go to if the login is failed
+      failureRedirect: '/users/login',
+      //This is the flash message that is dsiplayed when a failure occurs
+      failureFlash: true
+    })(req, res, next);
+    //These are parameters that are meant to be included as req.login is used to establish a sesison
+  });
+
+//Logout route
+router.get("/logout" , (req , res)=>
+{
+    req.logout()
+    req.flash("success_msg" , "You are Logged out")
+    res.redirect("/users/login")
+})
+
+
+//Maling  pages accesible
 module.exports = router

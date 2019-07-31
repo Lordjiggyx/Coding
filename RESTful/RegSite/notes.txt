@@ -605,3 +605,264 @@ and then change the inside message to match the global variable success_msg
   we need to finally grab the partial from register.js and place it in login .js
 
   <% include ./partials/messages %>
+
+  ===Login===
+
+  We said we will be using a local strategy 
+  we have to put this inside a config file and we will call this file passport.js
+
+  in this file we will create a variable called localStrategy and allow it to require passport-local and this has a paarameter called strategy.
+
+  const localStrategy = require("passport-local").Strategy
+
+
+  we must also bring in mongoose as we ill be logging in and must check if email nad passowords match
+
+  const mongoose= require("mongoose")
+
+  we must then Bring in bcrypt as we need to decrypt our passwords
+
+const bcrypt = require("bcrypt")
+
+we must alos bring the user model to access parameters from the user
+
+const user = require("../Models/User")
+
+We want to also export the strategy that we created 
+
+this will equal a function and take in the passport variable as we will pass it in from the app.js file
+
+we will then take the passport object and call the use method this method will taje in a variable called localStrategy which will take in a paarameter called usernameField in this case we are not matching usernames but instead matching emails 
+
+We will then pass in an arrow function which will take in 3 things the, the email , the password and a variable called done which is a call back funciton.
+
+module.exports = function(passport)
+{
+    passport.use(
+        new localStrategy(
+            {
+            usernameField:"email"
+            },
+            (email , password , done)=>
+            {
+                
+            }
+        )
+    )
+}
+
+
+
+
+We first want to match the user
+
+to do this we will use mongoose 
+
+we can call findOne on the user object we can check for an email to match the current email
+
+if there is were gonna get a promise and and catch
+
+in the .then() we will use an arrow function on the user 
+
+we will check if there is no match 
+
+if there isn't we will return done() and pass in null for the error false for the user and for the optional response a messgae that says the email cannot be found
+
+User.findOne({email:email})
+.then(user =>
+{
+if(!user)
+{
+    return done(null , false, 
+    {
+        message:"That email does not exist"
+    })
+}
+})
+.catch(err => console.log(err))
+
+
+We must now match the user through the password 
+
+we need to use bcrpyt as the db password is hashed 
+
+we will call the compare method on the bcrpyt object and then pass in the password being passed in upon login and then comparing to the password being read in from the user found in the database 
+
+there will be a callback in the method and take two paarameters error and a variable called isMatch 
+
+if this is true we will return our done function again in tis function we will pass in null for the error and the user that matches for the object
+
+
+if it doesnt match we will pass in null for the error false for the user and a messgae to indicate the passoword is not riight
+
+ bcrypt.compare(password , user.password , (err ,isMatch)=>
+                {
+                    //checking if there is an error and throwing if there is
+                    if(err)
+                    {
+                        throw err
+                    }
+
+                    //If the passowrd mathces we return done with null for the error and the matching user object
+                    if(isMatch)
+                    {
+                        return done(null , user)
+                    }
+                    else
+                    {
+                        return done(null , false , {message:"The password does not match "})
+                    }
+                })
+                .catch(err => console.log(err))
+
+
+Finally we will implement code fomr the passport documentation 
+http://www.passportjs.org/docs/configure/ geeneral->configure->sessions
+
+In a typical web application, the credentials used to authenticate a user will only be transmitted during the login request. If authentication succeeds, a session will be established and maintained via a cookie set in the user's browser.
+
+Each subsequent request will not contain credentials, but rather the unique cookie that identifies the session. In order to support login sessions, Passport will serialize and deserialize user instances to and from the session.
+
+
+In this example, only the user ID is serialized to the session, keeping the amount of data stored within the session small. When subsequent requests are received, this ID is used to find the user, which will be restored to req.user.
+
+The serialization and deserialization logic is supplied by the application, allowing the application to choose an appropriate database and/or object mapper, without imposition by the authentication layer.
+The code looks like this
+
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
+
+
+we must add middleware to our app.js
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+These lines must be put after the express session middleware 
+
+You will recive an error at the point saying passport hasnt been defined so we just need to require the file in our app.js
+
+const passport = require("passport")
+
+require("./Config/passport")(passport)
+
+we now need to create our route for the login
+
+when we submit a login it makes a post request to users/login 
+
+we have to handle this and tell the route to handle the localStrategy   
+
+this can be done in the users.js in the routes file
+
+we will require passport to this file
+const passport = require("passport")
+
+we will create another route for the login 
+
+router.post("/login" , (req , res)=>
+{
+
+})
+
+we must use passport.authenticate and use the localStrategy using local
+
+this will take in a few paarameters:
+
+successRedirect: we wnat to go to the dashboard page
+failureRedirect: we want to go to the login page 
+failureFlash: this will be the message if there is a failure
+
+we then need to place req , res and next as parameters
+
+in order to show the flash message we must make a new global variable in the app.js
+
+res.locals.error = req.flash("error")
+
+we must then go back to our messages.ejs and copy another flash message and change the variable to error not error_msg
+
+ <% if(error_msg != ''){ %>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <%= error %>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <% } %>
+
+
+=dashboard==
+
+WE MUST GO TO OUR INDEX.js Route
+
+and then create a route for the dashboard page rendering the dahboard view
+
+router.get("/dashboard" , (req , res)=>
+{
+    res.render("dashboard")
+})
+
+
+we will go to our users.js to handle the log out
+
+we will create a route with a get request 
+
+router.get("/logout" , (req , res)=>
+{
+    
+})
+
+the passport middleware gives us the ability to logout using req.logout
+
+will will then send a sucess message and redirect to the login page
+
+
+we need to implement ensure authenticate to make sure the dashboard is not accssable unless logged in
+
+in the config folder we create a file called auth.js
+
+this file will export an object called ensureAuthenticated this will be a function thta takes in req res and next 
+
+we will then check if the person is Authenticated using the req.isAuthenticated if they are we can return next if they arent we ill return an error message
+
+and then redirect to the login page
+
+module.exports = {
+    ensureAuthenticated: function(req, res, next) {
+      if (req.isAuthenticated()) {
+        return next();
+      }
+      req.flash('error_msg', 'Please log in to view that resource');
+      res.redirect('/users/login');
+    },
+    forwardAuthenticated: function(req, res, next) {
+      if (!req.isAuthenticated()) {
+        return next();
+      }
+      res.redirect('/login');      
+    }
+  };
+
+any page we wnat to be protected we must bring in the ensureAuthenticated object into the route file in this case index.js and require the the authentication file being auth.js
+
+const {ensureAuthenticated} = require("../Config/auth")
+
+and then we cn just pass in the object into the router.get method as a parameter
+
+router.get("/dashboard" ,ensureAuthenticated, (req , res)=>
+
+Finally when loggeed to display the user name we must pass in the an object into the dashboard page in order to gain access to it's parameters in this case we will create a name varibale and assign it to access the user name of the user being passed in upon logon
+
+and then in our ejs file include the name in between ejs tags
+
+Welcome <%= user.name % >
+
+ res.render("dashboard" , {
+        user:req.user
+    })
