@@ -15,7 +15,7 @@ router.get("/" , (req , res)=>
 
 //route for index page upon login
 //we passsed in the ensureAuthenticated to protect the page from being accesse without login
-router.get('/dashboard',  (req, res) =>
+router.get('/dashboard', ensureAuthenticated ,(req, res) =>
 {
   res.render('dashboard', 
   {

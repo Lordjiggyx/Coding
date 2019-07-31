@@ -886,4 +886,3 @@ Routes: This folder contains the two routes that will handle the application ind
 
 4. EJS is very confusing every single line being written in ejs must contain both an open and close tag it might be best to download a installation or go through a course that tecahes you how to code in ejs better
 
-5.
