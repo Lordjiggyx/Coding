@@ -866,3 +866,24 @@ Welcome <%= user.name % >
  res.render("dashboard" , {
         user:req.user
     })
+
+
+******THINGS TO NOTE/ CONSIDER*******
+
+1. app.js will serve as the the server and where you connect to the database, Here you instantiate the two routes that handle this application index.js which handles the welcome and dashboard pages and users.js that handles registeration login and log off
+
+2.You need a number of folders each holding different responsibilities
+
+Config: This folder will contain the 3 files for the application the authentication file for when someone logs in , keys for your MongoDB connection url and passport for using passport for creating sessions and logging in
+
+Models: This will contain a file called users that will contain the mongoose schema which esstenially defines the paarameters required in a user class
+
+Views: These are pages that are rendered when a post or get request is being exceuted
+
+Routes: This folder contains the two routes that will handle the application index.js and useres.js
+
+3. Being comfortavle with callbacks and promises is very important in these restful projetcs as they are always used suggest that you actually check out methodfs like .then and review the practice file on callbacks and promises
+
+4. EJS is very confusing every single line being written in ejs must contain both an open and close tag it might be best to download a installation or go through a course that tecahes you how to code in ejs better
+
+5.
