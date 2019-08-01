@@ -1,0 +1,261 @@
+This app will use react for pagination
+
+it will not being using any server side methods
+
+The posts are being grabbed from json placeholder 
+
+We will not be using classes instead we will use hooks
+
+Also bringing in bootstrap into the index.html file
+
+we will also use axios
+
+
+
+To sart we will import axios as we want to get the posts
+
+ but first we must intstall it
+
+ npm i axios
+
+ then in the app .js file
+
+ import axios from "axios"
+
+
+ We will then remove the code given to us and place this 
+
+
+ const App = () =>
+{
+  return (
+      <div className = "container">
+        <h1>My appa</h1>
+     </div>
+
+  )
+}
+
+we will be using hooks to do so we must being in two things
+
+useState - This alliws us to use state in a functional component
+useEffect - This allows us to mimic lifecycle methods in a class based component as when the component mounts we want to fire off a request to get the posts
+
+import React , {useState , useEffect} from 'react';
+
+inside our app component we will create aour state values
+
+we will crate a value callled posts and a method used to change the state called setPosts
+this is done within [] braces and we set this to useState and the default value whihc will be an empty array
+
+const [post, setPosts] = useState([])
+
+we will alos have loading as we will be fetching data this will be variable called loading and a method to change the value of that variable and it's defualt value wil be false
+
+const [loading , setLoading] = useState(false)
+
+we will then have useState values for the current page and a method to chenage the current page and it's default valuue will be one as we wil be on the first page
+
+const [cuurentPage , setCurentPage] = useState(1)
+
+
+Then we will have a post per page value and a method to chnage the variable 
+
+const [postsPP , setPostsPP]
+
+we will now use useEffect to make our request , this takes an arrow function
+you never want to place async on useEffect so you will need a new function
+
+this function will use async and use an arrow function 
+
+we will setLoading to true as we are fetching 
+then we will make a response variable and make our request using axios .get() which takes the posts url
+
+we will then set the posts to the response data 
+
+and then set the loading back to false
+
+and finally we will call the funcrtion
+
+useEffect(()=>
+{
+    const fetchPosts = async () =>
+    {
+        setLoading(true)
+        const res = await  axios.get("https://jsonplaceholder.typicode.com/posts")
+        setPosts(res.data)
+        setLoading(false)
+    }
+
+    fetchPosts()
+} , [])
+
+useEffect runs when the component mounts or updates this esstentially creates a never ending loop to stop this we place an empty [] , this is also where you put dependecies if you wanted it to run when something specific chnages
+
+There will be a seperate component for posts which we will pass them into 
+
+we will need a new folder in source called components and we will create a file called posts.js
+
+you cna type racf and press tab to create an arrow function component or just type out
+
+
+import React from 'react'
+
+const Posts = () => {
+    return (
+        <div>
+            
+        </div>
+    )
+}
+
+export default Posts
+
+This will take in props and we can destructure this and pull out our posts object and loading
+
+const Posts = ({posts , loading}) =>
+{
+    ...
+    ....
+    .....
+}
+
+The first thing we will check is if it finished laoding
+
+if(laoding)
+{
+    return  <h2>Loading...</h2>
+}
+
+then whenit is finished loading we can return the posts in the form of ul's and li's
+
+
+    return  <ul className = "list-group mb-4">  
+
+        {posts.map(post=>
+        (
+            
+             <li key={post.id} className='list-group-item'>
+            {post.id}.
+            {post.title}
+            </li>
+          
+        ))}
+
+</ul>
+}
+
+
+*****MAP returns a callback which is () => () not ()=> {}
+
+
+Now we go back to app.js 
+we must import posts
+
+import Posts from "../src/Components/Posts"
+
+to insert posts we need to remeber that posts takes in posts as a prop and also takes in loading 
+
+<Posts posts = {posts} loading ={loading} />
+
+To narrow this down we can now implement the pagination
+
+in the app.js above the return we will add extra logic 
+
+The first thing is to grab the index of the last post which will give us the idex of the last post as 
+
+const indexLastPost = currentPage * postsPP
+
+Then get the index of the first post
+
+const indexFisrtPost = indexLastPost - postsPP
+
+Then to get the current posts by setting it to the state of all the posts but we will use .slice() and pass in indexFisrtPost and indexLastPost which will cut out the number of posts we want
+
+const currentPosts = posts.slice(indexFisrtPost , indexLastPost)
+
+
+then in the return instead of passing in {posts} we will use currentPosts
+
+The slice() method selects the elements starting at the given start argument, and ends at but does not include, the given end argument.
+
+so currentPosts should return the post with the id 11 but instead returns the podt with id 10
+
+were gonnna createa new component called pagination
+
+we will use racf again
+
+this will take in probps whihc we will destructure
+
+const Pagination = ({postsPP , totalPosts}) => {
+
+then we will create a variable to represent the page numbers
+
+const pageNumbers = []
+
+then we will use a for loop 
+
+we want our index to be less then or equal to the totalPosts divided by the posts per page
+we wrap this in Math.ceil to round it off
+
+and then inside we'll just push on the index 
+
+for(var i = 1 ; i < Math.ceil(totalPosts/postsPP) ; i++)
+{
+    pageNumbers.push(i)
+}
+
+inside the return we will use the bootstrap markup fpr pagination
+
+we will start with a ul with the class of pagination
+
+then inside this tg we will loop through the page numbers and for each page number we will output an li 
+
+each li will get a key using the number and then the li will get a className of page item
+
+inside the li we will have a link tag and add a className of page link 
+and inside this tag we want the page number 
+
+then closes all the tags
+
+return (
+        <nav>
+            <ul class = "pagination">
+                {pageNumbers.map(number =>
+                (
+                    <li key = {number} className = 'page-item'>
+                    <a onClick={() => paginate(number)} href='#' className= 'page-link'>
+                        {number}
+                    </a>
+                    </li>
+                ))}
+            </ul>
+        </nav>
+    )
+
+Back in the app.js we will bring in pagination
+
+import Pagination from '../src/Components/Pagination';
+
+then in the return we will create our pagination component and then pass in the postsPP and totalPosts(the length of the posts array) as props
+
+to switch the pages when you click the items 
+
+we must go into pagination.js we can add an onclick 
+
+this onclick will call use an arraow function whihc will call a paginate method whihc will take the page number this will be called as a prop so we need to go back to our Pagination.js and add paginate to the function
+
+const Pagination = ({postsPP , totalPosts , paginate}) => {
+
+Then back in app.js we add paginate as a prop to our pagination component 
+
+paginate ={paginate}
+
+this will call a method call paginate
+
+this ewthod will call setCurentPage and pass in pageNumber but the actual function needs the pageNumber and this looks like this
+
+const paginate =(pageNumber)=>
+{
+  setCurentPage(pageNumber)
+}
