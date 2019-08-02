@@ -1,0 +1,213 @@
+Esstenially this project is a full stack porject working from the back to the front using 
+MongoDB , Express and nodr.js
+
+
+
+
+====Part 1 Getting started====
+
+To start you want to create a package.json with npm init -y in the folder where the application is
+
+Then you want to create the main file called app.js
+
+we can add our scripts to the package.json in order to run our application
+
+"start": "node app.js",
+"dev": "nodemon app.js"
+
+**nodemon installed with other dependencies****
+
+---Dependencies---
+
+Express will be the first dependency we add
+
+we will use npm i --save express
+
+this will create a folder called node_modules
+
+we can then install nodemon npm i g nodemon
+and use npm run dev to start it 
+
+**Testing express**
+
+Go into the App.js and require express and create a variable for it called app to represent express
+
+//Brininging in the express module
+const express = require("express")
+
+//We need an object to represnt our express app
+const app = express();
+
+
+we can now create routes using app._Method_Type e.g post get 
+
+app.get("/" , (req , res)=>
+{
+    ....
+    .....
+    ......
+})
+
+then we must use the app.listen to listen out on a particular port
+
+///This tells the application to listen on the value of whatwvwer we assigned to port
+app.listen(port , ()=>
+{
+    console.log(`Server Started on port ${port}`)
+})
+
+
+
+====Part 2 Pug Template engine====
+
+we will first require path from npm 
+
+const path = require('path')
+
+we will use npm i --save pug to install pug
+
+in our app.js 
+
+we can take our app variable and use .set()
+
+we want to point to the folder where the views will be kept
+
+to load the veiws engone we will pass in views and then use path.join path.join will take in the current directory using __dirname and then a folde rcalled views
+
+app.set("views", path.join(__dirname, "views"))
+
+then we can set this to pug 
+
+app.set("view engine , "pug")
+
+we can then create a folder called views
+and in this folder create a file called index.pug
+
+**Every view will have a pug extension***
+
+in this file we can type 
+
+h1 Hello World
+
+then going back to our app.js we change the res.send() to res.render in the app.get method and let it take in index.pug
+
+
+app.get("/" , (req , res)=>
+{
+    res.render("index.pug")
+})
+
+****
+PUG
+
+Pug works on indentation no tags 
+
+for example 
+
+html
+    head
+        title Tomi Ilori's World
+    body
+        h1 This is my World
+
+This is kinda like python 
+
+we can pass values ot the template 
+
+if we go to the res.render we can send an object  by ading it to the render parenthese
+
+app.get("/" , (req , res)=>
+{
+    res.render("index.pug"  ,
+    {
+        title:Jiggy's World
+    })
+})
+
+then in our index.pug we can use #{Variable_name} and then this will take in the variable values
+****
+
+
+We then create the route for the pagfe that will be used for creating articles
+
+app.get("/articles/add" , (req , res)=>
+{
+    res.render("add.pug"  ,
+    {
+        title:Add articles
+    })
+})
+
+in views we create a new file called add.pug
+
+and use the same pug template from index.pug 
+
+and if we use http://localhost:5000/articles/add we'll see the page changes
+
+
+The code in these views are repetitive so what you want to do is create a layout and extend it in eaxh view so you do not have to repeat yourself
+
+To do this we will create a file called layout.pug in the views folder
+
+and then copy the same pug code from the index.pug into it 
+
+but whereevr we want to output the view we want to indent and type block content
+
+html
+    head
+        title Tomi Ilori's World
+    body
+       block content
+       br
+       hr
+       footer
+        p Copyright &copy; 2019
+
+in our index.pug we will type 
+
+extends layout
+
+then type block content
+then what ever we wnat in it and you can now seeing it extends the layout
+
+
+we can add control statements to pug useing loopd snf if statements to test this we will create an empty array 
+
+
+let articles = [
+    
+   { id:1,
+    title:"A1",
+    User:"Template",
+    body:"This is article one"},
+   { id:2,
+    title:"A2",
+    User:"Template",
+    body:"This is article two"},
+   { id:3,
+    title:"A3",
+    User:"Template",
+    body:"This is article three"},
+    
+]
+
+we can pass more then one thing in  
+
+we then go to the route for the index and set the index to equal This array
+
+app.get("/" , (req , res)=>
+{
+    res.render("index.pug"  ,
+    {
+        title:"Home page",
+        articles:articles
+    })
+})
+
+we can then go to our index.pug and loop through using each
+
+underneath the h1 we can type
+
+ul
+    each article, i in articles
+        li= article.title
