@@ -32,6 +32,7 @@ const Component1 = () => {
                         )}
 
                     </Spring>
+                    
                     </div>
 
                 </div>
