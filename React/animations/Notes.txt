@@ -1,0 +1,228 @@
+To start we want to install react spring after cretaing our package
+
+npm i react-spring
+
+we will create a components folder in the src folder and create 3 files
+
+component1 - functional
+component2 - class based
+component3 - functional
+
+
+
+===Component 1=====
+
+IN thhis component we will just add a paragraph with lorem to start and a heading ot indicate that it is component 1
+
+thn we go into app js and bring in this component
+
+import Component1 from "./components/Component1"
+
+then replace the h1 in the app.js with the component1 tag
+
+to give this component style we add a style attriubute to the div tag in the component1 file
+ <div style = {c1style}>
+
+
+ then at the bottom we can instantiate this c1style variable and begin to add styles
+
+ const c1style = 
+ {
+     ....
+     .....
+     ......
+     .......
+ }
+
+ We must then import react spring to do this we use 
+
+import { Spring } from 'react-spring/renderprops';
+
+
+To use spring we must go into the return and create <Spring> tags whatever we want to animate muts be placed in these tags
+
+but in thesse tags we need to place props in curly braces we will set props to arrow function and inside the parentheses we place in a container div tag with a style and this style is set to props
+
+{props =>
+            (
+                <div style ={props} >
+
+                    
+                </div>
+            )}
+
+
+then we place want we want in this container tag
+
+
+
+   <Spring>
+            {props =>
+            (
+                <div style ={props} >
+                    <div style = {c1style}>
+                    <h1>Component 1</h1>
+                    <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                    </p>
+                    </div>
+
+                </div>
+            )}
+       
+        </Spring>
+
+
+The spring tag needs a few props passed into it which are the from and to props like css keyframes
+
+<Spring
+from={{opacity:0}}
+to={{opacity:1}}
+>
+
+THIS CAUSES THE Component to fade in from opacity 0 to opacity 1
+
+ <Spring
+        from={{opacity:0 , marginTop:-500}}
+        to={{opacity:1, marginTop:0}
+        >
+
+adding margin top causes it to move down 
+
+
+Component 2 will be a class based component as we will have a button on it so we need to pass props up in the hieracry
+
+we must also import spring in this file
+
+and then create a class component using the boilerplatwe
+
+we can take the same spring tag and content from c1 just remove the margin top animation as we do not want it to come down and then change the style this gets placed in the return of the class component
+
+at this point the component2 is still being pushed down by component1 so we will add a delay of 1 second so it doesn't render immediately and a duration of 1 esecon for a beter animation
+
+to do this we add a config prop with these parameters set
+
+<Spring
+        from={{opacity:0}}
+        to={{opacity:1}}
+        config={{delay:1000 , duration:500}}
+        >
+
+https://www.react-spring.io/docs/props/spring - for spring inner text animations
+
+in component1 we want to open another spring tag
+
+with from and to we can set the variable 0 to number 10
+
+<Spring
+                    from={{number:0}}
+                    to={{ number:1}}
+                    
+                    >
+
+then again we will add the props and set it to be an arroww function with a div with
+a style of props in here we can place a h1 
+we can now access this with props
+
+anything we put in props can be accessed so we can use {prop.number}
+
+    {props =>
+    (
+    <div style ={props} >
+
+    <h1>
+    {props.number}
+    </h1>
+
+    </div>
+
+we can add a style of counter to the h1 
+
+<h1 style = {counter}>
+
+to stop the decimal point from showing we can add a toFixed javascript method 
+
+{props.number.toFixed}
+
+
+====Transitions===
+
+Transitions work by changing in relation to a components state 
+
+in our app.js we will add showComponent3 to our state and set this false 
+when we click our button the transion will occur
+
+in component2 we will have a button 
+
+to create this button we just use buuton tags
+
+<button
+onClick = {this.props.toggle}
+style = {btn}
+>
+Toggle button 3</button>
+
+we added an onclic and a style tag to it
+
+as there is state in app.js we can use this.props and access any variable so we will create a method called toggle in and access it using 
+
+{this.props.toggle}
+
+back in app.js in the component2 tag we will add toggle to the tag and allow it to equal this.toggle which will be the method we create above it 
+
+we will let this equal an arrow function that will chage the state of the button
+
+ toggle = (e) =>
+    {
+        console.log("123")
+        this.setState(
+            {
+                showComponent3: !this.state.showComponent3
+            }
+        )
+    }
+
+we use this.setState to set showComponent3 to whatever the value of it is to the opposite value
+
+to make th component fade out and transtion
+
+in app.js we bring transtion and animated from react spring
+
+import { Transition , animated } from 'react-spring/renderprops';
+
+we will get rid of the component3 tag and replace it with a transtion tag 
+
+this will take in a few properties
+
+native:
+items:what we want to look at in our case being the state of component3
+from:
+enter:
+leave:
+
+all the others explained in the documentation
+
+<Transition
+          native
+          items={this.state.showComponent3}
+          from={{ opacity: 0 }}
+          enter={{ opacity: 1 }}
+          leave={{ opacity: 0 }}
+        >
+
+on the indside we want to open up curly braces and create an arrow function
+
+we will have the function call the show method and then create another arrow function using props and then inside we will use animated.div and pass in the style of props
+
+on the inside of this tag whatever we want to show can be placed inside whihc is component3 
+
+ {show =>
+            show &&
+            (props => (
+              <animated.div style={props}>
+                <Component3 />
+              </animated.div>
+            ))
+          }
+
+You can add any css properties 
