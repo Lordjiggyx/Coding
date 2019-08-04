@@ -211,3 +211,182 @@ underneath the h1 we can type
 ul
     each article, i in articles
         li= article.title
+
+
+
+====Part 4 - MongoDB & Mongoose====
+
+Rather then using command line for the MongoDB i'm going to use MongoDB compass as it makes htings much easier 
+
+Create a databas and a collection called articles 
+
+create article objects with the attributes title author and body
+
+To start connecting the app to the database we need to install and require mongoose 
+
+Go into the terminal and then intall monogoose as a dependency using 
+
+npm i --save mongoose
+
+Then we go to app.js and require mongoose
+const mongoose = require("mongoose")
+
+then to connect to database we use mongoose 
+
+monogoose.connect('mongodb://localhost/MER')
+
+then we must make a database object that can be used in the app
+
+let db = mongoose.connection
+
+
+Then we create a new folder in the project called models and then creat a file called articles.js , models allow us ot give infrastructure to our database
+
+we must first require mongoose
+
+//requiring mongoose modules
+const mongoose = require("mongoose")
+
+then we must create a schema 
+
+let articleSchema = mongoose.Schema(
+    {
+
+    }
+)
+
+inside this schema we can define our objects fields and whether they're required or not
+
+let articleSchema = mongoose.Schema(
+    {
+        title:
+        {
+            type:String,
+            required:true
+        },
+        Author:
+        {
+            type:String,
+            required:true
+        },
+        Body:
+        {
+            type:String,
+            required:true
+        }
+    }
+)
+
+
+Now we will createa  varical ecalled Aritcle and set it to modules.exports and then set it to mongoose.model() and this takes in the name of the model being article and the schema being articleSchema
+
+let Article = module.exports = mongoose.model('Article' , articleSchema)
+
+we then need to go into our app.js and bring in our models
+
+let Article = require("./Models/articles")
+
+we cam mow use the article variable
+
+now going to our home page we can use 
+
+Article.find()
+
+this takes in a query and a function
+
+seeing as we want all of the objects this can be left as a empty {}
+
+the function i use is an arrow function this will take in err and then the response being articles
+
+(err , articles)=>
+{
+
+}
+
+so together this lookes like 
+
+ Article.find({}, (err , articles)=>
+    {
+        
+    })
+
+
+we can then take our res.render and place itinto this function we also want to check and console log any errors 
+
+ Article.find({}, (err , articles)=>
+    {
+        res.render("index.pug"  ,
+        {
+            title:"Home page",
+            articles:articles
+        })
+    })
+
+===Part 5 - Add articles to database====
+
+We eill start in our add.pug file 
+
+we ill create a form underneath the title setting themethod to post and the action to the corresponding route in the app.js for adding articles
+
+form(method = "POST" , action="/articles/add")
+
+Seeing as we will be using bootstrap we will use form control 
+
+
+we will then create the fields 
+#form-group
+            label Title
+            input.form-control(name="Title" , type="text")
+
+            we will copy this for the aother fileds
+
+The body gets a text area so no need for a type
+
+to create a submit button we use input and set the type to submit along with the bootstrap classes btn btn-primary
+
+input.btn.btn-primary(value="Submit" , type="submit")
+
+as we are submitting a post request we create a route with a post method and in here we will handle the creationn of a new app 
+
+we need to install body-parser first
+
+npm i --save body-parser
+
+once this is install we must require it 
+
+const bodyParser = require("body-parser")
+
+we need add middleware for this 
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+ 
+// parse application/json
+app.use(bodyParser.json())
+
+we can then create an artcile object using the model that we imported 
+
+let article = new Article()
+
+
+Then we can assign the artcile fields to equal the fields passed into the form
+article.Title = req.body.Title
+    article.Author = req.body.Author
+    article.Body = req.body.Body
+
+we can then call the save method on the article object
+check for an error and if there isn;t one redirect to home page where the metohd in that page will render all the artilces including the new one
+
+ article.save((err)=>
+    {
+        if(err)
+        {
+            console.log(err)
+            return
+        }
+        else
+        {
+            res.redirect("/")
+        }
+
+    })
