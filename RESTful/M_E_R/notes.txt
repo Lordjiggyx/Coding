@@ -390,3 +390,334 @@ check for an error and if there isn;t one redirect to home page where the metohd
         }
 
     })
+
+
+====Part 6 -  Bootstrap====
+
+This will make the application look more attractive
+
+To start we create a public folder 
+this folder will be static so we can load images and css files
+
+we need to let express know that this folder will be treated as a static folder 
+
+to do this we go into our app.js and type the following
+
+/Set public folder
+app.use(express.static(path.join(__dirname , "public")))
+
+We will use Bower to install bootstrap
+
+to do this we will use npm i -g bower
+
+when you intsall through bower it will cretae a folder called bower components we want the bower components to go into the public folder so we can load it statically to do this we can create a file in the root called .bowerrc and in this file we can define where we want the components intsalled too
+
+
+{
+    "directory":"public/bower_components"
+}
+
+I actually used the cdn version of bbotrap as it was not working through bower
+
+link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css")
+
+We can begin to add bootstrap markup 
+
+Complete fail with the nav bar 
+
+next we will go to the index page and then allow each item to open a page when clicked 
+
+to do this we should put an a tag 
+
+li.list-group-item
+            a(href="#")=article.Title
+
+            we can then use it to target the article by id 
+
+
+    li.list-group-item
+            a(href="/article/"+article._id)=article.Title
+
+
+Now we must go to our app.js and go to our routes and create a route for grabbing a single article
+
+this will be a GET method so we will use app.get()
+
+in this method we will be grabbing books by their id so we must reference it in the actual link that were going to use :id so the path will look like 
+
+"/article/:id"
+
+as usual the methid returns a function for what to do when we make this request in this case we can call the Article.findById method seeing as when we click the link the id is taken from the object in the database and passed in so we can use it in this method. 
+ 
+
+To access this id we can use req.params.id which is Esstenially pulling the id variable from the requested object and this also returns a function for what should happen when we find the object in this case we will render a page called article.pug and pass in the article object found 
+
+Article.findById(req.params.id , (err , article)=>
+    {
+        res.render("article.pug"  ,
+        {
+            article:article
+        })
+    })
+
+We must then create the article.pug 
+
+this file is simple we can extend the layout of layout.pug 
+
+and then in th eblock content we can add heading tags and target pieces if the found object
+
+
+block content
+    h1= article.Title
+    h5 Written by #{article.Author}
+    p= article.Body
+
+If we wanted to reference a parameter value in a string we can just #{} similar to template literals in es6
+
+extends layout
+
+block content
+    h1= article.Title
+    h5 Written by #{article.Author}
+    p= article.Body
+
+
+===Part 7 -Update and delete ===
+
+in the article.pug button we will add a button 
+
+the link will bring us to page that will bring us to a page 
+where we can edit the page
+
+ a.btn.btn-primary(href="/article/edit/"+article._id) Edit
+
+ we need to create a route for this in our app.js file 
+
+ it is pretty much the same as the getting a single article just we will render a page caled edit_article.pug and change the path
+
+app.get("/article/edit/:id" , (req , res)=>
+{
+    Article.findById(req.params.id , (err , article)=>
+    {
+        res.render("edit_article.pug"  ,
+        {
+            title:"Edit Article",
+            article:article
+        })
+    })
+})
+
+Then the edit_Article.pug view is the same ass the add pug file 
+
+we need to pass a title into the file through the route 
+
+title:"Edit Article",
+
+the form in this file will go to a different loctaion being 
+
+form(method = "POST" , action='/articles/edit/'+article._id)
+
+we need to place the values of the inputs into each field 
+
+form(method = "POST" , action="/article/edit/"+article.id)
+        #form-group
+            label Title
+            input.form-control(name="Title" , type="text" , value = article.Title)
+        #form-group
+            label Author
+            input.form-control(name="Author" , type="text" , value = article.Author)
+        #form-group
+            label Body
+            textarea.form-control(name="Body" )= article.Body
+        input.btn.btn-primary(value="Submit" , type="submit")
+
+Now to catch the submission we must create a route in our app.js for submitting the edits 
+this will be similar to the add
+
+we must first change the path to 
+
+"/articles/edit/:id"
+
+Instead of creating a new article we will create an empty object 
+
+let article = {}
+
+we will then get the fields fro, the form and add them to the object
+
+ article.Title = req.body.Title
+    article.Author = req.body.Author
+    article.Body = req.body.Body
+
+Then we will create a query to match the the requested object to the one that we have created by id 
+
+let query = {_id:req.params.id}
+
+then we will not use the article varivale created we will use the model being Article
+
+we will then change the save method to Update and pass in the query and the article that we just made
+
+To delete an article we can use ajax 
+
+in artcile.pug we can add a btn to delete
+
+ a.btn.btn-danger.delete-article(href="#" , data-id=article._id) Delete
+
+
+ we can use jquery to grab onto this and maje the request 
+
+ We will create a folder in the public folder called js and then create a  new file called main.js this is the client side js file and also a css folder with a css file 
+
+ we must include these in our layout.pug
+
+ link(rel="stylesheet", href="/css/style.css")
+
+ with the js we need to take the javascript from the boottrap home page and also target it to our main.js file
+
+    script(src="https://code.jquery.com/jquery-3.1.1.min.js")
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous")
+  script( src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous")
+  script(src="/js/main.js")
+
+  in the main.js we will use $(doucument) an on this variable we can call the ready mthod , this returns a function and in this function we can call the button using the .delete-article class we added to it when we created it and then add the on method in this instance we will use on "click" and create another method that will set the variable of $target to be the button as this is being targeted by the event variable 
+
+  we can then set an id variable to the id of htis variable 
+
+
+  then we can use $.ajax in this it returns an object 
+
+  type - the type of method in this case being a delete 
+  url - the route that is called when this event is triggred
+  success - we can use a function to send an alert indicating the article was deletted and then using window.location.href to re-direct to the index page 
+  finally we can catch the error and get the console to display it 
+
+  $(document).ready(()=>
+{
+    $('.delete-article').on("click" , (e)=>
+    {
+        $target = $(e.target)
+       const id =  $target.attr("data-id")
+
+       $.ajax(
+           {
+               type:'DELETE',
+               url: '/article/'+id,
+               success: (response)=>
+               {
+                alert("Deleting Article")
+               window.location.href="/"
+               },
+               error:(err)=>
+               {
+                console.log(err)
+               }
+           }
+       )
+       
+    })
+})
+
+
+Before we can test this we must create the route that occurs when we click the button 
+
+in this route we wil use app.delete as this is the type of method being called 
+we will change the url to match the one we put in the url field for the main.js 
+
+and then we must create a query just to match the id of the requested object being requested in the body and the object in the database 
+
+then we can use Article.remove and pass in the query and check for the error and if there is no error we can just send a success messsage 
+
+app.delete('/article/:id' ,  (req ,res)=>
+{
+    let query = {_id:req.params.id}
+
+    Article.remove(query, (err)=>
+    {
+        if(err)
+        {
+            console.log(err)
+        }
+        res.send("success")
+    })
+})
+
+
+===Part 8 - Messaging and Validation === 
+we must install the following modules 
+express-messages
+express-session
+connct-flash
+express validator
+
+npm i save express-messages express-session connect-flash express-validator
+
+we can then require flash and session and validator into our file 
+
+const flash = require('connect-flash');
+const session = require('express-session');
+const expressValidator = require('express-validator');
+
+we will add the middleware for this code 
+
+For express session
+
+/ Express session
+app.use(
+    session({
+      secret: 'secret',
+      resave: true,
+      saveUninitialized: true
+    })
+  )
+
+  we need to add the express message middleware
+
+  // Express Messages Middleware
+app.use(require('connect-flash')());
+app.use(function (req, res, next) {
+  res.locals.messages = require('express-messages')(req, res);
+  next();
+});
+
+We need tro cretae a file called message.pug this will be an include pr part of our template 
+
+we will use this code 
+
+.messages
+  each type in Object.keys(messages)
+    each message in messages[type]
+      div(class="alert alert-"+type) #{message}
+
+this allows us to loop through the messages and pass in a type this will thne create a div with a class of alert with the corresponding type that is passed in so success for green danger for red etc and we will send the message out in an actual variable 
+
+
+we can then add this to our layout and place it above the block content
+
+ !=messages("message.pug" , locals )
+
+now we have a custom template 
+
+we can then go to our app.js 
+
+
+
+we will start with the submitting of an article whihc is in our submission route 
+
+just above the redirect we will write 
+
+req.flash('success' , "Article Added Successfully")
+
+we can add this to our update route as well
+
+To validate we can just use an if statement that checks if any of the fields are empty and if they are re render the page an send a flash message indicating that al fields must be filed
+
+ if(req.body.Title== "" || req.body.Author== "" || req.body.Body== "" )
+    {
+        req.flash("danger" ,"All fields must be filled")
+        res.render('add.pug',
+        {
+            title:"Add Article",
+        })
+    }
+
+The rest of the code is in the else statement followiung the normal procedure that follows when an article is being created
+
