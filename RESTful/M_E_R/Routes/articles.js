@@ -129,7 +129,7 @@ router.get("/articles/edit/:id" , (req , res)=>
      Article.findById(req.params.id , (err , article)=>
     {
         //Checking that artcile author matches the the logged in user id befire allowing changes to be made
-        if(article.id != req.user.id)
+        if(article.Author != req.user.id)
      {
          req.flash("danger" , "Not Authorised to make changes to this article" )
          res.redirect("/")
@@ -161,7 +161,7 @@ router.delete('/articles/:id' ,  (req ,res)=>
     Article.findById(req.params.id, function(err, article)
     {
         //Checking that the artocle owner is the same as the user that is logged in
-        if(article.author != req.user._id)
+        if(article.Author != req.user._id)
         {
           res.status(500).send();
         }

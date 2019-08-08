@@ -1267,7 +1267,7 @@ then the second one to check the user id is the same as the article author
 
 To prevent accessing the edit form with a user that does not own the artcile we can go to to our article.js and the edit form and use an if statement to check if the article author matches the user id 
 
-  if(article.id != req.user.id)
+  if(article.Author != req.user.id)
      {
          req.flash("danger" , "Not Authorised to make changes to this article" )
          res.redirect("/")
@@ -1295,7 +1295,7 @@ router.delete('/articles/:id' ,  (req ,res)=>
 
     Article.findById(req.params.id, function(err, article)
     {
-        if(article.author != req.user._id)
+        if(article.Author != req.user._id)
         {
           res.status(500).send();
         }
