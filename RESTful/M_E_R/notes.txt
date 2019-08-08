@@ -721,3 +721,597 @@ To validate we can just use an if statement that checks if any of the fields are
 
 The rest of the code is in the else statement followiung the normal procedure that follows when an article is being created
 
+Now will take our routes in the app.js and and place them in a seprerate file .We will create a folder called routes and inside a file called articles.js
+
+
+in this file we bring in express 
+
+and then we bring in the express router by creating a variable called router
+and setting it to equal express.Router
+
+we can grab all the routes except the home page route anything that has article/ and paste it into the articles.js file 
+
+we must then change the app.method to router.method
+
+e.g app.post => router.post
+
+at the bottom we must make this file accessible by using module exports
+
+module.exports = router
+
+
+
+in our app.js we wil bring in te route file
+
+let articles = "./Routes/articles"
+
+then we will say anything that goes to /articles will go to this file 
+
+to do this we can just tell our application to use articles by saying 
+
+app.use(articles)
+
+before we can test this we must go to our index.pug add.pug article.pug edit article.pug and ensure the methods all match the methods in the router file 
+
+The tutorial was messy so we will chnage Everything from /article => 
+/articles 
+
+****In the main.js when you delete a file you pass in the url of / article thiis must also be changed to /articles
+
+
+
+====Part 9 - User Registartion =====
+
+We want to implement user registration and access control and login 
+
+To start we will use npm i --save passport passport-local bcrypt
+
+Fisrt We should create a user model to di this we will create a new file caled user.js into the modles folder jsut like we did with the articles 
+
+//Requiring Mongoose
+const mongoose = require("mongoose")
+
+
+//User Scehema for user fields
+
+const UserSchema = new mongoose.Schema(
+    {
+        name:{
+            type:String,
+            required :true
+        },
+        email:{
+            type:String,
+            required :true
+        },
+        username:{
+            type:String,
+            required :true
+        },
+        password:{
+            type:String,
+            required :true
+        }
+        
+    }
+)
+
+const User = mongoose.model("User" , UserSchema)
+
+module.exports = User
+
+
+Before we go onto to making our users routes we should go into app.js and allow this file to access the users file by creating a variable and allowing it to require the file nand then calling app.use on this variable to in order to use it
+
+let users = require("./Routes/users")
+app.use(users)
+
+
+We can then cretae a file in our routes folder called users 
+
+we will bring in express , the express router , the user model , passport and bcryptjs
+
+//Brininging in the express module
+const express = require("express")
+
+//Creating express router 
+const router = express.Router()
+
+//user model
+const User = require("../Models/User")
+
+//bringing in bcrypt
+const bcrypt = require("bcrypt")
+
+//Bringing in passport
+const passport = require("passport")
+
+
+we Then need to create a route to our registration form 
+
+//Route for registeration page
+router.get("/users/register" , (req , res)=>
+{
+    res.render("reg.pug")
+})
+
+---Registartion view----
+
+We will cretae a new file in pur views folder called reg.pug and then we will base this form off the add article file 
+
+
+The main changes is that we will be adding two more fields for password and a confirmation password also changing types and values to correspond 
+
+
+---Registartion Process---
+
+Gping back to our users.js we will create a route for registrring
+
+In this route we can destrcuture the req.body object and from this we can use validation to check if all fields are full or if passwords match etc
+
+
+if Everything is fine we will create a new user passing in the fields from above
+
+ const newUser = new User({
+        name:name,
+        email:email,
+        username:username,
+        password:password
+    })
+
+beofre we call in newUser.save we must call bcrypt to hash the password
+
+now to encrpyt the password we need to generate a salt to create a hash there are two methods we will use 
+
+the bcrypt.genSalt this takes in a 10 and then a call back with an wrror and a salt this call back will call the bcrpyt.hash method this will take in our password and the salt this will also give use a call back with a possible error we will set the newuser password to the hash value 
+
+we can then call the save method on this user as this is method in the mongoose models 
+
+this will return a promise in which we will redirect the user to the login page 
+
+
+and then we will catch any errors
+
+//Hash passowrd
+
+                bcrypt.genSalt(10 , (err ,salt)=>
+                {
+                bcrypt.hash(newUser.password , salt ,(err , hash)=>{
+                   if(err)
+                  throw err
+
+                  //set passowrd to hashed
+                  newUser.password =hash
+                  //save User
+                  newUser.save()
+                  .then(user=>
+                    {
+                        //creating the success message 
+                        req.flash('success_msg','You have been registered and can now log in!!!!!')
+                       // req.flash('success_msg','You are now registered and can log in');
+                        //redirecting the user to the login page
+                        res.redirect("/users/login")
+                        console.log(req.flash("success_msg"))
+                    })
+                  .catch(err =>
+                    {
+                        throw err
+                    })
+                        
+                    })
+                })
+
+if they are all fine
+
+just to ensure that this works fine we want to create our login route and the view for it
+
+so we must go under the register and use router.get and create a route for /users/login
+
+router.get('/users/login' , (req , res)=>
+{
+    res.render("login.pug")
+}
+
+
+Then we must create our login.pug view
+
+
+extends layout
+
+block content 
+    h1 Login
+    form(method = "POST" , action="/users/login")
+        #form-group
+            label Username
+            input.form-control(name="username" , type="text")
+        #form-group
+            label Password
+            input.form-control(name="password" , type="password")
+        br
+        hr
+        input.btn.btn-primary(value="Login" , type="submit") 
+
+
+This view will only require the name and passowrd fields 
+ but the method will post to the users/login route
+
+ we can add the register & login links in the layout.pug file
+
+******AT THE END EXPORT THE USERS FILE BY USING MODULE.EXPORTS = ROUTER*********
+
+
+====Part 10 User Login===
+
+To start we will create a config folder and then have two files passport.js and database.js
+
+in database we will epxort an object using module.exports this object will have two parameters database and secret
+
+module.exports = {
+    database:,
+    secret:
+}
+
+
+secret can be any value 
+
+but database will be the link to our database that is in our app.js
+
+module.exports = {
+    database:'mongodb://localhost:27017/MER',
+    secret:"Tomi"
+}
+
+***The port number for mongodb is 27017 and this must be included in the path***
+
+
+so we can now go to our app.js and require the config and the parameter of database
+
+const config = require("./config/database)
+
+mongoose.connect(config.database)
+
+
+Thenwe can go to our passport.js file we need to bring in a few things 
+
+Passport-local
+the user model
+the config file and the parameter of database
+bcrpyt
+
+//Passportv variavble
+const LocalStrategy = require("passport-local").Strategy
+
+//Bring in config as we need to connect to DB
+const config= require("../config/database")
+
+//Bring in bcrypt as we need to decrypt our passwords
+const bcrypt = require("bcrypt")
+
+//Bring in The user model to access user parameters
+const User = require("../Models/User")
+
+
+we must export the file by calling module.exports and set it to a function this function can take in passport and we can begin to implement our LocalStrategy in the function
+
+we will then take the passport object and call the use method this method will take in a variable called localStrategy we will be matching the user name 
+
+We will then pass in an arrow function which will take in 3 things the, the email , the password and a variable called done which is a call back funciton.
+
+we will then create a query variable which is an object with what we wnat to match being usernames 
+
+
+
+module.exports = function(passport)
+{
+    passport.use(
+        new localStrategy(
+            (username , password , done)=>
+            {
+                let query = {username:username}
+            }
+        )
+    )
+}
+
+module.exports = function(passport)
+{
+    passport.use(
+        new localStrategy(
+            (username , password , done)=>
+            {
+                let query = {username:username}
+            //Take user model and find a user using findOne
+            //pass in the query and the callback which will tak in err and user
+            User.findOne(query , (err , user)=>
+            {
+               //checking if there is an error and throwing if there is
+               if(err)
+               throw err
+               //If there is no user we will return done with null and false and we can create a message indicating that the user hasn't been found
+               if(!user)
+               {
+                   return done(null , false, 
+                   {
+                       message:"User Not Found"
+                   })
+               }
+
+               //Match the password
+               //We arew passing in the password of the client input and conmparing this to the password found in the user object that was found 
+               //A function will happen and this will take in error or and a true or false value being is match
+               bcrypt.compare(password , user.password , (err ,isMatch)=>
+               {
+                   //checking if there is an error and throwing if there is
+                   if(err)
+                   throw err
+
+                   //If the passowrd mathces we return done with null for the error and the matching user object
+                   if(isMatch)
+                   {
+                       return done(null , user)
+                   }
+                   else
+                   //If the user is found but the passowrd is wrong we give a messgae 
+                   {
+                       return done(null , false , {message:"Wrong Passowrd "})
+                   }
+               })
+
+            })
+            }
+        )
+    )
+}
+
+
+we must then add this block of code into the bottom of the module exports
+
+
+
+The serialization and deserialization logic is supplied by the application, allowing the application to choose an appropriate database and/or object mapper, without imposition by the authentication layer.
+The code looks like this
+
+//Explanation in notes.txt creates sessions
+        passport.serializeUser(function(user, done)
+        {
+        done(null, user.id);
+        });
+  
+  passport.deserializeUser(function(id, done) 
+    {
+        User.findById(id, function(err, user)
+            {
+            done(err, user);
+            });
+    })
+
+Now going back to our app.js
+
+we must bring in passport 
+
+const passport = require("passport")
+
+we also want to bring in our passport configuration and be able to use the value 
+
+
+require("./Config/passport")(passport)
+
+
+
+we must add middleware to our app.js
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+These lines must be put after the express session middleware 
+
+we wnat to work on the route now 
+
+in our usesrs route we will cretae a new route with router.post()
+
+router.post("/login" , (req , res)=>
+{
+
+})
+
+
+router.post('/login', (req, res, next) => {
+    //Calling the authenticate method on the passport object
+    //Passing in lcila as our localStrategy
+    passport.authenticate('local', {
+    //Success redirect is the page you wnat to go to if the the login is successful
+      successRedirect: '/',
+      //Failure redirect is the page you want to go to if the login is failed
+      failureRedirect: '/users/login',
+      //This is the flash message that is dsiplayed when a failure occurs
+      failureFlash: true
+    })(req, res, next);
+    //These are parameters that are meant to be included as req.login is used to establish a sesison
+  });
+
+  When we find no user it returns a message with the class of alert alert-error this is not a bootstrap calss so we must make our own one in the the css file same thing along with the success messahe
+
+  This now creates a req.user session 
+
+  we want to log out so we need to create a global variable in app.js and create a route that goes to all urls
+
+  we only want to set this object if there is a req.user object 
+
+app.get("*" , (req , res , next)=>
+{
+    res.locals.user = req.user|| null
+    next()
+})
+
+****This should be done before any routes near the top of the file****
+
+
+in the layout file we can make it show register and login only when we are not logged in 
+
+to do this we can use an if statement 
+the log out should point to the /users/logout route
+
+ if user
+                 li 
+                    a(href='/users/logout') Logout
+            else
+                li.nav-item
+                        a(href='/users/register') Register
+                hr
+                li.nav-item
+                        a(href='/users/login') Login
+
+in the users.js we can create the logout route 
+
+router.get("/users/logout" , (req , res)=>
+{
+    req.logout()
+    req.flash("success_msg" , "You are Logged out")
+    res.redirect("/users/login")
+})
+
+in this route we can just call thr req.logout() method which is accessible through passport and then send a message to let them know they've been logged out and the res.redirect to the login page 
+
+===Part 11- access control====
+
+Whn we add an article we now want the author of the article to take in the user id of the user logged in we will have to remove the author field from the add article field
+
+
+then we go to the artilce submission route and remove the author validation 
+
+then we must go down and change the article author value to become the user id using req.user.id
+
+article.Title = req.body.Title
+        article.Author = req.user.id
+        article.Body = req.body.Body
+
+now we must find add a query to find the user and put the name in the page that grabs the Aritcle
+
+to do this we start by bringing in the user model
+
+const User = require("../Models/User")
+
+Then we must go into the route that grabs the artile and use user.findById() we can then pass in the aricle.author value as this is now the id of the user who created it. This returns a callback with the error and the user object in which we can take the user nam value and pass it into the render function
+
+router.get("/articles/:id" , (req , res)=>
+{
+    Article.findById(req.params.id , (err , article)=>
+    {
+        User.findById(article.Author, (err ,user)=>
+        {
+        res.render("article.pug"  ,
+        {
+            article:article,
+            author:user.name
+        })
+    })
+    })
+})
+
+we can also do the same thing for our edit route so when we change the author it's the author naem we are changing not the id 
+
+The in our artcile.pug we must change article.author to just author 
+
+   h5 Written by #{author}
+
+We Then want to hide the link if we are not logged in to do this we go to our layout.pug and use an if statement
+
+we can still access this through the url 
+
+we shoudl go to our articles.js and ensure authentication
+
+we will name a function after this 
+
+
+// Access Control
+function ensureAuthenticated(req, res, next){
+  if(req.isAuthenticated()){
+    return next();
+  } else {
+    req.flash('danger', 'Please login');
+    res.redirect('/users/login');
+  }
+}
+
+This function says taht if the user is authenticated we can just move onto the page but if thwy are not we will send a message telling them to login
+
+
+Now we can add this to any route we want to protect as a second parameter for example the add artcile 
+
+router.get("/articles/add",ensureAuthenticated , (req , res)=>
+{
+    res.render("add.pug"  ,
+    {
+        title:"Add articles"
+    })
+})
+
+we will aslos place this in the edit form
+
+
+When we go into an article we want to stop the button from being displayed unless unless one there is a user present and two they own the article 
+
+to do this we must edit our article.pug file 
+
+we can use two if statements
+
+the first to check a user exists
+
+then the second one to check the user id is the same as the article author
+
+ if user
+        if user.id = article.id
+            a.btn.btn-primary(href="/articles/edit/"+article._id) Edit
+            a.btn.btn-danger.delete-article(href="#" , data-id=article._id) Delete
+
+
+To prevent accessing the edit form with a user that does not own the artcile we can go to to our article.js and the edit form and use an if statement to check if the article author matches the user id 
+
+  if(article.id != req.user.id)
+     {
+         req.flash("danger" , "Not Authorised to make changes to this article" )
+         res.redirect("/")
+     }
+
+
+We must also check for the delete to make sure the user is the same as the article
+so we go to our delete route in the article and change it 
+
+first we will go above the query and make sure that the user os logged in
+
+if(!req.user._id){
+    res.status(500).send();
+  }
+
+Then we will make sure the user id matches that of the article author to provr they own the article
+
+router.delete('/articles/:id' ,  (req ,res)=>
+{
+    //Checking that a user is logged in 
+    if(!req.user._id){
+        res.status(500).send();
+      }
+    let query = {_id:req.params.id}
+
+    Article.findById(req.params.id, function(err, article)
+    {
+        if(article.author != req.user._id)
+        {
+          res.status(500).send();
+        }
+         else
+        {     
+            Article.remove(query, (err)=>
+            {
+                if(err)
+                {
+                    console.log(err)
+                }
+                res.send("success")
+            })
+    }})
+})
+
+
+
+====Come back and deploy application===

@@ -12,6 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^3.0.6",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "connect-flash": "^0.1.1",
     "express": "^4.17.1",
@@ -20,6 +22,8 @@
     "express-validator": "^6.1.1",
     "mongoose": "^5.6.8",
     "nodemon": "^1.19.1",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
     "pug": "^2.0.4",
     "save": "^2.4.0"
   }

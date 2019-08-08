@@ -8,7 +8,7 @@ $(document).ready(()=>
        $.ajax(
            {
                type:'DELETE',
-               url: '/article/'+id,
+               url: '/articles/'+id,
                success: (response)=>
                {
                 alert("Deleting Article")
