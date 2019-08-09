@@ -25,6 +25,11 @@ router.get("/register" , (req , res)=>
 {
     res.render("register")
 })
+router.get("/getUser" , (req , res)=>
+{
+    User.find()
+    .then(item =>res.send(item))
+})
 
 
 //Route for making registration post request === esstentially acting like a method

@@ -1,0 +1,335 @@
+Technologies used 
+
+MongoDB
+Nodejs
+Reactjs
+Expressjs
+Reactstrap
+Redux
+React-transition-group
+==heroku for live deployment==
+
+
+
+===PART 1 - EXPRESS API & MONGODB===
+
+To start we will create our package.json file using 
+
+npm init -y 
+
+We will then go to intstall a number of dependencies
+
+express
+body-parser
+mongoose
+concurrently
+nodemon*** might need to save as a dev dependency as not required for production
+
+npm i  --save express body-parser mongoose concurrently
+
+we need ot create to scripts to run the application in the package.json
+
+"start": "node server.js",
+"dev": "nodemon server.js",
+
+We can then create our server.js file
+
+---Server.js---
+
+and in this file we can bring express mongoose and body-parser
+
+const express = require("express")
+const mongoose = require("mongoose")
+const bodyParser = require("body-parser")
+
+we then initialze express to an app variable 
+
+const app = express()
+
+Body parser needs middleware 
+
+app.use(bodyParser.json())
+
+--Connecting to Database--
+Rather then using command line for the MongoDB i'm going to use MongoDB compass as it makes htings much easier 
+
+Create a databas and a collection called items 
+
+create item objects with the attributes name author and date
+
+
+
+To conect to MongoDB
+
+we need to create a config folder and store our mongo conection url in a file called keys.js
+
+we then use modules.exports 
+
+we let this export an object containing our keys for example the mongo url
+
+module.exports = 
+{
+    MongoUrl:"mongodb+srv://Tomi:<Lordjiggy123.>@testcluster1-bsyse.mongodb.net/MERN?retryWrites=true&w=majority"
+}
+******To get your application to interact with a certain database in atlas after the .mogodb.net/ you must change the vlaue to the name of the database******
+
+we can then bring this into our app.js file and connect to the database
+
+to do this we create a databse variable and allow it to require the keys files and we request the mongo url
+
+const db = require("./Config/keys").MongoUrl
+
+we then use mongoose.connect to connect to the database
+
+this takes in the database variable and an object called useNewUrlParser which must be set to true this returns a promise which we can just console.log the database is Connected and then a catch where we can just log the error
+
+mongoose.connect(db , {useNewUrlParser:true})
+.then(()=> console.log("Connected To Database..."))
+.catch(err => console.log(err))
+
+We can then create a variable for the port as we may use heroku to deploy it we will set this variable to an environment variable or set it to a local port of 5000
+
+const port = process.env.PORT || 5000
+
+then we can call the app.listem method to start the server passing in the port variable and returning a callback indicating the port is started
+
+app.listen(port , ()=>
+{
+    console.log(`Server strated on port ${port}`)
+})
+
+now we will use npm run dev to strat our server
+
+
+===Model===
+
+The next thing we will be creating is a model which is a model of our data and the fields we want 
+
+To do this we will create a folder called modles and crete a file called Item.js
+
+
+In this file we will bring in mongoose and and then create a schema
+
+const mongoose = require("mongoose")
+
+The schema is named after the data so it will be called ItemSchema it will be set to a new mongoose schema
+
+const ItemSchema = new mongoose.Schema(
+    {
+        ...
+        ....
+        .....
+    }
+
+This schemaa object will take a name and date field
+
+we then create an Item variable and then set it to equal the mongoose.schemaa and this will taje in the name of the data baeing created which is an item and the schema that represents it
+
+let Item = mongoose.model("Item" , ItemSchema)
+
+Then we can export this using module.exports
+
+module.exports = Item
+
+
+===Routes===
+We need to creat a folder called routes for our routes in the project and in this folder we will cretae a folder called API
+
+The Api routes will return JSON 
+
+****we are not using a template engine****
+
+in the api older we will create a file called items.js which all our routes will go 
+
+for this file to work we need to include it in our app.js file so the application knows where to look for it 
+
+in our app.js we will create a variable called items.js and require the path of the items.js file 
+
+const Items = require("./Routes/api/items")
+
+we then want to make it so any request targeted at /routes/api to target items.js
+
+To do this we will call app.use() and point to the items file by referencing the variable
+
+//Use Routes
+app.use("/Routes/api/", Items)
+
+---Items.js---
+
+We can then go into our items.js and bring in express then we must use the express router 
+
+//Bringing in express
+const express = require("express")
+//Using express router 
+const router = express.Router()
+
+
+****Export This file using module.exports******
+
+
+We must then bring in the item model in oirder to manipulate the items 
+
+//Bringing in Item model
+const Item = require("../../models/Item")
+
+Now in the items.js file we will create our routes 
+
+
+---Items routes---
+
+The first route will be a get request to retrieve all items
+
+router.get("/" , (req , res)=>
+{
+    
+})
+
+to fetch all the items in the database
+
+we will first take the model(Item) and then use the find method
+
+this method returns a promise and in this function it will return the items and then we will send a json response using  res.json and pass in items
+
+we can also tag on a .sort() method in order to sort the items by date 1 for ascending and -1 for descending
+
+router.get("/" , (req , res)=>
+{
+    Item.find()
+    .sort({date:-1})
+    .then(items =>res.json(items))
+})
+
+we then want to create aa route for creating an item this will use router.post 
+
+
+router.post("/" , (req , res)=>
+{
+
+})
+
+in here we will create an item variable set it to be a new item object and we just pass in the name variable from the request which is llowed by using body parser 
+
+
+router.post("/" , (req , res)=>
+{
+   const newItem = new Item(
+       {
+           name: req.body.name
+       }
+   )
+    console.log("Page working")
+})
+
+we can then call the newItem.save() method which will save it to the database this returns a promise which returns the object and we will send out a json repsonse seding out the item
+
+
+router.post("/" , (req , res)=>
+{
+   const newItem = new Item(
+       {
+           name: req.body.name
+       }
+   )
+
+   newItem.save()
+   .then(item =>
+    {
+        res.json(item)
+    })
+    console.log("Page working")
+})
+
+
+We will then call a delete request This will be based off the id of the item
+
+//Route for deleting a post
+router.delete("/:id" , (req , res)=>
+{
+    //Finiding the Item to delete by ID
+   Item.findById(req.params.id)
+   //This returns a promise which gives us trhe found item and then a callback of what we want to happen
+   .then(item =>
+    {
+        //We want to use thr remove method on the model and then send a message saying the item was deleted
+        Item.remove()
+        .then(()=> console.log("Item Deleted"))
+        //We then want a catch method this method will return an err and a callback this callback will return a 404 not found message and a messgae to indicate that there was an error
+        .catch(err =>res.status(404).send("Error"))
+    })
+   
+ console.log("Page Working")
+})
+
+
+===Part 2 Setting up the Client and Reactstrap====
+
+We will start to work on the front-end focusing on React
+
+To start we need to create a new folder called Client
+
+This is where our react app will go 
+
+in this folder we will use create-react-app . to specify that we want to cretae a a react apploication in this folder
+
+This package.json it creates is different from your package.json in the root folder
+
+****When you are building a full stack app like this you need a proxy value in the package.json in the client folder *****
+
+,
+  "proxy": "http://localhost:5000/"
+
+This way the application knows what we are talking about when we make calls to the endpoint in
+
+--Run Both Servers--
+
+We then want to run both servers at the same time 
+
+to do this we can use concurrently which wil allow us to run both at the same time
+
+To do this we open the package.json in the server side of the application and then create a few scripts 
+
+"client": "npm start --prefix client" This is to run the client server from the server directory
+
+
+ "Both": "concurrently \"npm run dev\" \"npm run client\" " This will allow us to run both servers together the backslahes are used for character escaping 
+
+"client-intstall": "npm install --prefix client" 2 -This is done as if this app is being cloned or moved it will stop the need to reinstall the node_modules folder and run npm install 
+
+this way you can just use npm run client install to install all the client dependencies
+
+so we can now cd back to the root folder and call npm run both
+
+--React Client Side--
+
+In this folder there are extra default things we will delete the following 
+
+logo.svg
+index.css
+
+we can go into the app.css and remove the Code
+
+remove any sort of calls that reference deleted files 
+
+in the app.js file we can remove all the code an djust keep the div tag and pss in hello world
+
+import React from 'react';
+import './App.css';
+
+function App() {
+  return (
+    <div className="App">
+     <h1>Hello World</h1>
+    </div>
+  );
+}
+
+export default App;
+
+We have a few dependencies to add to the application 
+
+we can open a new terminal and go into the client folder
+
+now we want to install 
+bootstrap
+Reactstrap
+uuid used for static data at the moment
