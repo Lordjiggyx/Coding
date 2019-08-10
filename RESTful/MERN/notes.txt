@@ -332,4 +332,252 @@ we can open a new terminal and go into the client folder
 now we want to install 
 bootstrap
 Reactstrap
-uuid used for static data at the moment
+uuid used for static data at the moment to genereate random numbers
+
+npm i bootstrap reactstrap uuid react-transition-group
+
+---Components--
+
+We need to import bootsrap into our app.js 
+
+import "../../client/node_modules/bootstrap/dist/css/bootstrap.css"
+
+**Must be at proper directory path**
+**If the page does not load turn the server off and on**
+
+
+We will create a folder called Components in the src folder
+
+
+-Navbar-
+In the Components folder we will creeate a fille called AppNavbar
+
+We will import react and the Component from react 
+
+import React , {Component} from "react"
+
+We will then import a few things from reactstrap
+
+import
+{
+    Collpase, - This is for teh toggler in the case we add more links to a responsive hamburger menu
+    Navbar, - The Navbar
+    NavbarToggler, - Used in conjuction to Collpase
+    NavbarBrand, - The brand for the Navbar
+    Nav, - Wrap around the links
+    NavItem, - wrap around nav links
+    NavLink, - this wil be where the href is
+    Container, bootrap container for everything
+} from "reactstrap"
+
+Then we will create our class 
+
+class AppNavbar extends Component
+{
+
+    constructor(props)
+    {
+        super(props)
+        this.state = {}
+    }
+
+
+    render()
+    {
+        
+        return(
+            <div>
+
+            </div>
+        )
+    }
+}
+
+export default AppNavbar
+
+
+***We will be passing in props to our navbar so we must pass in props in the navbar and hte super***
+
+We will then create the toggle function 
+
+toggle = () =>
+{
+
+}
+
+The toggle funtion here has been set to an arrow function this is a work around for having to bind the the function in the constructor like you usually would and you can do this for any custom function
+
+then in our state we can add isOpen:false , this is the variable that will halp us toggle the hamburger menu 
+
+then in our toggle method we can use this.setState to change the value of isOpen to whatever the oppposite is to allow toglle
+
+toggle = () =>
+        {
+            this.setState({
+                isOpen: !this.state.isOpen
+            })
+        }
+
+in our render function we will render our navbar using the react Components
+
+First we will place the navbar in the div 
+
+<Navbar color = "success" dark expand = "sm" className="mb-5">
+            
+</Navbar>
+
+The navbar can take attributes like normal html ones wouls 
+color is for the bootstrap colors success = green
+
+expand means that it will become a hamburger menu on small screens as we set it to sm 
+
+className mb-5 means margin-bottom 5
+
+we place dark for the text on the page
+
+we will then place a container in this 
+then we can place our NavbarBrand and allow it to have a href to the index page 
+
+<NavbarBrand href = "/">
+      The M.E.R.N Shopping List
+</NavbarBrand>
+
+Next is the NavbarToggler we give this an onclick and pointit to carry out the toggle method
+
+<NavbarToggler onClick={this.toggle}/>
+
+Then we must add the Collpase we add the isOpen attributes and set it to be the value of isOpen in the state of the clsss we place navabr to let the application know that it's part of a navbar 
+
+<Collapse isOpen = {this.state.isOpen} navbar>
+
+then we add the nav with a class if ml auto just ot make sure that the nav bar is aligned to the left and the link is alligned to the right 
+
+<Nav className = "ml-auto" navbar>
+
+we then add the NavItem link to wrap the link and then the nav item , the nav item taks a href of where you want to send the client with text inside
+
+<NavItem>
+    <NavLink href= "https://youtube.com">
+        Click To Go to Youtube
+    </NavLink>
+</NavItem>
+
+In total the AppNavbar looks like this 
+
+
+ <div>
+<Navbar color = "success" dark expand = "sm" className="mb-5">
+    <Container>
+        <NavbarBrand href = "/">
+            The M.E.R.N Shopping List
+        </NavbarBrand>
+        <NavbarToggler onClick={this.toggle}/>
+        <Collapse isOpen = {this.state.isOpen} navbar>
+            <Nav className = "ml-auto" navbar>
+                <NavItem>
+                    <NavLink href= "https://youtube.com">
+                        Click To Go to Youtube
+                    </NavLink>
+                </NavItem>
+            </Nav>
+        </Collapse>
+    </Container>
+</Navbar>
+</div>
+
+
+Then we must go into our app.js and import this Component
+
+import AppNavbar from "../src/Components/AppNavbar"
+
+and then in the div we can return the AppNavbar tag 
+
+function App() {
+  return (
+    <div className="App">
+    <AppNavbar></AppNavbar>
+    </div>
+  );
+}
+
+
+
+===Part 4 - Shopping list Components and Transitions====
+
+In our Components file we will create a new fille called shopplnnglist.js this will be a class based component
+
+we need to import react 
+
+//Importing react and the components
+import React , {Component} from "react"
+
+we need to import things from reactstrap
+
+import {
+    Container,
+    ListGroup,
+    ListGroupItem,
+    Button
+} from "reactstrap"
+
+Then we need to import things from react-Transition-group
+import { CSSTransition , TransitionGroup} from "react-transition-group"
+
+
+we import uuid for our list items id's
+import uuid from "uuid"
+
+We can start by creating the shopplnnglist Component
+
+At the momeent we will hardcode the data into the state 
+
+
+this.state =
+    {
+         items:
+         [
+             {id:uuid() , name: "Chicken"},
+             {id:uuid() , name: "Pudding"},
+             {id:uuid() , name: "Rice"},
+             {id:uuid() , name: "Chicken"}
+         ]
+    }
+
+in our rrender method we can destructure our state and pull out the items array
+
+ const {items} = this.state
+
+Then in our return we can start by creating a container tag
+and in this container we will create a button to add the item 
+
+In the button tag we can add attributes one for the color and an inline style of a margin botttom of 2 rem 
+
+then rather then creating a whole new function to handle the onclick we will use and arrow function 
+
+in this arrow function we will create a variable that will be a prompt for the user to enter a name for the item called name 
+
+then we will create an if statement thhat says if name exists we will change the state but in the this.setState method we will use the spread operatoron the array to add the new object to the array of Items then we close all the tags
+
+ <Container>
+                <Button 
+                color = "dark"
+                style={{marginBottom:"2rem"}}
+                onClick = {()=>
+                {
+                    const name = prompt("enter Item")
+                    if(name)
+                    {
+                        this.setState(state =>
+                        (
+                            {
+                                items:
+                                [...state.items,
+                                {id:uuid() , name:name}
+                                ]
+                            }
+                        ))
+                    }
+                }}>
+                        Add Item
+                </Button>
+            </Container>
