@@ -7,7 +7,7 @@ const Item = require("../../Models/Item")
 
 //Route to rerieve all items 
 
-router.get("/" , (req , res)=>
+router.get("/items" , (req , res)=>
 {
     //Using the Item model to retrieve all items
     Item.find()
@@ -47,13 +47,13 @@ router.delete("/:id" , (req , res)=>
    .then(item =>
     {
         //We want to use thr remove method on the model and then send a message saying the item was deleted
-        Item.remove()
-        .then(()=> console.log("Item Deleted"))
+        Item.deleteOne()
+        .then(()=> res.json({success:true}))
         //We then want a catch method this method will return an err and a callback this callback will return a 404 not found message and a messgae to indicate that there was an error
         .catch(err =>res.status(404).send("Error"))
     })
    
- console.log("Page Working")
+// console.log("Page Working")
 })
 
 

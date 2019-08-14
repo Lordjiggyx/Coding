@@ -558,6 +558,9 @@ in this arrow function we will create a variable that will be a prompt for the u
 
 then we will create an if statement thhat says if name exists we will change the state but in the this.setState method we will use the spread operatoron the array to add the new object to the array of Items then we close all the tags
 
+explanation of the spread syntax here 
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+
  <Container>
                 <Button 
                 color = "dark"
@@ -581,3 +584,760 @@ then we will create an if statement thhat says if name exists we will change the
                         Add Item
                 </Button>
             </Container>
+
+
+To dispay the buttons we will go underneath the button and use a list group tag
+we want to map through all the items and display each one 
+
+<ListGroup>
+
+we will be using the transition group tag and give it a class name of shopping-list
+<TransitionGroup className = "Shopping-list"
+
+inside this tag we will use the map higher order array funciton , we will destructure the item object and grab just the name and id of the items 
+
+{items.map(({id, name}) => (
+
+
+))}
+
+for each item we will display a ListGroupItem but wee want the transition effect to occur first we will use the CSSTransition tag this will take a key which will be the id of the item is then we will set a tineout and finally it needs a classname attribute of fade then we will have to add css to the className for the fade to happen 
+
+then inside this tag we will place the ListGroupItem tag and we will display the name
+
+<ListGroup>
+    <TransitionGroup className= "shopping-list">
+        {items.map(({id , name})=> (
+        <CSSTransition key = {id} timeout= {500} classNames= "fade">
+        
+        <ListGroupItem>
+            {name}
+        </ListGroupItem>
+
+        </CSSTransition>
+        ))}
+    </TransitionGroup>
+</ListGroup>
+
+Before the name we will add a delete button thr button will take in properties 
+
+a className
+the colour
+the size 
+an onclick
+
+  <Button
+    className= "btn-del"
+    color = "danger"
+    size = "sm"
+    onClick = {()=>{}}
+    >
+
+in th onclick we will call the this.setState method , we will take the current state and then the items variable and the state of this value we will use ht filter method to return a mew array without the clicked item
+
+This method returns each item along with a condition , this condition will be if the item id is not equal to the id, whatever item we click on will actually remove the item from the UI 
+
+ onClick = {()=>
+{
+    this.setState(state =>(
+        {
+            items: state.items.filter(item => item.id !== id)
+        }))
+}}
+
+we can then go to our app.css and edit the button and make the fade transition happen
+
+.fade-enter{
+opacity: 0.01;
+}
+
+.fade-enter-active
+{
+opacity: 1;
+transition: opacity 1000ms ease-in
+}
+
+.fade-exit{
+    opacity: 1;
+    transition: opacity 1000ms ease-in
+}
+
+.fade-exit-active
+{
+    opacity: 0.01;
+}
+
+fade-enter & fade-enter-active are the tramsitions that happen wehen we add an item to the list we want it to start off as invisible usin the opacity property and then become visible we set the duration to be one second or how long you wnat it
+
+the fade-exit and fade-exit-active is the opposite when we delete an item
+
+We then must go to our app.js and add the component
+
+
+====Part 5 Implementing Redux====
+
+CARS = Component => actions => Reducer => store
+
+We are Implementing redux in order to create a component called an item modal component which will interact with our redux state , There is a lot of boilerplate 
+
+To start we need to install a few things
+***We must be in the client Folder***
+
+redux - The redux itself
+react-redux what binds the two
+redux-thunk - middleware for dealing with back end for dispatching from actions to our reducer when we want to make async calls
+
+we must intsall redux , react-redux , redux-thunk
+
+npm i --save redux react-redux redux-thunk
+
+Then in our src folder in the client folder we will cretae a file called store .js
+
+This will be the starting point of our redux store , the only way to cahnge this is by calling an action
+
+so in this store.js file we need to import  a few things
+
+
+import {createStore , applyMiddleware ,compose} from "redux"
+import thunk from "redux-thunk"
+import rootReducer from "./Reducers/index"
+
+we eill create a variable to represent our initail state 
+
+const iniialState = {}
+
+Then a variable for middleware being used and we will store these in an arrau
+
+const middleware = [thumk]
+
+Then a variable called store and set it to be our createStore function , this will take in three things our rootReducer , iniialState and any middleware but since were using redux tools we will pass the applyMiddleware into the compose function and in this applyMiddleware function we can pass in thunk using the spread Operator
+
+const store = createStore(rootReducer , initialState , compose(
+    applyMiddleware(...middleware)
+))
+
+To use the redux dev tools we must insert a line of code inside 
+
+ window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+
+ thne we can just export the store 
+
+ export default store
+
+ in oreder to integrate the store into our application we need to go into our app.js and bring in the provider, this is from react-redux 
+
+ in order to use redux in our components and manipulate state we must wrap everything in the provider tag , this tag takes in a property of our store  
+
+ 
+function App() {
+  return (
+    <Provider store = {store}>
+    <div className="App">
+    <AppNavbar></AppNavbar>
+    <ShoppingList></ShoppingList>
+    </div>
+    </Provider>
+  );
+}
+
+This will allow us to access state from the components
+
+next we will create the rootReducer this will be done in the src folder we will create a folder called reducers and then a file called index.js
+
+The main point of this is to bring together all the other reducers , this is a simple app so we only have itemReducer if we were to add authentication or manage errors we might need an authentication reducer of error reducer.
+
+so to start we will import combinereducers
+import {combineReducers} from "redux"
+
+and then itemReducer which we have not created yet but we will 
+
+import itemReducer from "./itemReducer"
+
+
+Then we will export combineReducers and pass in an object with the different reducers and we will set itemReducer to a value called item which will help us identify it within components when we wnat to use it
+
+Next we will creeate our itemReducer in the reducers file called itemReducer.js
+
+******************************************************************************
+A reducer is where our actual state is going to be , this is wher we check our actions , we will have an actions file which will contain our actions for getting items or adding items actions and dispatch to our reducer , it can send a payload 
+
+So say we were to fetch data from our server for the grtting items we would then dispatch to the reducer and send the response from our server to the reducer and then manipulate it within react in our components
+******************************************************************************
+
+So Going back to this itemReducer.js file we will create our iniialState this will be an object with an items array 
+
+const initialState= 
+{
+    items:
+         [
+             {id:uuid() , name: "Chicken"},
+             {id:uuid() , name: "Pudding"},
+             {id:uuid() , name: "Rice"},
+             {id:uuid() , name: "Chicken"}
+         ]
+}
+
+***You need to import uuid***
+
+
+in this reducer we need to evaluate action types , so we need to create types 
+we will cretae a folder called actions in the src file 
+
+and in this file we will have afile called types.js this can also be called "constants" , they are just constants set to strings that we export
+
+export const GET_ITEMS = "GET_ITEMS"
+export const ADD_ITEMS = "ADD_ITEMS"
+export const DEL_ITEMS = "DEL_ITEM"
+
+***Any thing you do in your application you will add an actionn type for***
+
+We can then bring this inot our item reducer
+
+back into the itemReducer.js we will import the actions
+import {GET_ITEMS ,ADD_ITEMS , DEL_ITEMS } from "../actions/types"
+
+in our itemReducer.js we want to export a fucniton this function takes two paramaters first is the state whihc we will set to our initial state and then secondly it will take an action object which will have a type attached to it from the actions file that we haven't created yet 
+
+export default function (state =initialState , action)
+{
+   
+}
+
+
+in this function we will have our switch statement when the action comes in we wnat to run a test on the type , as actions is an object we can access the type using actions.type and we will check for the action name 
+
+at the momeent with the GET_ITEMS we will just use the spread Operator to return the current state this will be changed when we connect to the backend 
+
+ switch(action.type)
+    {
+        case GET_ITEMS:
+            return {
+                ...state
+            }
+        default:
+            return state;
+    }
+
+Next we want an actions file in our actions folder called itemActions.js this is where we wil be maing backend requests
+
+we need to import our tuypes into the file
+
+import {GET_ITEMS ,ADD_ITEMS , DEL_ITEMS } from "../actions/types"
+
+we can then export an arrow funciton whihc returns the type to the reducer in this case it will be GET_ITEMS
+
+export const getItems = () =>
+{
+    return{
+        type:GET_ITEMS
+    }
+}
+
+
+This goes to our itemReducer and checks action.type 
+
+now we want is to call the getItems from our component instead of getting it from the state we want to grab it from our itemReducer
+
+Now in our ShoppingList component we must make a few chnages 
+
+first we must import connect from react redux this allows us to get state from redux into a react component 
+
+import {connect} from "react-redux"
+
+Then we need to import the getItems action this is being taken from the actions folder and the itemActions file 
+
+when we use connect like this instead of exporting the actual clsss we want to export connect with parentheses which will take in two things a function called mapStateToProps which is a function we haven't created yet and thne it will take in any actions we want to use in this case being getItems and then the class naem wrapped around in brackets 
+
+
+export default connect(mapStateToProps , {getItems})(ShoppingList)
+
+
+What mapStateToProps allows us to take our state in itemReducer and map this into a component property which will let us access it it using this.props.items
+
+
+we must create the function mapStateToProps, this will use an arrow function and it takes in state and then we want to set it to parentheses and then pass in an object and then we want to set item to state.item **We use state.item cause that is what we called the reducer in th rootReducer**
+
+const mapStateToProps = (state) =>
+({
+    item:state.item
+})
+
+next we want to bring in our prop types whenever you have component properties they should be put into prop types which is like a form of validation 
+
+import PropTypes from "prop-types"
+
+Then underneath the class we can then  type shopplnnglist.propTYpes and set it to {} we have two props in this component , the first is getItems , when you bring na action from redux it's stored as a prop so we can set this to PropTypes.func.isRequired  and then set item to PropTypes.object.isRequired
+
+ShoppingList.propTypes = 
+{
+    getItems: PropTypes.func.isRequired,
+    //This is our state which is an obejct
+    item: PropTypes.object.isRequired
+}
+
+
+
+The last thing to run get items
+
+to do this we want to run it in a componentDidMount function call within our class
+
+componentDidMount()
+{
+    this.props.getItems()
+}
+
+
+we must now cahnge the way we accessed the items by using 
+
+this.props.item.items
+
+item represents the state object 
+items is the array inside the state
+
+so we can use destructuring again just target a different object this time
+
+ const {items} = this.props.item
+
+
+
+
+
+To help you better understand how redux is working in this application you must remember that the ShoppingList COMPONENT is connected to the Redux store through connect. So, when you click the delete button it fires the deleteItem ACTION. In his tutorial, he has the dispatch inside his action creator, so the action itself will initiate the STORE to call the reducer. The REDUCER will then check which action will be executed then return the correct behavior to the STORE. It looks a little something like this:
+Component (click) --> Action(dispatch) --> Store (sends action to reducer) --> Reducer (returns new state AS item) --> Store
+
+
+===Part 6 Finsihing Redux===
+
+first thing we want to do is the delete
+
+we will rmeove uuid remove any instance of uuid in the component and then renmove the button as we will create a separate component for adding items
+
+in our shopplnnglist component we will bring in the delItems actions along with getItems at the top
+
+import {getItems , delItems} from "../actions/itemActions"
+
+ and also include in the export at the bottom 
+
+ export default connect(mapStateToProps , {getItems , delItems})(ShoppingList)
+
+ Now we go to our itemActions.js and then create a new const called delItems this wiill take in an id to identify which element to delete  and change the type tO DEL_ITEM
+
+export const delItems = (id) =>
+{
+    return{
+        type:DEL_ITEMS
+    }
+}
+
+
+ To get the id we must send along a playload if the id that i spassed into the function 
+
+export const delItems = (id) =>
+{
+    return{
+        type:DEL_ITEMS,
+        payload:id
+    }
+}
+
+
+  This is returining to the reducer so we must go to the reducer and check for DEL_ITEM. we must now add a case for delete 
+
+  case DEL_ITEMS:
+            return {
+                
+            }
+
+To start we want to grab the state using the spread Operator then
+
+ case DEL_ITEMS:
+            return {
+                ...state
+            }
+
+then we eill take the items and then calle the filter method on them and then do what we did previosuly returning an item and each time the item is retuerned we check that the id of it does not equal the value of the clicked identify
+
+in this case however in our action we passed in a payload whihcwe can access using action.payload
+
+case DEL_ITEMS:
+            return {
+                ...state,
+                items: state.items.filter(item => item.id !== action.payload )
+            }
+
+
+Then going back to our component we will change the onclick to a function we create called onDeleteClick , this method must take in the id of the clicked item and to do this we can use bind and pass in this and id 
+
+
+ onClick = {this.onDeleteClick.bind(this , id)}
+
+ then we can create the method we set this this will be an arrow function whihc tajes in the id and then it calls the action delItems passing in the id
+
+ onDeleteClick = (id) =>
+{
+    this.props.delItems(id)
+}
+
+This then sets the type to DEL_ITEMS and creates a payload with the id value inside this then called the reducer which exceutes the delete method which is explained above 
+
+
+In our components folder we will create a new file called itemModal.js
+
+in this file we will import react and a number of components from reactstrap
+
+
+import React, { Component } from 'react'
+import {
+    Button,
+    Modal,
+    ModalHeader,
+    ModalBody,
+    Form,
+    FormGroup,
+    Label,
+    Input
+  } from 'reactstrap';
+
+  
+
+  A container is a component that is hooked to redux if you are using redux state in a component it is called a container
+
+
+  we must import connect and the additem action which we have not created yet 
+
+import { connect } from 'react-redux';
+import { addItems } from "../actions/itemActions"
+
+  To start we will give the modal state and we will set modeal to false this represents if the modal is open or not we will have a form which will have the item name so we need to give our component state too , in the case where you have a form you want the input to have state in the component 
+
+  
+    state = {
+        modal: false,
+        name : " "
+    }
+   
+   , we will also have a toggle like the navbar and allow it to vhnage the modal vakue to the opposite of it's current value
+
+   toggle = () =>
+   {
+       this.setState(
+           {
+               modal = !this.state.modal
+           })
+   }
+
+
+
+Then in our render method we will place a button within our div , this button wil open the modal same button as our last one
+
+
+ <Button 
+color = "dark"
+style={{marginBottom:"2rem"}}
+onClick ={this.toggle}
+>
+Add Item
+</Button>
+
+under the button is where we will place the modal 
+it will take a few paramaters 
+
+isOpen - set to this.state.modal to tell uf the modal is open or not
+toggle - set to toggle function
+
+
+<Modal
+isOpen = {this.state.modal}
+toggle = {this.toggle}
+>
+
+After the modal we will have the modal header this will also have a toggle attribute in it
+
+<ModalHeader toggle = {this.toggle}>
+Add to Shopping list
+</ModalHeader>
+
+then we will have the ModalBody
+inside the ModalBody we will have a form this form takes an onsubmit attribute and we will set this to a mtehod called onsubmit that we wil create 
+
+  <Form onSubmit = {this.onSubmit}>
+
+
+inside the form tag we will place a FormGroup tag and inside this FormGroup we will use the Label and Input tags the Label will have an attribute called "for" and this will be set to item 
+
+<Label for = "item">
+Name
+</Label>
+
+The input will take in a few attributes
+type - text
+name - this value should match the name of the state you are affecting
+id- set to item
+placeholder- whatever you want
+
+onChange - In react when you have an input you want ot set it to a function called onChange whihc we will create 
+
+ <Input
+type = "text"
+name = "name"
+id = "item"
+placeholder = "Enter Item"
+onChange = {this.onChange}
+/>
+
+Then we will create a button just for submitting the name to the state 
+
+ <Button
+color = "dark"
+style={{marginTop:"1rem"}}
+block
+>
+Submit
+</Button>
+
+we use block so it fits the whole container
+
+
+We will then cretae the onChange and onSubmit methods 
+
+
+The onChange will be set to an arrow function this will take in an event paramater inside the function we will use this.setState , we're actually going to use e.target.name this targets the name of the input which should have a matching vlaue in thwe state so if we had multiple inputs we would not have to create multiple functions for one input. Then we can set this to be the e.target.value
+
+onChange = (e) =>
+   {
+       this.setState(
+           {
+              [ e.target.name]:e.target.value
+           }
+       )
+   }
+
+The onsubmit will also be an arrow function that takes in an event paramater, we first need to prevent the form from acting how it would naturally at the momeent were not dealing with the backend so we will create an item with a uuid ID and the name value will come from the state when we type into the input it updates the state name 
+
+const newItem = 
+{
+id:uuid(),
+name:this.state.name
+}
+
+we now will add the item through the addItem action to do this we use this.props.additems() and then pass in newItem 
+
+ this.props.addItems(newItem)
+
+ and then you can close the model using this.toggle
+
+
+
+  before we create our addItems action we need to export our component with model withn connect and create a mapStateToProps function 
+
+  we must create the function mapStateToProps, this will use an arrow function and it takes in state and then we want to set it to parentheses and then pass in an object and then we want to set item to state.item **We use state.item cause that is what we called the reducer in th rootReducer**
+
+const mapStateToProps = (state) =>
+({
+    item:state.item
+})
+
+then to export our object we must use connect passing in this mapStateToProps functino along with the addItems action and then the itemModal
+
+  export default connect(  mapStateToProps, { addItem } )(ItemModal)
+
+Now we must go to our itemActions.js and create the add item 
+
+export const addItems = (item) =>
+{
+    return{
+        type:ADD_ITEMS,
+        payload:item
+    }
+}
+
+instead of id this action will takje in the whole item , and the type we want to return to the reducer is ADD_ITEMS and along with that a payload if the item object itself
+
+
+Then we must go to our redcucer and then create a case for ADD_ITEMS and we want to return the current state using the spread Operator and then set items to equal the item from the action.payload and use the spread Operator to add it to the state of the items 
+
+Then in our app.js we can import and add the itemModal
+
+====Part 7 - Connecting to the backend====
+
+Now we will Implement the backend by making requests to it from the front end by doing this in the actions 
+
+in the itemredcucer.js we will get rid of the static data and add a loading value and make this boolean
+
+we need another type in pur types and this will be called ITEMS_LOADING
+
+import {GET_ITEMS ,ADD_ITEMS , DEL_ITEMS , ITEMS_LOADING} from "../actions/types" 
+
+and we will have to create this in our action types
+
+export const ITEMS_LOADING = "ITEMS_LOADING"
+
+Then back in our itemReducer.js we will add ITEMS_LOADING as a case , all this will do will cahnege the isloading value in the state to true 
+
+  case ITEMS_LOADING:
+                    return {
+                        //we use spread to get current state 
+                        ...state,
+                        //Then we can just set the state of the loading value to eqaul true 
+                        loading:true
+                    }
+
+Then in our itemActions.js we need ot create another funciton called setLoading
+
+to start we must bring in ITEMS_LOADING at the top
+
+import {GET_ITEMS ,ADD_ITEMS , DEL_ITEMS  , ITEMS_LOADING} from "./types"
+
+and then we will create the function exporting it at the same time this will be an arroe function
+all this function will do is retun the type of ITEMS_LOADING which ultimate;y sets it from false to true 
+
+--GET_ITEMS Action--
+
+Now we will fetch the items to make requests we will use axios , to use axios we must first install it using npm i --save axios and this should be done within the client side 
+
+onec this is installed we need to import it into our file using 
+
+import axios from "axios"
+
+Then we will add another arrow function and add dispatch to the function 
+
+export const getItems = ()=> dispatch =>
+{
+
+}
+
+we want to call setLoading by using dispatch() and passing on setLoading() into this method
+
+dispatch(setLoading())
+
+we can then make our axios request using axios.get in here we will pass in the route from our back end that fetches the data which was "/routes/api/items"
+
+axios.get("/routes/api/items")
+
+this will then return a promise using .then 
+and in here we will be given our response obejct in which we will return
+ dispatch()
+
+and inside the dispatch we will pass in curly braces and set the type which will be GET_ITEMS and then set the payload to res.data whihc is the data given to us from the back end when we make this request 
+.then(res => 
+        dispatch(
+            {
+                type:GET_ITEMS,
+                payload: res.data
+            }
+        )
+        ) 
+
+Then we go to the reducer and go to our GET_ITEMS case we now want to get the items array which is blank and populate it with the new items from the action.payload
+
+items:action.payload,
+
+We then want to set isloading to false which shows that the fetching has been finished 
+
+
+--Add items--
+This will be the same thing in our itemredcucer.js
+
+we will add the dispatch 
+
+export const addItems = (item)=>dispatch =>
+
+then we will make an axios post request to our target route which is the same 
+"/routes/api/" we need to pass along data whihc is our item and htis will be passed into the axios.post request 
+
+axios.post("/routes/api/" , item)
+
+but we need to go to our onsubmit method in our item modal we want ot remove the uuid cause MongoDB creates the id for us
+
+now a promise is returned again giving us a response and then we will do the same thing again setting it to dispatch and again passing in curly braces where we set the type and and the payload to be our data 
+
+ .then(res => 
+        //Inside dispatch we will set the type to be GET_ITMES and then set the payload to be res.data which is th data given to us from the backend 
+        dispatch(
+            {
+                type:GET_ITEMS,
+                payload: res.data
+            }
+        )
+        ) 
+
+This data is the new item being returned to us from the db
+
+
+--delete iTEMS--
+
+in our shopplnnglist we need ot change any instance of id to _id in our delete as the value of id in mongodb is _id not id
+
+Now in the actions we will repeat again by adding our dispacth 
+
+and then call an axios.delete request in this one we wwant to use the id variable so we can use back ticks  to pass the id into the url target
+
+we will get a promise which gives us the response and then we will return dispatch whihc will take in curly braces and then we will set the type to be DEL_ITEMS and then the payload will be he id
+
+export const delItems = (id) =>dispatch =>
+{
+    axios.delete(`/routes/api/${id}`)
+    .then(res =>
+        dispatch(
+            {
+               type:DEL_ITEMS,
+               payload:id 
+            }
+        ))
+}
+
+
+Then the only change we need ot make in our reducer is that we need to remeber that mongodb creates an id using _id so we need to vhnage item.id to item._id 
+
+items: state.items.filter(item => item._id !== action.payload )
+
+
+==== Part 8 - Deploying on heroku===
+
+Come back and finish it 
+
+
+===Part 9  - Backend JWT Auth====
+
+The first thing we need ot do is to create our user model 
+
+in models we create a file called user.js
+
+//Requiring Mongoose
+const mongoose = require("mongoose")
+
+
+//User Scehema for user fields
+
+const UserSchema = new mongoose.Schema(
+    {
+        name:{
+            type:String,
+            required :true
+        },
+        email:{
+            type:String,
+            required :true,
+            unique:true
+        },
+        password:{
+            type:String,
+            required :true
+        },
+        RegDate:
+        {
+            type:Date,
+            default:Date.now()
+        }
+        
+    }
+)
+
+let User = mongoose.model("User" , UserSchema)
+
+module.exports = User
+
+
+Then we need routes for users so we will create a file in our api folder called users.js
+
+to bring this into our server we need to 
