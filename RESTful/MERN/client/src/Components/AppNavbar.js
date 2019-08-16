@@ -14,6 +14,9 @@ import
     Container,
 } from "reactstrap"
 
+//Bringing in nav link 
+import Reg from "./auth/Reg"
+
 class AppNavbar extends Component
 {
 
@@ -54,9 +57,7 @@ class AppNavbar extends Component
                         <Collapse isOpen = {this.state.isOpen} navbar>
                             <Nav className = "ml-auto" navbar>
                                 <NavItem>
-                                    <NavLink href= "https://youtube.com">
-                                        Click To Go to Youtube
-                                    </NavLink>
+                                   <Reg></Reg>
                                 </NavItem>
                             </Nav>
                         </Collapse>

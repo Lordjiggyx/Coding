@@ -20,7 +20,7 @@ npm init -y
 We will then go to intstall a number of dependencies
 
 express
-body-parser
+body-parser - express acc has this now so you dont need it
 mongoose
 concurrently
 nodemon*** might need to save as a dev dependency as not required for production
@@ -40,7 +40,7 @@ and in this file we can bring express mongoose and body-parser
 
 const express = require("express")
 const mongoose = require("mongoose")
-const bodyParser = require("body-parser")
+const bodyParser = require("body-parser")- not needed
 
 we then initialze express to an app variable 
 
@@ -48,7 +48,7 @@ const app = express()
 
 Body parser needs middleware 
 
-app.use(bodyParser.json())
+app.use(bodyParser.json()) - nshould be app.use(express.json())
 
 --Connecting to Database--
 Rather then using command line for the MongoDB i'm going to use MongoDB compass as it makes htings much easier 
@@ -1340,4 +1340,738 @@ module.exports = User
 
 Then we need routes for users so we will create a file in our api folder called users.js
 
-to bring this into our server we need to 
+to bring this into our server we need to do what we did with our server routes
+ by first requiring the routes route into the app 
+
+ const Users = require("./Routes/api/users")
+
+ and then calling the app.use on this file path pasing in users varibale too
+
+ app.use("/Routes/api/", Users) 
+
+ in our users.js we can copy items.js and just chnage accordingly
+ 
+ we should also install bcrypt  using npm i  --save bcrypt this will be used for hashing our passwords 
+
+ we will create a route for registering/cretaing a user 
+
+ router.post("/register" , (req , res) =>
+ {
+
+ }
+
+we will use req.body to get our user value and using destructuring we can pull the name email and password from this
+
+ const {name , email ,username, password , password2} = req.body
+ 
+ we will also do some basic validation checking if all fields are entered and if not send a message asking the user to enter all fields alpng with a status 400
+
+  if(!name || !email || !password)
+   {
+       return res.status(400).json({msg:"Please Enter All Fields"})
+   }
+
+if they do fill fields we will use the user model and check for an existing user by email using User.findOne({email:email}) 
+
+this will give us a promise returning a user if there is a user we will return a 400 status and a message to tell the clinet that the user already exists
+
+ .then(user =>
+    {
+        if(user)
+        {
+                return res.status(400).json({msg:"User Already Exists"})
+        }
+    }
+   )
+
+
+
+if the user does not exist we will create a new user using our User model passing in th naem email and password fields 
+
+ else
+        {
+            const newUser = new User
+            (
+                {
+                    name , email , password
+                }
+            )
+        }
+
+we will then bring in bcrypt using 
+
+now to encrpyt the password we need to generate a salt to create a hash there are two methods we will use 
+
+the bcrypt.genSalt this takes in a 10 and then a call back with an wrror and a salt this call back will call the bcrpyt.hash method this will take in our password and the salt this will also give use a call back with a possible error we will set the newuser password to the hash value 
+
+we can then call the save method on this user as this is method in the mongoose models 
+
+this will return a promise in which we will sned the user back 
+
+const bcrypt = require("bcrypt")
+
+thne the bcrypt code 
+bcrypt.genSalt(10 , (err ,salt)=>
+    {
+    bcrypt.hash(newUser.password , salt ,(err , hash)=>{
+       if(err)
+      throw err
+
+      //set passowrd to hashed
+      newUser.password =hash
+      //save User
+      newUser.save()
+      .then(user=>
+        {
+            //Just sending the respnse of the user object 
+           res.json({
+               user:{
+                   name: user.name
+
+               }
+           })
+        })
+      .catch(err =>
+        {
+            throw err
+        })
+            
+        })
+    })
+
+
+Now we want to implement tokens 
+
+to start we will install jsonwebtoken using npm i --save jsonwebtoken and thrn install config using npm i --save config
+
+we can create a json file called default.json instead of keys.js  and we can place a json object inside 
+
+inside this json object we can place any keys any url's anything we we will take our mongourl inside along with a jwt seceret value 
+
+just for auth purposes we will no longer use keys.js ***dont dlete just comment out*** in serevr.js 
+
+so we can just require config 
+
+const config = require("config")
+
+then we can get the MongoUrl using 
+
+const db = config.get("MongoUrl")
+
+in our users file we can also bring config again
+
+then we can bring in the json web tokens
+
+const jwt = require("jsonwebtoken")
+
+then just after we save the user in the respnse is where we wnat to creaet a token right above the res.json
+
+we will call jwt.sign the first paramater will be the payload this cna be whatever you want , we wnat to make this a json object with a paramater of id snd set it to the user id 
+
+in this case when we send a token from react the user id is in there so it knows which user it is.
+
+next paramater is oging to be the seceret valkue which will be the value in our config
+
+The last paramater is the last paramater is if you want it to expire in which we do we set this to 1800 secsonds which is 30 mins
+
+The final paramater is a callback which gievs us a possible error and a token this is where we will actually send our respnse inside here 
+
+jwt.sign(
+{id:user.id},
+config.get("jwtSecret"),
+{expiresIn:3600},
+(err , token) =>
+{
+    if
+    (err) throw err
+        //Just sending the respnse of the user object
+    res.json({
+        token,
+        user:{
+            id:user.id,
+            name: user.name,
+            email:user.email
+
+        }
+    })
+}
+
+)
+
+So when we register we get a user and a token which we can then use to authenticate private routes 
+
+We can write custom routes to make routes private
+
+
+We now want ot login and get a token from logging in
+we cretae  a new file called auth.js in the routes folder
+
+we can take a lot from the the users.js just we will change the routes and the validation as we we'll only be comparing the email and password
+
+Then we will  search for a user by email address  amd return an error messgae of the user does not exist
+
+ User.findOne({email:email})
+   .then(user =>
+    {
+        //If there is no user we'll display a message indciating the use rodes not exist
+        if(!user)
+        {
+                return res.status(400).json({msg:"User Does not exist"})
+        }
+    }
+
+Next thing we wnat to do is actually compare the hashed password to the plain text password entered form the req.body object
+
+we will use the bcrypy.compare method an dwe will check  if the passwords match and if the user exists or not 
+
+
+bcrypt.compare(password , user.password)
+        //This returns a promise and gives us a boolean which we will call Match
+        .then(Match =>
+            {
+                //If the password does not match we will send a response indicated the passwords do not match
+                if(!Match)
+                {
+                    return res.status(400).json({msg:"Invalid Credentils"})
+                }
+                //If the passowrd matches we send the user and the token
+                else
+                {
+                    //Cretaing a JWT token
+            jwt.sign(
+                //Passing in user id as a payload
+                {id:user.id},
+                //jwt secert
+                config.get("jwtSecret"),
+                //Toke expires in 30 minutes
+                {expiresIn:1800},
+                //callback
+                (err , token) =>
+                    {
+                        if
+                        (err) throw err
+                         //Just sending the respnse of the user object and a token
+                        res.json({
+                            token,
+                            user:{
+                                id:user.id,
+                                name: user.name,
+                                email:user.email
+             
+                            }
+                        })
+                    }
+            
+            )
+                }
+
+            })
+
+We then need to make this file avaliable to our server.js 
+
+first we require it 
+
+const Auth = require("./Routes/api/auth")
+
+then we bring it in
+
+app.use("/Routes/api/", Auth)
+
+The last thing ot do is to create middleware to have private routes taht can only be accessed along with the token 
+
+in the routes folder we create a folder called middleware andinsde we cresate a file called auth .js
+
+in this file we bring in config and our jwt
+
+const config = require("config")
+const jwt = require("jsonwebtoken")
+
+Then we crete a middleware function called auth taht takes in req res and next 
+
+function auth (req ,res , next)
+{
+
+}
+
+in this function we will create a variable to represent the token coming in 
+this is taken from the header object in the request object and the token has a vlue of x-auth-token
+
+ const token = req.header("x-auth-token")
+
+ Then we will check if the token exists
+ if the token does not exist we will send a 401 response indicating that there is not token present and the access is denied 
+
+ insdie a try catch we will create what happens if the toke does exost 
+
+If the token does exist we will create a variable vcalled decoded which calls the jwt.verify method on the token and checks the tokens secert
+
+const decoded = jwt.verify(token , config.get("jwtSecret"))
+
+we then want the user from the token and set this to be the req.user 
+
+req.user = decoded
+
+Then we call next 
+next()
+
+in the catch we will pass in the event value and then send a response of 400 telling the user the token is invalid if there is an error
+
+finally we wnat to export the middleware function 
+
+module.exports = auth
+
+So now we can require this into any file and add it as a second paramater to any route to secure it 
+
+for example in our items routes we wnat the adding and deleting of items to be authenticated
+
+so we will require auth into the file 
+
+const auth  = require("../middleware/auth")
+
+and then add auth to any route
+
+We want to create a route in the auth.js 
+This route will get the current users data by using the token , jwt authentication is stateless , so we need a route that takes the token and returns the user
+
+
+so in auth.js we will bring in the auth middleware 
+
+and we will create a route this will be a get request
+
+router.get("/auth",auth ,(req , res)=>
+{
+
+})
+
+Then we will call user.findById
+we do not want to show the passowrd so we can use .select("-password") to exclude this , then a promise will be returned along with a user object we can then send a response of user 
+
+router.get("/auth",auth ,(req , res)=>
+{
+    //find the user by passing in the user id from the req.user object
+    User.findById(req.user.id)
+    //We do not want the password so we can use .select()
+    .select("-password")
+    //This will send a promise with the user and we will send a response of the user object
+    .then(user =>res.json(user))
+})
+
+===Part 10 - React & Redux AUTH State===
+
+Before we create a modal component for login and registration  we should manage the state 
+
+so back in the client.
+
+We have two new Reducers and Auth reducer and an error reducer each which there own actions
+
+To start we go to our types.js we need to create in a number of types for the logn and registration process
+
+export const USER_LOADING = "USER_LOADING";
+export const USER_LOADED = "USER_LOADED";
+export const AUTH_ERROR = "AUTH_ERROR";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAIL = "LOGIN_FAIL";
+export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
+export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+export const REGISTER_FAIL = "REGISTER_FAIL";
+export const GET_ERRORS = 'GET_ERRORS';
+export const CLEAR_ERRORS = 'CLEAR_ERRORS';
+
+Then we need to create  our reducers in the reducers folder
+
+authReducer
+errorReducer
+
+then in the index.js we need to bring in the two reduxers
+
+import AuthReducer from "./AuthReducer"
+import ErrorReducer from "./ErrorReducer"
+
+then we need to add them to our combine reducers method 
+
+
+export default combineReducers(
+    {
+        item:itemReducer,
+        auth: AuthReducer,
+        Error: ErrorReducer
+    }
+)
+
+
+The error reducer is simple so we will start with this 
+
+so in this file we will import GET_ERRORS and CLEAR_ERRORS from actions types
+
+import {GET_ERRORS , CLEAR_ERRORS} from "../actions/types"
+
+Then we will create a state for this reducer with a message object a status value of null and an id for errors of value null
+
+const initialState =
+{
+    msg:{},
+    status:null,
+    id:null
+}
+
+we must then create a function which takes in the state value and set it to the iniialState value and an action which is taken from the action file , this function must be exported
+
+//This fucntion sets the state that it takes in to the atate current state
+export default function (state =initialState , action)
+
+we must then create a switch statement to evaluate the action type
+
+{
+    switch(action.type)
+    {
+        
+    }
+}
+
+Then we will create cases for each action type
+
+for get errors we will change the atte by returning a message status and id all from the payload 
+
+ case GET_ERRORS:
+    return{
+        //This will be a msg from the action payload which will be an object with a message from the server
+        msg:action.payload.msg,
+        //Also come from the payload
+        status:action.payload.status,
+        //Also from payload
+        id:action.payload.id
+    }
+
+Thw clear errors action will just clear message obejct and set each other value to null
+
+case CLEAR_ERRORS:
+    return{
+        //Sets the message object to an empty object
+        msg:{},
+        //makes status null
+        status:null,
+        //makes id null
+        id:null
+    }
+
+
+On defualt behavior we will just return the state
+
+default:
+            return state
+
+
+Next for the auth redcucer
+
+
+we will bring the in the necessary actions
+
+import {
+    USER_LOADED,
+    USER_LOADING,
+    AUTH_ERROR,
+    LOGIN_SUCCESS,
+    LOGIN_FAIL,
+    LOGOUT_SUCCESS,
+    REGISTER_SUCCESS,
+    REGISTER_FAIL
+  } from '../actions/types';
+
+Then for the state we will have an object with the following values
+
+token
+isAuthen
+isLoading
+user
+
+we must then create a function which takes in the state value and set it to the iniialState value and an action which is taken from the action file , this function must be exported
+
+we must then create a switch statement to evaluate the action type
+
+{
+    switch(action.type)
+    {
+        
+    }
+}
+
+***Cases explained in the file for authReducer***
+
+
+Now with every request we want to constanly try load the user so we wil cretea n action called load_user
+
+
+in the actions folder we will cretae two new files authactions and erroractions.js
+
+first is the auth actions so in this filw we will import axios 
+
+//Importing axios
+import axios from "axios"
+
+and then we will import all our types
+
+//actions
+import {
+    AUTH_ERROR,
+    LOGIN_SUCCESS,
+    LOGIN_FAIL,
+    LOGOUT_SUCCESS,
+    REGISTER_SUCCESS,
+    REGISTER_FAIL,
+    USER_LOADING,
+    USER_LOADED,
+  } from '../actions/types';
+
+  The first thing we wnat to do is to check the token and load the user and to do this we need to make a request to /api/auth/user
+
+we will create a helper method at the bottom called tokenConfig this will get the token from our state and add it to the header and then if there is a token we will set the x-auth-token value in the config header object to be the token from our state
+
+export const tokenConfig = getState => {
+    //Geting token frpm local storage
+    //This looks at the auth reducer
+    const token = getState().auth.token
+
+    //We can add the token to the header
+    const config = 
+    {
+       headers:
+       {
+           "Content-type":"application/json"
+       }
+    }
+
+    //if token exists we add it to the headers 
+    if(token)
+    {
+        //We want to set our headers token to the token in our state which will be ultimately the token stored in loclastorage
+        config.headers["x-auth-token"] =token
+    }
+}
+
+
+We will create a function called loadUsser which will be an arrow function this will take in dispacth and getState as we are making an async request - explained in file
+
+//Exportable function which will need dispatch as we are making an async request
+export const loadUser = () => (dispatch , getState) => 
+{
+    //First we will do is dispatch user loading which changes the value of laoding form false to true
+
+    //User loading - this will call the case of user loading in our auth reducer
+    dispatch({type:USER_LOADING})
+
+
+  //Fetching the usser using axios.get request  
+  axios
+  //TARGERT THE URL /routes/api/auth we must also pass in our token which
+  .get('/routes/api/auth', tokenConfig(getState))
+  //We will dispatxh user loaded
+  .then(res =>
+    dispatch({
+      type: USER_LOADED,
+      //The payload will be the user object and the token object
+      payload: res.data
+    })
+  )
+  //If there is an issue
+  .catch(err => {
+    //We will return Auth Error which will clear out the auth state 
+    dispatch({
+      type: AUTH_ERROR
+    })
+  })
+
+  Any error we get we want ti run it through our errorReducer so we must di it through our erroractions 
+
+  first we must import our types
+
+  //actions
+import {GET_ERRORS , CLEAR_ERRORS} from "../actions/types"
+
+
+The nwe will crete a function to return our errors
+
+this will take in a message the status and an oprional id whic will be null by default , then we will return the type of GET_ERRORS and then the payload whihc will include everything 
+
+// RETURN ERRORS
+export const returnErrors = (msg, status, id = null) => {
+  return {
+    type: GET_ERRORS,
+    payload: { msg, status, id }
+  }
+}
+
+
+Then we will crete a method to clear the errors this takes no paramaters and it will just return the type of clear errors
+
+export const clearErrors = () => {
+  return {
+    type: CLEAR_ERRORS
+  }
+}
+
+Back in our authReducer if we get an error we want to call returnErrors which will call GET_ERRORS from the errorReducer which will put the everything from the action into the errorReducer state 
+
+we must go to our authActions and import returnErrors
+
+import { returnErrors } from  "./errorActions"
+
+and we can then call it in the catch just before we dispacth the auth errors
+
+//We dispatch return errors , which returns an object 
+//This function takes in a message status and id if an eror occurs and this will be stored in the err value above m err.response.data will give us the message and err.response.status will pass in the status
+
+    dispatch(returnErrors(err.response.data, err.response.status));
+
+In our app.js we bring in the loadUser action
+
+import {loadUser} from "./actions/authActions"
+
+we will call this action when the app renders using componentDidMount
+
+ componentDidMount() 
+  {
+    store.dispatch(loadUser())
+  }
+
+Now in the console we will see our actions happening in the redux tools and if we try add or delete items we will get a 401 error and the unauthorised message and also when we mount the application we will get an error message because thee is no token present as we have not creted a user
+
+
+===Part 11 - React registration ===
+Now we must make our components for login and register
+in our components folder we will creaet a folder called auth and in this older we will create a file called reg.js for our registration modal
+
+---REGISTER COMPONENT----
+
+We will start with Reg.js
+we can take a lot from our itemModal and paste itinto Reg.js
+
+***Changes***
+1. We wont need additems action in any case
+
+2. State will have more paramaters email password and error
+
+3. We must bring in propTypes
+
+import PropTypes from "prop-types"
+
+4.Change class name to Reg and export name to Reg
+
+5. We want to bring in the value of isAuthenticated as we want to close the modal once we have registered if we are authenticated. so in our mapStateToProps variable we can change item to isAuthenticated and set its to eqaul state.auth.isAuthenticated
+
+
+6. We also want to bring the error state so we can bring in the error state and set it to the state.error
+
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated,
+    error: state.Error
+  });
+
+******THE AUTH AND ERROR ARE BEING TAKEN FROM THE rootReducer WHICH GIVES US ACCESS TO THE STATE WITHIN THE AUTH AND ERROR REDUCER AND ALL THERE VALUES*****
+
+7. Add propTypes just beloww the state
+
+   //Setting the prop types
+    static propTypes = 
+    {
+        isAuthenticated:PropTypes.bool,
+        error: PropTypes.object.isRequired
+    }
+
+8. Remove the newItem and add item action from the onsubmit
+
+9.We do not want a button for register we want a nav link so we must bring this in from reactstrap at the top and then replace the button with a navlink with an onclick handler which will be set to this.toggle an da href to nothing  , this way we can just place it in the nav bar
+
+<NavLink onClick={this.toggle} href = "#">
+Register
+</NavLink>
+
+10.Thhe modal will get the following changes 
+    10.1 Model header name changed to register
+    10.2 The name will be the first value changed the name an did to name and the placeholder
+    10.3 Copy name input and add email and pssword fields
+
+11. We will have an register action called register from the authActions file when the client submits there values 
+
+first we will import the register action and in order to use it we need to place it in our connect down the bottom 
+
+import {register} from "../../actions/authActions"
+
+export default connect(
+    mapStateToProps,
+    {  register}
+  )(Reg);
+
+We will then make this a prop so we need to add it to propTypes up at the top to access it
+
+register: PropTypes.func.isRequired
+
+
+12.
+in the submit we get the name email an dpassword from the state
+
+
+ const {name , email,password} = this.state
+
+Then we cretae a user object
+
+//Creating new user 
+      const newUser = {
+          name,
+          email,
+          password
+      }
+
+ Then we call the register action 
+
+//Register user
+      this.props.register(newUser)
+
+
+
+13. If there is an error we want error messagae from the server to display in the modal
+
+we will use componentDidUpdate this will take in prev props
+
+we will pull out error from our props
+
+componentDidUpdate(prevProps)
+{
+    const {error} = this.props
+}
+
+Then we will check if the error is different from the previous error,
+then we will check if the error id is REGISTER_FAIL and if it is we will call this.setState and set the msg to error.msg.msg as in the redux tools the error message is in the error message
+
+ if (error !== prevProps.error) {
+      // Check for register error
+      if (error.id === 'REGISTER_FAIL') {
+        this.setState({ msg: error.msg.msg });
+      } 
+
+if the message has somehting in it we want it to display it in an alert whihc we will bring in alert from reactstrap up the top
+
+then above the form we will use a ternary update to return an alert if the state has a message inside
+
+
+{this.state.msg ?
+(<Alert color= "danger">
+    {this.state.msg}
+</Alert>)
+:
+null}
+
+
+
+Then we go into our appnavabr.js and then import our Reg.js file
+
+import reg from "./auth/Reg"
+
+Then we can replace our navlink with a Reg component
+
+ <NavItem>
+<Reg></Reg>
+</NavItem>
+
+
+We can create the register action in our authActions file 
+****EXPLAINED IN FILE****

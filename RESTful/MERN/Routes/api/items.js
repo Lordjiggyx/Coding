@@ -5,6 +5,10 @@ const router = express.Router()
 
 const Item = require("../../Models/Item")
 
+
+//JWT Authorisation
+const auth  = require("../middleware/auth")
+
 //Route to rerieve all items 
 
 router.get("/items" , (req , res)=>
@@ -22,7 +26,7 @@ router.get("/items" , (req , res)=>
 
 //Route to Create an Item
 
-router.post("/" , (req , res)=>
+router.post("/" , auth,(req , res)=>
 {
    const newItem = new Item(
        {
@@ -39,7 +43,7 @@ router.post("/" , (req , res)=>
 })
 
 //Route for deleting a post
-router.delete("/:id" , (req , res)=>
+router.delete("/:id",auth , (req , res)=>
 {
     //Finiding the Item to delete by ID
    Item.findById(req.params.id)
