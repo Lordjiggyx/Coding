@@ -1366,7 +1366,7 @@ we will use req.body to get our user value and using destructuring we can pull t
  
  we will also do some basic validation checking if all fields are entered and if not send a message asking the user to enter all fields alpng with a status 400
 
-  if(!name || !email || !password)
+  if(name ==" "|| email == " " || password == " ")
    {
        return res.status(400).json({msg:"Please Enter All Fields"})
    }
@@ -1824,7 +1824,7 @@ import {
 
   The first thing we wnat to do is to check the token and load the user and to do this we need to make a request to /api/auth/user
 
-we will create a helper method at the bottom called tokenConfig this will get the token from our state and add it to the header and then if there is a token we will set the x-auth-token value in the config header object to be the token from our state
+we will create a helper method at the bottom called tokenConfig this will get the token from our state and add it to the header and then if there is a token we will set the x-auth-token value in the config header object to be the token from our state then we need to return config
 
 export const tokenConfig = getState => {
     //Geting token frpm local storage
@@ -1846,6 +1846,8 @@ export const tokenConfig = getState => {
         //We want to set our headers token to the token in our state which will be ultimately the token stored in loclastorage
         config.headers["x-auth-token"] =token
     }
+
+    return config;
 }
 
 
@@ -2061,6 +2063,38 @@ then above the form we will use a ternary update to return an alert if the state
 null}
 
 
+14. We then want to implement the clearErrors function in order to remove the erorr message once the modal has been closed
+
+First we import clearErrors
+
+import {clearErrors} from "../../actions/errorActions"
+
+Then we need to bring it into our state
+
+ clearErrors: PropTypes.func.isRequired
+
+ Then we need to map it our mapStateToProps
+
+ We will call this in the toggle , right before we close the modal we will clear the errors
+
+15. Once we register we want the mpdal to cloase on it's own
+
+We will go to componentDidUpdate 
+
+first we will make sure the modal is open so we check that modal is true meaning it is open 
+
+
+***Pass in isAuthenticated in the destructuring above ****
+
+//Checking that the modal is open
+if(this.state.modal)
+{
+    //Check that were authenticated and if we are the modal will be closed
+    if(isAuthenticated)
+    {
+        this.toggle()
+    }
+}
 
 Then we go into our appnavabr.js and then import our Reg.js file
 
@@ -2075,3 +2109,334 @@ Then we can replace our navlink with a Reg component
 
 We can create the register action in our authActions file 
 ****EXPLAINED IN FILE****
+
+
+No we can add register our user
+
+If we look at the redux tools we can see the token is present isAuthenticated is true and isloading is false then the user value is the name of the user
+
+
+---Log Out Component---
+In our components folder in our auth folder we will cretae a file called logout.js
+
+This component wil require state 
+
+it will be a clss based action 
+
+it will need to bring in an logout action from authActions.js
+
+import {logout} from "../../actions/authActions"
+
+It will need connect from react redux
+
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+
+
+
+The render will be a navlink that we will place in our navbar 
+we wil use a fragment in this case so we need to import it from react
+
+import React, { Component , Fragment} from 'react'
+
+ we'll also have to bring in navlink
+
+import { NavLink } from 'reactstrap';
+
+
+inside our return we will replace the div with a fragment and inside this fragment we will place a nav link 
+
+This nav link will cal this.props.log out and have a href to nothing with the name of logout 
+
+<Fragment>
+<NavLink onClick={this.props.logout} href='#'>
+    Logout
+</NavLink>
+</Fragment>
+
+Then we need to bring in our propTypes 
+we will add th action of logout
+
+ static propTypes = {
+        logout: propTypes.func.isRequired
+    }
+
+Then we will export default connect with our mapStateToProps and logout and the naem of the component being logout
+
+We can then go to our AppNavbar and import the logout from the auth/logout
+
+import Logout from "./auth/Logout"
+
+then we put in another nav item in our AppNavbar and place logout in this nav item
+
+Then we need to do is create our action 
+Now as far as log out goes we just need to send an action type of LOGOUT_SUCCESS to our reducer which will set the state back to eit's inital state
+
+
+=====Part 12 -Login and Access Control=====
+
+To start the login process we must go to our auth folder in the components folder and create a file called Login.js
+
+We can take the register modal because a lot of it is similar
+
+
+Changes to be made 
+
+1.Change action to login
+
+import {login} from "../../actions/authActions"
+
+2. In the state remove name as we just need email and password
+
+ state = {
+        modal: false,
+        email: " ",
+        password: " ",
+        msg:null
+    }
+
+3. Chnage propTypes of register to login
+
+   static propTypes = 
+    {
+        isAuthenticated:PropTypes.bool,
+        login: PropTypes.func.isRequired,
+        error: PropTypes.object.isRequired,
+        clearErrors: PropTypes.func.isRequired
+    }
+
+4. Change the error id to be login fail not register fail
+
+   //If there is a cahnge and it is an error we call componentdidupdate
+    componentDidUpdate(prevProps) {
+        //This pulls the error from props
+        const { error  , isAuthenticated} = this.props
+        //If the  current state of error is not the same as the previous state of errpr
+        if (error !== prevProps.error) {
+          // Check for error id and if it matches LOGIN Fail we send the error message
+          if (error.id === 'LOGIN_FAIL')
+           {
+            this.setState({ msg: error.msg.msg })
+          }
+          //If it is not LOGIN fail we leave the message null
+           else
+           {
+            this.setState({ msg: null })
+          }
+
+5. The on submit will be different
+
+
+we neeed to get the email nad password of the state which will be what is entered by the user 
+
+ const {email , password} = this.state
+
+
+Then we need to create a new user in orde rot submit for login
+
+const user = {email , password}
+
+Then we will call the login action and pass in the user
+
+this.props.login(user)
+
+
+
+
+
+6.  Chnage titles in modal from register to Login
+
+
+7. get rid of input for name
+
+
+8.Change the register action to login at the bottom in pur maps state to props
+
+export default connect(
+    mapStateToProps,
+    { login , clearErrors}
+  )(Login);
+
+9. Change any reference to the class name of Reg to Login
+
+
+
+Then we can insert it into our navbar like the register
+
+
+We need to thne create the login action very similar to the register action we are just hitting the login endpoint and sending hte email and passowrd
+
+we can copy the register action and change it to apply for login
+***Like the register action it is explained throughly in the file****
+
+
+
+----Access Control----
+
+To start this we need ot go to our appnavabr
+
+we need to access our auth state from the AppNavbar so wee need to bring in conect so we can connect to redux 
+
+and then import our propTypes
+
+import { connect } from 'react-redux'
+import PropTypes from "prop-types"
+
+
+Then we ned to creaet our maps state to props gettin the auth 
+
+const mapStateToProps = state => ({
+    //These values are being taken from the rootreducer so refer to them exact
+   auth:state.auth
+  });
+
+
+At the bottom we need to export default connect and pass in mapStateToProps and null seeing as we do not need actions and then the name of the component
+
+export default connect(
+    mapStateToProps,
+    null
+  )(AppNavbar);
+
+  Then we can bring in our prop types as this wil be a prop
+
+   //Bringing in our proptypes
+    static propTypes = 
+    {
+        auth:PropTypes.object.isRequired
+    }
+
+    Now we can go into the render and above the return we will pull out  from the props auth state we will pull out the isAuthenticated and user values
+
+    const {isAuthentcated , user} = this.props.auth
+
+    we can then grba two values from the auth reducer by getting the them from the props
+
+    const {isAuthentcated , user} = this.props.auth
+
+
+    we want two variables one for the users that are logged in and one for guest links 
+
+    We can take the nav items and place them in divs for each variable 
+
+
+     const logLinks = (
+            <div>
+                 <NavItem>
+                    <Logout></Logout>
+                </NavItem>
+            </div>
+        )
+
+        //Guest links
+
+        const guestLinks = (
+            <div>
+                 <NavItem>
+                    <Login></Login>
+                </NavItem>
+
+                <NavItem>
+                    <Reg></Reg>
+                </NavItem>
+
+            </div>
+        )
+
+    Then remove them from the actual nav bar and then place a ternary Operator
+    if we are authenticated we will see the logout link and if we are not authenticated we will see the login and register links
+
+<Nav className = "ml-auto" navbar>
+{isAuthenticated ? logLinks : guestLinks}
+</Nav>
+
+We can then have a welcome message 
+
+in the logLinks we can place another NavItem and then a span we can then give it the bootrap classes of navbar taxt and mr-3 for moving the margin right by 3
+
+Then we can place a strong tag and inside we can place an expression that says if the user is don we can place Welcome and the user name 
+
+ <NavItem>
+          <span className='navbar-text mr-3'>
+            <strong>{user ? `Welcome ${user.name}` : ''}</strong>
+          </span>
+
+Finally we want tp be bale to add or delete items we need to send the token with any of the add or delete request
+
+we acc need to go into our itemActions and bring our tokenConfig which is the helper funciton that gets ythe token and puts it in the headers
+
+import {tokenconfig} from "./authActions"
+
+
+Thne we want to be bale to return errors so we n=must bring in hat function from the erroractions
+
+import {returnErrors} from "./errorActions"
+
+Now we wnat to send along the token in both add and delet item so along with dispacth we will pass in getState
+
+export const addItems = (item)=>(dispatch ,getState) =>
+
+
+Then where we make the request as long as passing in the data we will pass in tokenConfig andpass in getState and we will do the same for delete
+
+Finally we want to make it so if we are not authenticated we cannot see the list an dbe able to add or delete items and instead ask the person to login
+
+In the ItemModal we need ot bring in the auth state into our mapStateToProps so we can grab the isAuthenticated value
+
+const mapStateToProps = state => ({
+    item: state.item,
+    isAuthenticated:state.auth.isAuthenticated
+  });
+
+  we then need to bring in prop types and then isAuthenticated  in as a prop type above 
+
+     static propTypes = 
+    {
+        isAuthenticated:PropTypes.bool
+    }
+
+    we want to go into the render and then do a ternary to show the button if we are authenticated or else a messge to indicate the user dhould log in
+
+            {this.props.isAuthenticated ? (
+          <Button
+            color='dark'
+            style={{ marginBottom: '2rem' }}
+            onClick={this.toggle}
+          >
+            Add Item
+          </Button>
+        ) : (
+          <h4 className='mb-3 ml-4'>Please log in to manage items</h4>
+        )}
+
+add it to our proptypes
+
+And then the same for the ShoppingList with the delete buttons
+
+const mapStateToProps = (state) =>
+({
+    item:state.item,
+    isAuthenticated:state.auth.isAuthenticated
+})
+
+
+ShoppingList.propTypes = 
+{
+    getItems: PropTypes.func.isRequired,
+    //This is our state which is an obejct
+    item: PropTypes.object.isRequired,
+    isAuthenticated: PropTypes.bool
+}
+
+Then for the delete button we will alsoe do a ternary for if wer authenticated
+
+ {this.props.isAuthenticated ? (
+                    <Button
+                      className='remove-btn'
+                      color='danger'
+                      size='sm'
+                      onClick={this.onDeleteClick.bind(this, _id)}
+                    >
+                      &times;
+                    </Button>
+                  ) : null}

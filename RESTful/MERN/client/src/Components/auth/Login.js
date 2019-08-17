@@ -17,21 +17,20 @@ import { connect } from 'react-redux';
 //Bring in proptypes to set proptypes
 import PropTypes from "prop-types"
 
-//Bringing in register action from the the auth actions file
-import {register} from "../../actions/authActions"
+//Bringing in Login action from the the auth actions file
+import {login} from "../../actions/authActions"
 
 //Bringing in clearerror action from the the error actions file
 import {clearErrors} from "../../actions/errorActions"
 
 //import uuid from "uuid"
-class Reg extends Component {
+class Login extends Component {
 
     
    
     //Setting the state of our component 
     state = {
         modal: false,
-        name : " ",
         email: " ",
         password: " ",
         msg:null
@@ -41,7 +40,7 @@ class Reg extends Component {
     static propTypes = 
     {
         isAuthenticated:PropTypes.bool,
-        register: PropTypes.func.isRequired,
+        login: PropTypes.func.isRequired,
         error: PropTypes.object.isRequired,
         clearErrors: PropTypes.func.isRequired
     }
@@ -52,12 +51,12 @@ class Reg extends Component {
         const { error  , isAuthenticated} = this.props
         //If the  current state of error is not the same as the previous state of errpr
         if (error !== prevProps.error) {
-          // Check for error id and if it matches Register Fail we send the error message
-          if (error.id === 'REGISTER_FAIL')
+          // Check for error id and if it matches LOGIN Fail we send the error message
+          if (error.id === 'LOGIN_FAIL')
            {
             this.setState({ msg: error.msg.msg })
           }
-          //If it is not register fail we leave the message null
+          //If it is not LOGIN fail we leave the message null
            else
            {
             this.setState({ msg: null })
@@ -107,21 +106,15 @@ class Reg extends Component {
    {
        e.preventDefault()
 
-      //Getting naem email and password from state 
-      const {name , email, password} = this.state
+       //Get email and password from the state
+       const {email , password} = this.state
 
-      //Creating new user 
-      const newUser = {
-          name,
-          email,
-          password
-      }
+       //Create a user object to submit the email and password
+        const user = {email , password}
 
-      //Register user
-      this.props.register(newUser)
-
-       //Closing the modal
-       //this.toggle()
+       //Then we will call the login action and pass in the user
+        this.props.login(user)
+     
    }
    
    
@@ -132,7 +125,7 @@ class Reg extends Component {
         return (
             <div>
                <NavLink onClick={this.toggle} href = "#">
-                    Register
+                    Login
                </NavLink>
 
                 <Modal
@@ -140,7 +133,7 @@ class Reg extends Component {
                 toggle = {this.toggle}
                 >
                     <ModalHeader toggle = {this.toggle}>
-                        Register
+                       Login
                     </ModalHeader>
 
                     <ModalBody>
@@ -155,17 +148,7 @@ class Reg extends Component {
                         null}
                         <Form onSubmit = {this.onSubmit}>
                             <FormGroup>
-                                <Label for = "name">
-                                    Name
-                                </Label>
-                                <Input
-                                type = "text"
-                                name = "name"
-                                id = "name"
-                                placeholder = "Enter Your Name"
-                                onChange = {this.onChange}
-                                />
-
+                              
                                 <Label for = "email">
                                     Email
                                 </Label>
@@ -193,7 +176,7 @@ class Reg extends Component {
                                  style={{marginTop:"1rem"}}
                                  block
                                  >
-                                Submit
+                                Login
                                 </Button>
                             </FormGroup>
                         </Form>
@@ -214,5 +197,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    { register , clearErrors}
-  )(Reg);
+    { login , clearErrors}
+  )(Login);

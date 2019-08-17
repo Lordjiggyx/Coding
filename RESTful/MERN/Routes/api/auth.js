@@ -18,14 +18,14 @@ const bcrypt = require("bcrypt")
 const auth = (require("../middleware/auth"))
 
 //Route to authenticate the user 
-router.post("/" , (req , res) =>
+router.post("/auth" , (req , res) =>
  {
     const {email , password} = req.body
 
      //Validation
 
    //required fields
-   if( !email || !password)
+   if( email == " " || password == " ")
    {
        return res.status(400).json({msg:"Please Enter All Fields"})
    }

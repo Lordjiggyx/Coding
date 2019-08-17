@@ -102,16 +102,17 @@ onDeleteClick = (id) =>
                         {/*The list group item will just display the name of the item  */}
                         <ListGroupItem>
                         {/**The button for delete an item */}
-                        <Button
-                        className= "btn-del"
-                        color = "danger"
-                        size = "sm"
-                        onClick = {this.onDeleteClick.bind(this , _id)}
-                        >
-                        {/**&times is used ot give us the "x" symbol*/}
+                        {this.props.isAuthenticated ? (
+                            <Button
+                            className='remove-btn'
+                            color='danger'
+                            size='sm'
+                            onClick={this.onDeleteClick.bind(this, _id)}
+                            >
                             &times;
-                        </Button>
-                            {name}
+                            </Button>
+                        ) : null}
+                             {name}
                         </ListGroupItem>
                         
                         </CSSTransition>
@@ -127,7 +128,8 @@ onDeleteClick = (id) =>
 //MapStatToProps function takes satet from reducer and allows us to access from this.props
 const mapStateToProps = (state) =>
 ({
-    item:state.item
+    item:state.item,
+    isAuthenticated:state.auth.isAuthenticated
 })
 
 //Mapping getItems and item to our props
@@ -135,7 +137,8 @@ ShoppingList.propTypes =
 {
     getItems: PropTypes.func.isRequired,
     //This is our state which is an obejct
-    item: PropTypes.object.isRequired
+    item: PropTypes.object.isRequired,
+    isAuthenticated: PropTypes.bool
 }
 
 

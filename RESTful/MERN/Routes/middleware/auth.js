@@ -17,6 +17,7 @@ function auth(req , res ,next)
     
         //sending a 401 status - whihc means that you don not have the correct authorizations
        return res.status(401).json({msg: "No Token Acesss Denied"})
+       
 
 try{
         //if there is a token we need to verify it we create a vvariable called decoded which called the jwt.verify method on the token and this also takes in the jwt secret

@@ -57,7 +57,7 @@ export const loadUser = () => (dispatch , getState) =>
 //This takes in the name email and password and since we will be passing in an object we can destrucre it and then we must cal our dispatcg
 export const register =  ({name , email, password}) => dispatch => 
 {
-  //We need add a headrers file of content type since we will be sending json to the server we will make a post request to our routes/api/user route
+  //We need add a headrers file of content type since we will be sending json to the server we will make a post request to our routes/api/register route
 
   //Headers
   const config = 
@@ -73,7 +73,7 @@ export const register =  ({name , email, password}) => dispatch =>
   const body = JSON.stringify({ name, email, password });
 
   //We will make a axios post request to the register route and then pass in the data being body and the headers
-  axios.post("routes/api/register")
+  axios.post("routes/api/register" , body , config)
   //Returns a promise
   .then(res =>
     //dispatch the register succes type and then send a payload of everything whihc is just res.data that end point returns the user and the token which will be sent to the reducer
@@ -92,6 +92,60 @@ export const register =  ({name , email, password}) => dispatch =>
     })
   })
 }
+
+
+//Funciton for Logging on the user must be exported
+//This takes in the  email and password and since we will be passing in an object we can destrucre it and then we must cal our dispatch
+export const login =  ({ email, password}) => dispatch => 
+{
+  //We need add a headrers file of content type since we will be sending json to the server we will make a post request to our routes/api/auth route
+
+  //Headers
+  const config = 
+  {
+     headers:
+     {
+         "Content-type":"application/json"
+     }
+  }
+
+  //Create the requets body/data which will be the email and password
+  //we must use Json strinify to turn this data into an object
+  const body = JSON.stringify({ email, password });
+
+  //We will make a axios post request to the register route and then pass in the data being body and the headers
+  axios.post("routes/api/auth" , body , config)
+  //Returns a promise
+  .then(res =>
+    //dispatch the login succes type and then send a payload of everything whihc is just res.data that end point returns the user and the token which will be sent to the reducer
+    dispatch({
+      type:LOGIN_SUCCESS,
+      payload:res.data
+    }))
+   //If there is an issue
+  .catch(err => {
+    //We dispatch return errors , which returns an object 
+    //This function takes in a message status and id if an eror occurs and this will be stored in the err value above m err.response.data will give us the message and err.response.status will pass in the status we will also add an ID of LOGIN fail
+    dispatch(returnErrors(err.response.data, err.response.status , "LOGIN_FAIL"));
+    //We will return register fail which will clear out the auth state 
+    dispatch({
+      type: LOGIN_FAIL
+    })
+  })
+
+}
+
+
+
+//Logout user
+export const logout =() =>
+{
+  return{
+    type:LOGOUT_SUCCESS
+  }
+}
+
+
 
 // Setup config/headers and token
 export const tokenConfig = getState => {
@@ -112,7 +166,8 @@ export const tokenConfig = getState => {
     if(token)
     {
         //We want to set our headers token to the token in our state which will be ultimately the token stored in loclastorage
-        config.headers["x-auth-token"] =token
+        config.headers["x-auth-token"] = token
     }
+    return config;
 }
 
