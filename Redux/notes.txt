@@ -1,0 +1,63 @@
+                            ===== What Is Redux =====
+
+-Redux is a predictable state container for javascript apps
+-It is ran in different environments e.g. the client server and navtive
+-Very small only uses KB
+
+                                --Without Redux--
+
+Suppose we have a root coponent , then we have 2 child components and then 4 sub child components
+
+                                    ===Root===
+                                        |
+                                   <===   ===>
+                                    |        |
+                                    |        |
+                                    |        |
+                        --------<==Child    Child==>--------
+                        |            |        |             |
+                        |            |        |             |
+                        |            |        |             |
+                       ==Sub==    ==Sub==    ==Sub==     ==Sub== 
+
+Say we wanted to pass state from the root to the sub components , you need to pass it through the child components and vice versa if you want to pass the state from the sub component to the root component you would need to pass it again theough the child
+
+With redux it is like a central store where everything is avaliable , this redux store holds the state of our appllication so every component can all for the state from this redux store
+
+                            --Structure of Redux--
+
+                                   Redux Store
+                                        
+                                Action    Reducers 
+
+                                    Subscribe                   
+
+Redux Store - This holds the state of the appllication
+
+Actions - Inside the store information comes from the actions and actions are just javascript objects
+
+Reducers - Reducers are normal functions that get actions , reducers get information from the action and then change and update the state 
+
+Subscribe- To updatet the DOM you need to subscribe to the DOM part of the appllication
+
+
+--Three principles of Redux---
+
+1. The redux store is a single point of truth , the data/state of the application must be stored in one place and this is the store
+
+2.State is read only , you can not change state directly
+
+3. Reducers make the cahnges in the state 
+
+
+                                ======Coding=====
+
+Create a new react app in the folder using npx creaet-react-app
+
+Then run npm run start to start the application
+
+Then we will intsall redux using 
+
+npm i redux 
+
+We can then go to our index.js and inport createStore from redux 
