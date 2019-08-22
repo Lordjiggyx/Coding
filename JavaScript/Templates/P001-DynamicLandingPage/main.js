@@ -62,7 +62,7 @@ else if(hour<18)
 {
     //Afternoon
     document.body.style.backgroundImage = "url(https://source.unsplash.com/1600x900/?clouds)"
-    greeting.textContent = 'Good AfterNoon'
+    greeting.textContent = 'Good Afternoon'
     document.body.style.color = 'white';
 }
 else
@@ -82,7 +82,8 @@ function getName()
     //This checks if there is an element that exists in the local storage called name
     if(localStorage.getItem('name') === null)
     {
-        name.textContent = 'Please Enter Name....'
+        name.placeholder = 'Please Enter Name....'
+
     }
     else
     {
