@@ -52,6 +52,8 @@ Subscribe- To updatet the DOM you need to subscribe to the DOM part of the appll
 
                                 ======Coding=====
 
+                            ======Getting Started=====
+
 Create a new react app in the folder using npx creaet-react-app
 
 Then run npm run start to start the application
@@ -61,3 +63,559 @@ Then we will intsall redux using
 npm i redux 
 
 We can then go to our index.js and inport createStore from redux 
+
+import { createStore } from 'redux'
+
+Then we can create a store variable 
+
+const store = createStore()
+
+We will get an error at this point as the createStore accepts a reducer as a function to be passed in so we must create a reducer which is a funcion and passing it into our store and this gets rid of the error 
+
+//Reducer function
+const reducer = function()
+{
+    
+}
+
+//Creating the redux store 
+const store = createStore(reducer)
+ 
+we can actually check the redux store's properties using console.log and passing in the store variable
+
+console.log(store)
+
+One of the main properties we will look at it getState this is a function that gets the state of the store , if we call this using store.getState , it will return an empty object
+
+if we go into our and return an object with a name it will be displayed in the getState function call when we go into our console
+
+const reducer = function()
+{
+    //We must always use return in our reducers
+    return {
+        name:"Tomi Ilori"
+    }
+}
+
+console.log(store.getState())
+
+                            =====Updating State=======
+
+To update state we need to dispatch an action 
+
+an action is a javascript object with two parameters 
+
+1. The type of the action 
+2. The data that is being sent which is called a payload 
+
+The action must be dispatched though so we can use store.dispatch and pass the action into it 
+
+store.dispatch(
+    {
+        type:"UPDATE_STATE",
+        payload: "Tobi Ilori"
+    }
+)
+
+The problem is that even if you dispatch the action you need to take the action and pass it into the reducer 
+
+reducers taje two things
+1.State
+2.Actions
+
+so in our reducer we can say if the action type is the same as our cretaed action of UPDATE_STATE then we can return the payload 
+
+const reducer = function(state , actions)
+{
+    if(actions.type === "UPDATE_STATE")
+    //We must always use return in our reducers
+    return {
+        name:actions.payload
+    }
+}
+
+If we then use console.log(store.getState()) we see the value has been updtaetd 
+
+
+                                ===Combined reducers===
+
+We can only pass in one reducer at a time ot our store  so to use more tahn one we must use a combined reducer
+
+we must import the combineReducers from redux
+
+import { createStore , combineReducers } from 'redux'
+
+
+and then create a variable that calls this function and in this function we can pass in an object with each reducer inside and then pass this combined reducer variable into our store variable
+
+const rootReducer = combineReducers(
+    {
+        personReducer,
+        gameReducer
+    }
+)
+
+ratther then calling the reducersby name we can chnage it by creating a value that is set the reducers
+
+
+
+const rootReducer = combineReducers(
+    {
+        game:gameReducer,
+        person:personReducer
+    }
+)
+
+
+const store = createStore(rootReducer)
+
+if we were returning the state in any of our reducers we must pass in a state value for it be in declared inside the reduer function or a seperate variable 
+
+const personReducer = function(state = {} , actions)
+{
+    if(actions.type === "UPDATE_STATE")
+    //We must always use return in our reducers
+    return {
+        name:actions.payload
+    }
+    return state
+}
+
+So when we look at the person reducer we see that it returns an empty object and then it returns a reducer with a name parameter 
+
+
+instead of setting the inital state like that we create a variable that represents the inital state for us and then we can pass this into our createStore function as a second parameter
+
+const initialState =
+{
+    game:
+    {
+        name:"Jimbo"
+    },
+    person:
+    {
+        name:"Tomi"
+    }
+}
+
+
+const store = createStore(rootReducer , initialStates)
+
+
+                        ====Relocation of files=====
+We now have 2 reducers, a block of store related information and one action it is better if we seperate these things 
+
+in our src folder we can create a store folder and in this foider we will cretae a file called index ,js
+
+in this file we copy evrrything from our index.js taht is redux related in the orginal index.js and place it in the new one 
+
+and at the bottom we can tpe export default store
+
+now in out orginal index.js we can just import store from this new directory
+
+Next we will create a reducer folder and creaetea file for each reducer person and game 
+
+we must then copy the reducers from this index.js and place it in it's respective file 
+
+and at the bottom of each file we must type export default and the name of the function
+
+Then we need to import these reducers into our index.js file 
+
+We now create a folder called actions 
+
+and in this we can create a file called perosn actions and game actions and then we can takeour actions from indexjs and place them in the respective file.
+
+But in these files we create vairable to represent the action bing called so for example updating the state of a person object
+
+const update_person =  {
+        type:"UPDATE_STATE",
+        payload: "Tobi Ilori"
+    }
+
+Then we export deafult and the name of the variable 
+
+and then in our index.js we can remove the store.dispatch
+
+                    ===== Implement React=====
+
+We can go our app.js and remove all the extra code and replace it with redux tutorial
+
+We wnat to access the name of the person so do to this we need to import the store first in our app.js file from our index.js file in the storre folder
+
+then we can access the nam of the user saying 
+
+{store.getState().person.name}
+
+We know that state is stored in the store 
+Then we know thaht getState is th function that gets the state of the application
+we know that person is really personReducer 
+we know that person reducer returns a name value so this is what we will be accesing
+
+  Person Name: {store.getState().person.name}
+
+To update the name we will use a button and then with the onclick we will dispatch the update_person action 
+
+to start we will import this action
+
+import update_person from "../src/Actions/personActions"
+
+Then in our button we will set our buttons onclick to call a function which will dispatch the action
+
+<button onClick = {updatePerson}>Update Person</button>
+
+we will create a function call updatePerson
+this function will simple dispatch the update_person action
+
+
+function updatePerson() 
+{
+  store.dispatch(update_person)
+}
+
+************************************************************************************
+*****Quick Break - connecting store to redux tools******
+
+When we created our store we need to place this line of code in our parentheses as a third argument
+
+window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+
+//Creating the redux store 
+const store = createStore(rootReducer , initialStates , window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+
+************************************************************************************
+
+The actual page does not change as well tho once this button is clicked yes thet satte can be seen changing in the redux dev tools.
+
+To get the change we must now subscribe our DOM with this store
+
+back in our index.js in the src file we must create a function called render and pass in the line of code that actualy renders our application
+
+now below we call our store.subscribe passing in render 
+
+then we callour render mehtod again
+
+store.subscribe(render)
+//calling our function to render htew page
+render()
+
+
+                    =======Switch Statement=====
+
+It is much better practice to use a switch Statement in our reducers rather than if statement 
+
+in this switch statement we will check for the action type and for each case we ill return the payload
+
+const personReducer = function(state = {} , actions)
+{
+
+    switch(actions.type)
+    {
+        case 'UPDATE_STATE':
+            return {
+                name: actions.payload
+            }
+        default:
+            return state
+    }
+}
+
+We can create a folder called types and createa a file called types.js
+
+in this file we can create type variables to represent the string value of our types and export them so thye can be accessed across the application
+
+//Variable sthat represent our action items
+export const UPDATE_STATE = "UPDATE_STATE"
+export const UPDATE_GAME = "UPDATE_GAME"
+
+Then we can go to whereever the UPDATE_GAME/UPDATE_STATE is used and import these type variables and then call them in the file
+
+
+So for example with ou update state 
+
+first we import it into our action 
+
+import {UPDATE_STATE} from "../types/types"
+
+
+const update_person =  {
+    type:UPDATE_STATE,
+    payload: "Tobi Ilori"
+}
+
+and then we import it inot our reducer
+
+
+import {UPDATE_STATE} from "../types/types.js"
+
+//Reducer function
+const personReducer = function(state = {} , actions)
+{
+
+     //Use of swirch statemnet is better 
+    //as we can check just on the action type and do it for multiple types
+    switch(actions.type)
+    {
+        case UPDATE_STATE:
+            return {
+                name: actions.payload
+            }
+        default:
+            return state
+    }
+}
+
+we doi the same with gameAction and gameReducer
+
+
+                        ======REACT REDUX======
+
+For better ocnnection between react and redux and remove the subscribe functionality we can instead use react redux and to do this we must installl it through npm first 
+
+npm i --save react-redux
+
+we can go to our src inde.js and remove the render and the subscribe methods
+
+once this is called we can import provider from it and then wrap our app tag in this provider tag while passing in our store as a state 
+
+import {Provider} from "react-redux"
+
+
+    ReactDOM.render(
+    <Provider store = {store}>
+    <App />
+    </Provider>, document.getElementById('root'));
+
+This will stop our DOM from updating 
+
+To get it to update we must go to our app.js and we need ot use the connect component which comes from redux so we must import this 
+
+import {connect} from "react-redux"
+
+and then at the bottom call connect and surround the app in our brakcets
+
+
+export default connect() (App);
+
+This still does not fix the problem completly we must pass something into our connect 
+
+connect takes in the relation or the mapping of state and the prop
+
+so we create a function called mapStateToProps this is a function that holdds the state and returns sstate
+
+
+function mapStateToProps(state)
+{
+return state 
+}
+
+Then we take this fucntion and pss it into our connect function
+
+Now our state and the prop is connected which means we can make changes again so now our props also possess the gameReducer values and teh personReducer values 
+
+if we pass props into our app and thenb call console.log props we will see this 
+
+Now in our app.js we can repplace store.getState() with props.
+
+ Person Name: {props.person.name} ||
+    <button onClick = {updatePerson}>Update Person</button>
+    <hr/>
+    Game Name: {props.game.name}
+    <button onClick = {updateGame}>Update Game</button>
+
+Because we can return the state we can do it differently
+in our app.js inside the mapStateToProps function we can assign names to the desired state that we are targetting 
+
+function mapStateToProps(state)
+{
+  return{
+    game:state.game,
+    person:state.person
+  } 
+}
+
+Next thing we wnat to get rid of is the calling of store dispatch instead we will pass in another parameter into our connect brakcets called mapDispatchToProps
+
+export default connect(mapStateToProps , mapDispatchToProps) (App);
+
+this will be another function which will take in dispatch and inside we will return all  the dispatchs
+
+each dispacth will be assigned an arrow function which will call the dispacth of the actions
+
+function mapDispatchToProps(dispatch)
+{
+  return {
+    updateGame: ()=>
+    {
+      dispatch(update_game)
+    },
+    updatePerson: ()=>
+    {
+      dispatch(update_person)
+    }
+  }
+}
+
+Now in our buttons onClick function we can use props.action_name 
+
+                    =======Async======
+
+To start we will createa a button for fetcing users in our app.js 
+
+Then we will create another reducer ,actions and types for our users
+
+Then in our index.js in our intial state we will create an empty array of users 
+
+const initialStates =
+{
+    game:
+    {
+        name:"Jimbo"
+    },
+    person:
+    {
+        name:"Tomi"
+    },
+    users:
+    []
+}
+
+
+
+
+and then in our root reducer we createa reference to the user reducer
+
+const rootReducer = combineReducers(
+    {
+        game:gameReducer,
+        person:personReducer,
+        users:userReducer
+    }
+)
+
+
+
+Next in our app.js we want to map our user state to the props
+
+function mapStateToProps(state)
+{
+  return{
+    game:state.game,
+    person:state.person,
+    users:state.users
+  } 
+}
+
+Then underneath our button for fectging users we will create a ternary operator that says if the lenght of the users array is 0 we will display that no users have been found otherwise we map them to our page 
+
+   { props.users.length === 0 ? <p>"No Users found"</p> : props.users.map(user =>
+    
+      <p key = {user.id}>
+        User ID:{user.id}
+        <br/>
+        Usuer Name: {user.name}
+        <br/>
+        User Email: {user.email}
+      </p>
+    )}
+
+    (***When returning a list of users each user needs a key so we pass in the key user id as the key )
+
+Now we can go to our button and add an onClick function called getUsers 
+
+<button onClick = {props.getUsers}>Fetch users</button>
+
+Then we must map this our mapDispatchToProps 
+
+in our fetch_users action we will create a function taht takes in dispatch and returns our users
+
+But we get an error if we call our fecth method so we need middleware for it 
+
+the middleware we will install is thunk using npm i redux-thunk
+
+when this is installled we got our inde.xjs where our store is stored
+
+first we import thunk 
+
+import thunk from "redux-thunk"
+
+Then we create a variable called middleware and let it equal to an array with thunk inside
+
+const middleware = [thunk]
+
+we msut also import applyMiddleware and compose from redux
+
+Then we can pass in applyMiddleware to our create function using the spread operator in case we add more middleware  but this will cause an error so we place both applyMiddleware our connection to redux dev tools into our compose function
+
+thunk esswntially takes care of the actions which are functional actions
+
+const store = createStore(rootReducer , initialStates , compose(
+    applyMiddleware(...middleware),  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()))
+
+
+Now we can go to get_users function in our userActions.js file amd call the fetch method
+
+The fecth users method will take in a parameter of dispatch so we can send pur type and the matching paylaod
+
+we call this method and pass in the url of json placeholder of users this will give us a promise which will return a response which we will turn into json and then this will create another promise which will return anothe response in which we can manipulate 
+
+What we will do is dispatch the type and payload so after the last arrow function we will call dispatch and senf the GET_USERS type and the payload being set to the users coming in 
+and then we will export this function
+
+function fetch_users(dispatch)
+{
+    fetch("https://jsonplaceholder.typicode.com/users")
+    .then(response => response.json())
+    .then(res => dispatch({
+        type:GET_USERS,
+        payload:res
+    }))
+}
+export default fetch_users
+
+When we try to execute our action when we press the button an error comes up saying that props.users.map is not a function App
+
+so when we call the action we send the type of GET_USERS an dthis is handled by userReducer but we set users to the payload but we don't want to do this instead we want to return the payload which sets the state of users to the incoming data
+
+
+
+                ======Changing state of single parameter when there is multiple parameters=====
+
+say in the inital state we add an emial parameter to our person and we want to update this on the call of our update person function if we try this the nae is changed as usual but the email is removed , this is because we are not updating the name we are simply returnig just the name and skipping the email .
+
+To fix this we go to our person reducer , rether then just returning the name withj the payloasd we can also add email:state.email
+
+const personReducer = function(state = {} , actions)
+{
+
+     //Use of swirch statemnet is better 
+    //as we can check just on the action type and do it for multiple types
+    switch(actions.type)
+    {
+        case UPDATE_STATE:
+            return {
+                name: actions.payload,
+                email:state.email
+            }
+        default:
+            return state
+    }
+}
+
+We can use state.email because the state in the function parentheses holds the repvious value of our state so when we call this again the name is chaneged and the email is still present
+
+What if you had multiple parameters and wanted to change only one ?
+you would have to say state.param_name for each one 
+
+so instead we can saye Object.assign() and we pass in an empty object oour state and then the value we wish to change 
+
+ switch(actions.type)
+    {
+        case UPDATE_STATE:
+            return Object.assign({} , state , {name:actions.payload})
+        default:
+            return state
+    }
+
+
+            ***********Redux Workflow explanantion******************
+            https://hackernoon.com/https-medium-com-heypb-react-redux-workflow-in-4-steps-beginner-friendly-guide-4aea9d56f5bd
