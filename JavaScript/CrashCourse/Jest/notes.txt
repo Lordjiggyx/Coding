@@ -1,0 +1,189 @@
+Jest is testing solution for javascript that helps with unit testing
+
+                                 ====Getting started====
+
+You need Node.js installed before you can use Jest
+The first thing we will do is run npm init -y to get our package.json file created 
+
+Then we are goning ot install jest 
+
+npm i --save jest
+
+and then we will create our script we have the test value so we can just change that to jest and save it
+
+Then once this is installed we will create a file called functions.js and a file called functions.test.js it should have the same name as the file just with .test and jest will automatically pick this up
+
+In our functions file we will create a variable called functions 
+
+and in this is where we will create our functions 
+
+
+                             ====Basic functions and tests====
+
+the first one will create is a fucntion called add and we will use es6 arrow function
+
+This function takes in two numbers and returns the sum of the two numbers
+
+const functions = 
+{
+    add :(num1 , num2) =>
+    {
+        num1 + num2
+    }
+}
+
+before we go and write our test we must export the functions variable
+
+module.exports = functions
+
+Then in our functions.test.js we must bring this file in to use it 
+
+const functions = require("./functions")
+
+now we can create our test 
+
+we write test with brackets hthis takes in 2 things 
+1. our description of hte test
+2. a fucntion 
+
+in this function we write expect and pass in the the functions file add function along with any parameters the fucntion takes 
+
+test(
+    "Adds 2 + 2 to eqaul 4" ,()=>
+    {
+        expect(functions.add(2,2))
+    }
+    )
+
+we want to add what's called a matcher and there are a lot of matchers in javascript and in thhis case we will use toBe() and pass in 4 which says that with the parameters present to expected outcome is going to be 4
+
+test('two plus two is four', () =>
+ {
+  expect(functions.add(2,2)).toBe(4)
+});
+
+Then in our tereminal window we can just type npm test to run the test which calls jest 
+
+This test is passed
+
+if we were to pass in different numbers into the function we will get a fialed test telling us what it expected and what it recieved
+
+we can also use not which will be for a test that does not give us a result
+
+just befor the toBe we place not 
+
+test('two plus two is not equal to five', () =>
+ {
+  expect(functions.add(2,2)).not.toBe(5)
+});
+
+toBe is used  to check for a specific value , but we can also check for other things like null , undefined , truthy values and falsy values 
+
+in our functions file we can create another fucntion called isNull and this function will just return null
+
+isNull: ()=> Null
+
+Then we can create another test for testing this function 
+
+test('Should be null', () =>
+ {
+  expect(functions.isNull()).toBeNull()
+});
+
+we use toBeNull to check if the fucntion returns null
+
+
+test('Should be null', () =>
+ {
+  expect(functions.isNull()).toBeNull()
+});
+
+The next function will be called check value it will take in something and just return it
+
+checkValue:(x)=> x
+
+Then the test will call the checkValue function and take in null then on the end we will call toBeFalsy()
+
+test('Should be falsy', () =>
+ {
+  expect(functions.checkValue(null)).toBeFalsy()
+});
+
+This test passes cause null is a falsy value along with the likes of 0 and undefined 
+
+The next function will be called createUser and we will create a user with a first and last name 
+
+
+createUser: ()=>
+    {
+        const user = 
+        {
+            firstname: "Tomi"
+        }
+        //add the last name onto the user
+        user["lastname"] = "ilori"
+        return user
+    }
+
+The test for this function will checkk that the function returns an ibject with a firstname of tomi and a lastname of tomi
+
+toBe is for primitive type variables so we must use toEqual or toStrictEqual for objetcs and collections 
+
+test("User object with first and last name of tomi ilori" , ()=>
+{
+    expect(functions.createUser()).toEqual(
+        {
+            firstname:"Tomi",
+            lastname:"ilori"
+        }
+    )
+})
+
+
+We have macthers for less than and greater than 
+
+we can actually place our logic in the test rather then creating a function in our functions file 
+
+test("should be under 1600" , ()=>
+{
+    const load1 = 700
+    const load2 = 500
+    expect(load1 +load2).toBeLessThan(1600)
+})
+
+We can test for regex 
+
+test("There is no I in team , ()=>
+{
+    expect('teamI').not.toMatch(/I/)
+})
+
+This will fail as there is an I in the team string if this is replaced with a lowercase i then it will pass 
+
+
+For arrays we use .toContain() 
+
+test("Admin should be in usernames" , () =>
+{
+    usernames =
+    [
+        "John",
+        "Karen",
+        "admin"
+    ]
+
+    expect(usernames).toContain("admin")
+})
+
+If we remove admin the test failes if w have admin inside the test passes
+
+
+                            ===Asycnhronous functions====
+
+We can test Asycnhronous functions 
+
+we will install axios 
+
+we can go back to our fucntions file and import axios 
+
+then we will create a funccion to fetch users from the json placeholder 
