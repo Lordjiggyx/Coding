@@ -187,3 +187,94 @@ we will install axios
 we can go back to our fucntions file and import axios 
 
 then we will create a funccion to fetch users from the json placeholder 
+
+***Remember to import axios***
+
+ fetchUser: ()=>
+        axios.get("https://jsonplaceholder.typicode.com/users/1")
+        .then(res=> res.data)
+        .catch(err => "error")
+    
+
+When dealing with async data we need to use expect.assertions() this verifies that a certain number of assertions are called ,  you also need to return the promise if you forget to do this the test will complete before the axios function completes it is insdie our .then where we check the data matches what we expect 
+
+
+test("user Fetched name should be leanne Graham" , ()=>
+{
+    //Expecting one object to be returned
+    expect.assertions(1)
+    //returning promise as test will finish before promise does
+    return functions.fetchUser().then(data =>
+        {
+            expect(data.name).toEqual("Leanne Graham")
+        })
+})
+
+
+We can do this unit test as an async await we can just add the async into the test brackets and then remove the .then and then instead of returning a function we can createa variable that is the function and then carry on he same 
+
+// Async Await
+test('User fetched name should be Leanne Graham', async () => {
+  expect.assertions(1);
+  const data = await functions.fetchUser();
+  expect(data.name).toEqual('Leanne Graham');
+});
+
+
+
+                ====Unit Test for cardio Session functions====
+
+We will test some of the files from the cardio session 
+
+The first will be revere String 
+
+we will create a file that has the reverse string code called revString.js 
+
+we must use module.exports = reverseString at the bottom
+
+then create a revString.test.js file and require this fucntion from the file 
+
+same with anagram and chunk explanations will be written in comments inside files
+
+                ===Run methods before or after tests====
+
+go into functions.js and create dummy functions
+
+one function will be initDb which will initialized database and then anothe rone that says database closed
+
+
+function initDatabase()
+{
+    console.log("Databsae initialized....")
+}
+function closeDatabase()
+{
+    console.log("Databsae Closed....")
+}
+
+To run thes before and after each test we use beforeEach() and afterEach() and inside we call the initDatabase before each test and closeDatabase after each test
+
+//initialse DB before each test
+beforeEach(() => console.log(initDatabase))
+afterEach( () => console.log(closeDatabase))
+
+
+
+But what if we want to run it once beofre the test are checked and once after the tests are checked we can jsut run beforeAll and afterAll
+
+
+If you want to target htese dummy functions to run after certain tests we can use describe
+
+
+so we will have a dummy function caled check names and then we will ust decribe to call the beforeEach and this will call check names and inside this describe we will call our test 
+
+This only runs twice because the two tests have been completed
+
+
+                            =====Watch All====
+
+We can have jest run as we are dveloping using watch all from jest 
+
+to do this we can go into our package.json and then add a script called testWatch and let this be equal to "jest --watchAll"
+
+This runs all the tests and allow us run certain tests so if we make a test fail it will automatically show us
