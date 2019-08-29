@@ -15,9 +15,9 @@
     <h1 class="display-4 mb-4">Fetch API Sandbox</h1>
 
     <div class = "d-flex"> <!--The class = is bootstrap styling for coloring the buttons-->
-<button id="getText" class = 'btn btn-primary mr-3' >Get Text</button>
-<button id="getUsers"  class = 'btn btn-success mr-3'>Get Users</button>
-<button id="getPosts" class = 'btn btn-warning mr-3'>Get API Data</button>
+<button id="getText" class = 'btn btn-primary mr-3' >Get Comments From API</button>
+<button id="getUsers"  class = 'btn btn-success mr-3'>Get Users From Api</button>
+<button id="getPosts" class = 'btn btn-warning mr-3'>Get Posts From API</button>
 </div>
 <hr>
 <div id="output"></div>
@@ -66,20 +66,33 @@ function getText()
 
      //call fetch function
      //fetch takes in a parameter url/file
-    fetch('Sample.txt')
+    fetch('https://jsonplaceholder.typicode.com/comments')
     //When done with arrow function fetch returns the res which is the response in this case
-    .then((res) => res.text())
+    .then((res) => res.json())
     //The data that is then held in the response is then inserted into the html document by 
     //setting the value of where the information will be displayed to equal the data in the response
-    .then((data) => document.getElementById('output').innerHTML = data)
-
+    .then((data) => {
+          var output= "<h2 class= mb-4>Comments</h2>"
+          console.log(data)
+        data.forEach(function(comment)
+        {
+            output += `
+            <ul class ='list-group mb-3'>
+                <li class = 'list-group-item'>ID: ${comment.id}</li>
+                <li class = 'list-group-item'>name: ${comment.name}</li>
+                <li class = 'list-group-item'>email: ${comment.email}</li>
+            </ul>
+            `
+        })
+        document.getElementById('output').innerHTML = output
+      })
     //put into webapage
     
     
     }
 //Function to grab users from file
 function getUsers(){
-      fetch('users.json')
+      fetch('https://jsonplaceholder.typicode.com/users')
       .then((res)=> res.json())
       .then((data) => {
           var output= "<h2 class= mb-4>Users</h2>"
