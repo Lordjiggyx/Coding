@@ -1,4 +1,16 @@
-http://facebook.github.io/react-native/docs/getting-started
+
+
+
+watch Tutorisl again and type put instruction on how to start you fucking idiot
+
+
+
+
+
+
+
+
+ http://facebook.github.io/react-native/docs/getting-started
 refer to this page to get started
 you need android studio and a jdk
 ctrl + m to help

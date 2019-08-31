@@ -1,4 +1,38 @@
-import axios from "axios"
+const axios = require("axios")
+
+//Dummy funcions
+function initDatabase()
+{
+    console.log("Databsae initialized....")
+}
+function closeDatabase()
+{
+    console.log("Databsae Closed....")
+}
+
+//initialse DB before each test
+// beforeEach(() => console.log(initDatabase))
+// afterEach( () => console.log(closeDatabase))
+
+// beforeAll(() => console.log(initDatabase))
+// afterAll( () => console.log(closeDatabase))
+
+const nameCheck = () => console.log("Checking names....")
+
+describe('Checking names', () => {
+    beforeEach(()=> nameCheck())
+    
+    test('User is Jeff' , ()=>
+    {
+        const user = "jeff"
+        expect(user).toBe("jeff")
+    })
+    test('User is Karen' , ()=>
+    {
+        const user = "Karen"
+        expect(user).toBe("Karen")
+    })
+});
 
 const functions = 
 {
@@ -27,11 +61,12 @@ const functions =
 
     //function to fetch one user from the json placeholder
     fetchUser: ()=>
-    {
         axios.get("https://jsonplaceholder.typicode.com/users/1")
-        .then(res=> res.data)
+        .then(res => res.data)
         .catch(err => "error")
-    }
+    
+
+   
     
 }
 
