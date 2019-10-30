@@ -34,7 +34,7 @@ const mongoose = require("mongoose")
 const db = require("./Config/keys").MongoUrl
 
 //Connect to database
-mongoose.connect(db , {useNewUrlParser:true})
+mongoose.connect(db , {useNewUrlParser:true ,useCreateIndex:true})
 .then(()=> console.log("Connected To Database..."))
 .catch(err => console.log(err))
 
