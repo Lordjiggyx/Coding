@@ -1,0 +1,21 @@
+.nav-container
+{
+    height: 10vh;
+    width: 100vh;
+    position: relative;
+    overflow-y: hidden;
+}
+
+.nav-container img
+{
+    margin-top: 0.5%;
+    width: 80px;
+  
+ 
+}
+
+.main{
+    position: relative;
+    height: 90vh;
+    width: 100vh;
+}

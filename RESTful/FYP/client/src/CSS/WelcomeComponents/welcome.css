@@ -1,0 +1,168 @@
+
+@import url("https://fonts.googleapis.com/css?family=Nanum+Myeongjo&display=swap");
+@import "~normalize.css";
+@import "~@blueprintjs/core/lib/css/blueprint.css";
+@import "~@blueprintjs/icons/lib/css/blueprint-icons.css";
+
+.split{
+
+    height:100%;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+
+    }
+    
+    .left{
+        left:0;
+        background-color:white;
+        
+    }
+    
+    .right{
+        right:0;
+        background-color: #D976ED
+    }
+    
+    .welcome_center
+    {
+       
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        font-family: 'Nanum Myeongjo', serif;
+    }
+
+     .crab
+    {
+        position: absolute;
+        top: 30%;
+        left: 50%;
+        right: 50%;
+        width: 250px;
+        transition: all .2s ease-in-out;
+        transform: translate(-50%, -50%);
+      
+    }
+    .crab:hover
+    {
+        
+        opacity: 0.85;
+    }
+
+    .Ponc_header{
+            letter-spacing: 6px;
+            font-weight: 1000;
+            font-size: 4.2em;
+            margin:20px
+          
+    }
+
+    .Ponc_slogan{
+        letter-spacing: 6px;
+        font-weight: bold;
+        font-size: 2.0em;
+        color: #D976ED;
+        word-spacing: 3px
+}
+
+.Greeting
+{
+    position: absolute;
+    top: 20%;
+    left:25%;
+    right:75%;
+    font-size: 2em;
+    font-weight: bold;
+    font-family: 'Nanum Myeongjo', serif;
+
+    
+}
+
+.Greeting_Text
+{
+    position: absolute;
+    font-size: 1.1em;
+    line-height: 1.5em;
+    font-weight: bold;
+    top: 27%;
+    left:25%;
+    right:5%;
+    font-family: 'Nanum Myeongjo', serif;
+    
+}
+
+.Greeting_Text1
+{
+    position: absolute;
+    font-size: 1.1em;
+    line-height: 1.5em;
+    font-weight: bold;
+    top: 43%;
+    left:25%;
+    right:5%;
+    font-family: 'Nanum Myeongjo', serif;
+    
+}
+
+.Contact_Details
+{
+    position: absolute;
+    font-size: 1em;
+    font-weight: bold;
+    top: 65%;
+    left:25%;
+    right:5%;
+    font-family: 'Nanum Myeongjo', serif;
+}
+
+.Contact_Details a
+{
+    color:black;
+}
+
+.bp3-minimal.continue
+{
+    margin-top: 50%;
+    margin-left:24%;
+    font-family: 'Nanum Myeongjo', serif;
+    font-weight: bold;
+    
+}
+
+.bp3-minimal.why
+{
+    margin-top: 50%;
+    margin-left:24%;
+    font-family: 'Nanum Myeongjo', serif;
+    font-weight: bold;
+    
+}
+
+.bp3-minimal.continue:hover
+{
+  background-color: #D976ED !important
+}
+
+.bp3-minimal.why:hover
+{
+  background-color: #D976ED !important
+}
+
+.bp3-minimal.continue:focus
+{
+  outline:0px !important
+}
+
+.bp3-minimal.why:focus
+{
+    outline:0px #ECBBF6 !important
+}
+
+.rightIcon{
+    color: white !important
+}

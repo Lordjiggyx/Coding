@@ -9,7 +9,7 @@ const User = require("../../Models/user")
 const ET = require("../../Models/EmailToken")
 
 
-router.get("/getUsers" , (req , res)=>
+router.get("/users/getUsers" , (req , res)=>
 {
     User.find({}).then(user=>
         {
@@ -17,7 +17,7 @@ router.get("/getUsers" , (req , res)=>
         })
 })
 
-router.post("/register" , (req ,res)=>
+router.post("/users/register" , (req ,res)=>
 {
     const {FirstName , LastName , Email , Password} =req.body
 
@@ -34,7 +34,7 @@ router.post("/register" , (req ,res)=>
         {
             const crypt = crypto.randomBytes(16).toString('hex')
             const host = req.get('host')
-            const link = `http://${host}/Routes/API/verify?token=${crypt}&&Email=${user.Email}`
+            const link = `http://${host}/Routes/API/users/verify?token=${crypt}&&Email=${user.Email}`
             RegToken = new ET(
                 {
                     userId:user.id,
@@ -81,10 +81,14 @@ router.post("/register" , (req ,res)=>
         })
 })
 
-router.get("/verify/", (req , res)=>
+//Need to reverse 
+// Find user first based off email passed in through req.query.Email
+//then find token and see if there is a token that has a user id that matches the user id coming in
+//if user token found verify user else display user not found
+router.get("/users/verify/", (req , res)=>
 {
     console.log(req.query.token)
-    //console.log(req.query.Email)
+    console.log(req.query.Email)
     
 
     ET.findOne(
@@ -121,7 +125,7 @@ router.get("/verify/", (req , res)=>
 })
 
 
-router.post("/login" , (req,res)=>
+router.post("/users/login" , (req,res)=>
 {
     const { Email , Password} =req.body
 
@@ -157,7 +161,7 @@ router.post("/login" , (req,res)=>
         })
 })
 
-router.post("/update/:id",(req,res)=>
+router.post("/users/update/:id",(req,res)=>
 {
 
     const {DOB , Height , Weight , Ethnicity , Activity_Level , Cancer_Type , Smokes , Verified} = req.body

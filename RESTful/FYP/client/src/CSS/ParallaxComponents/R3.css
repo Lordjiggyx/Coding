@@ -1,0 +1,101 @@
+@import url("https://fonts.googleapis.com/css?family=Nanum+Myeongjo&display=swap");
+@import "~normalize.css";
+@import "~@blueprintjs/core/lib/css/blueprint.css";
+@import "~@blueprintjs/icons/lib/css/blueprint-icons.css";
+
+
+.R3_center
+{
+    height:100%;
+    width: 100%;
+    position: fixed;
+    z-index: 0;
+    overflow-x: hidden;
+    background-color:white;
+
+}
+
+.welcome_center_1
+    {
+       
+        position: absolute;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        font-family: 'Nanum Myeongjo', serif;
+    }
+
+    .welcome_center_2
+    {
+       
+        color: #D976ED;
+        font-size: 2em;
+        font-weight: bold;;
+        position: absolute;
+        top: 55%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        font-family: 'Nanum Myeongjo', serif;
+    }
+
+    .welcome_center_3
+    {
+        text-align: center;
+        position: absolute;
+        font-size: 1.1em;
+        line-height: 1.5em;
+        font-weight: bold;
+        top: 65%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: 'Nanum Myeongjo', serif;
+    }
+
+    .welcome_center_4
+    {
+       
+        position: absolute;
+        top: 75%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        font-family: 'Nanum Myeongjo', serif;
+        font-weight: bold
+    }
+
+.heart
+{
+    transition: all .2s ease-in-out;
+    transform: scale(1.0);
+}
+
+.heart:hover
+{
+    transition: all .2s ease-in-out;
+    transform: scale(0.5) rotate(360deg);
+}
+
+.bp3-minimal.right
+{
+    position: absolute;
+    top: 75%;
+    left: 66%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-family: 'Nanum Myeongjo', serif;
+    font-weight: bold
+
+}
+
+.bp3-minimal.left
+{
+    position: absolute;
+    top: 75%;
+    left: 33%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-family: 'Nanum Myeongjo', serif;
+    font-weight: bold
+}

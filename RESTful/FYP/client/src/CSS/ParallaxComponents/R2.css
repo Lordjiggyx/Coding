@@ -1,0 +1,88 @@
+
+.split{
+
+    height:100%;
+    width: 50%;
+    position: fixed;
+    z-index: 0;
+    top: 0;
+    overflow-x: hidden;
+
+    }
+    
+    .left{
+        left:0;
+        background-color:white;
+        
+    }
+
+.r1_right
+{
+    right:0;
+    background-color: white !important;
+}
+
+.Reason2
+{
+    color: #D976ED;
+    position: absolute;
+    left:25%;
+    right:5%;
+    font-size: 2em;
+    font-weight: bold;
+    font-family: 'Nanum Myeongjo', serif;
+
+    
+}
+
+.Reason2_Text
+{
+    position: absolute;
+    font-size: 1.1em;
+    line-height: 1.5em;
+    font-weight: bold;
+    top: 45%;
+    font-family: 'Nanum Myeongjo', serif;
+
+    
+}
+
+.R2_image
+{
+  
+    position: absolute;
+    top: 50%;
+    
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-family: 'Nanum Myeongjo', serif;
+}
+
+.r1_right
+{
+    right:0;
+    background-color: white !important;
+}
+
+.board
+{
+    transition: all .2s ease-in-out;
+    transform: scale(1.0);
+}
+
+.board:hover
+{
+    transition: all .2s ease-in-out;
+    transform: scale(0.9);
+}
+
+.bp3-minimal.r2
+{
+    position: absolute;
+    font-weight: bold;
+    top: 80%;
+    left:24%;
+    right:5%;
+    font-family: 'Nanum Myeongjo', serif;
+
+}

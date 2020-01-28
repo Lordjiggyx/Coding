@@ -18,7 +18,7 @@ const db = require("./config/Keys").MongoUrl;
 
 //Connecting to database
 mongoose
-.connect(db , {useNewUrlParser:true ,useCreateIndex:true , useUnifiedTopology: true })
+.connect(db , {useNewUrlParser:true ,useCreateIndex:true , useUnifiedTopology: true})
 .then(()=> console.log("Connected To Database..."))
 .catch(err => console.log(err))
 
@@ -31,6 +31,6 @@ app.use("/Routes/API", Users);
 //app.listen() used ot start the server
 app.listen(port , ()=>
 {
-    console.log(`Server strated on port ${port}`)
+    console.log(`Server started on port ${port}`)
    
 })

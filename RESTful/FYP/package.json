@@ -6,7 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "both": "concurrently \"npm run dev\" \"npm run client\" ",
+    "client-intstall": "npm install --prefix client" 
   },
   "keywords": [],
   "author": "",
@@ -14,6 +17,7 @@
   "dependencies": {
     "bcrypt": "^3.0.6",
     "concurrently": "^5.0.0",
+    "create-react-app": "^3.3.0",
     "crypto": "^1.0.1",
     "express": "^4.17.1",
     "mongoose": "^5.7.7",
