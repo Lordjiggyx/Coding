@@ -6,6 +6,7 @@ import {Link} from "react-router-dom";
 import { motion } from "framer-motion"
 
 import "../../CSS/ParallaxComponents/R1.css"
+import Navabr from '../General/Navabr';
 
 export default class R1 extends Component {
     render() {
@@ -36,7 +37,7 @@ export default class R1 extends Component {
         return (
 
             <div>
-
+                <Navabr/>
                 <div className = 'split left'>
                 <motion.div
                  initial="hidden"

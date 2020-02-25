@@ -17,18 +17,29 @@ router.get("/users/getUsers" , (req , res)=>
         })
 })
 
+router.get("/users/hello" , (req , res)=>
+{
+    console.log("request Reavched");
+ 
+   
+})
+
 router.post("/users/register" , (req ,res)=>
 {
-    const {FirstName , LastName , Email , Password} =req.body
+    // const {firstName , lastName , email , Password} =req.body
+
+const firstname = req.body.firstName
+const email = req.body.email
 
     const newUser = new User()
 
 
-    newUser.FirstName = FirstName
-    newUser.LastName = LastName
-    newUser.Email = Email
-    newUser.Password = Password
+    newUser.FirstName = firstname
+    //newUser.LastName = LastName
+    newUser.Email = email
+    //newUser.Password = Password
 
+    console.log("here")
     newUser.save()
     .then(user=>
         {

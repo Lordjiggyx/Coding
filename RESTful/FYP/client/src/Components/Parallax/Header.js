@@ -13,13 +13,13 @@ class Header extends React.Component {
         return (
             <div>
 
-                <div className="nav-container">
+            {/*     <div className="nav-container">
                <Navbar fixedToTop = "true">
                     <Link to ="/">
                     <img src={crab} alt="Logo" className="crab"/>
                     </Link>
                </Navbar>
-               </div>
+               </div>*/}
 
             <div className="Main">
             <R1/>

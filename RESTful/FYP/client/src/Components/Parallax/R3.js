@@ -5,7 +5,7 @@ import { Button } from "@blueprintjs/core";
 import { motion } from "framer-motion"
 import {Link} from "react-router-dom"
 
-export default class R1 extends Component {
+export default class R3 extends Component {
     render() {
 
         
@@ -41,6 +41,7 @@ export default class R1 extends Component {
 
             <div>
 
+                
                 <div className = 'R3_center'>
                 
                 <motion.div
@@ -74,7 +75,9 @@ export default class R1 extends Component {
                     in turn will result in you becoming a more mentally reinforced indiviual.
                 </motion.div>
 
+                <Link to = "/SignUp">
                 <Button className="bp3-minimal right" rightIcon="arrow-right" >Sign Up</Button>
+                </Link>
 
                 <Link to ="/">
                 <Button className="bp3-minimal left" icon="arrow-left" >Home</Button>

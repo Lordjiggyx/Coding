@@ -13,14 +13,16 @@ import Header from './Components/Parallax/Header';
 import R1 from './Components/Parallax/R1';
 import R2 from './Components/Parallax/R2';
 import R3 from './Components/Parallax/R3';
+import UserForm from './Components/SignUp/UserForm';
 
   const routes = (
     <Router>
         <div>
             <Route exact path = "/" component = {Welcome}/>
-            <Route path = "/why" component = {Header}/>
+            <Route path = "/why" component = {R1}/>
             <Route path = "/why/R2" component = {R2}/>
             <Route path = "/why/R3" component = {R3}/>
+            <Route path = "/SignUp" component = {UserForm}/>
             
         </div>
     </Router>
