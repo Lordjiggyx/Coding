@@ -13,7 +13,7 @@ const UserSchema = new mongoose.Schema(
         },
         DOB:
         {
-            type:Date,
+            type:String,
             default:null
         },
         Email:{
@@ -25,33 +25,23 @@ const UserSchema = new mongoose.Schema(
         },
         Height:
         {
-            type:Number,
+            type:String,
             default:null
         },
         Weight:
         {
-            type:Number,
+            type:String,
             default:null
         },
-        Ethnicity:
+        Gender:
         {
             type:String,
             default:null
         },
-        Activity_Level:
+        UserName:
         {
             type:String,
             default:null
-        },
-        Cancer_Type:
-        {
-            type:String,
-            default:null
-        },
-        Smokes:
-        {
-            type:Boolean,
-            default:false
         },
         Verified:
         {

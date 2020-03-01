@@ -17,14 +17,16 @@ export class UserForm extends Component {
         userName : "",
         lastName :"",
         email : "",
-        ethnicity : "",
         gender : "",
         DOB : "",
-        country : "",
+        country: "",
         height :"",
         weight : "",
         //come back and add
         password : "",
+        user: "",
+        active:""
+
 
     }
 
@@ -60,19 +62,20 @@ export class UserForm extends Component {
             [input]:e.target.value
         })
     }
+    
 
     render() {
         //get step from state
         const {step} = this.state;
 
         //get fields
-        const {firstName , lastName , email ,ethnicity
+        const {firstName , lastName , email ,ethnicity , userName
          , gender ,  DOB , country , height , weight  , password} = this.state;
 
         //Values holds all the variables which can be passed into each component
         const values =
         {
-            firstName , lastName , email ,ethnicity
+            firstName , lastName , email ,ethnicity , userName
          , gender ,  DOB , country , height , weight  , password
         }
 

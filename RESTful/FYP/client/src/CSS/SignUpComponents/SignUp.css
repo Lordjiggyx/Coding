@@ -1,0 +1,27 @@
+.next1
+{
+    margin:0 auto;
+}
+
+.next
+{
+    position: absolute;
+    right:    40%;
+}
+
+.back
+{
+    position: absolute;
+    left:40%;
+}
+.Bodycenter
+{
+    font-family: 'Nanum Myeongjo', serif;
+    text-align: center
+}
+
+
+h1
+{
+    font-family: 'Nanum Myeongjo', serif;
+}

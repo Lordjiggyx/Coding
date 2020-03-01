@@ -2,12 +2,42 @@
 import React, { Component } from 'react'
 import Header from "../Parallax/Header"
 import Navabr from '../General/Navabr';
-import {Button , InputGroup , Radio ,RadioGroup , Slider , Label , Icon , FormGroup} from "@blueprintjs/core";
+import {Slider} from "@blueprintjs/core";
+import { Close, Send, User , FormNext ,FormPrevious } from "grommet-icons";
+import {
+    Box,
+    Button,
+    CheckBox,
+    Grommet,
+    Form,
+    FormField,
+    MaskedInput ,
+    RadioButtonGroup,
+    RangeInput,
+    Select,
+    TextArea
+    ,TextInput
+  } from "grommet";
 
 
 
 
 export class Health extends Component {
+  
+
+    bmi = () =>
+    {
+        const {values :{height , weight,bmi }} =this.props
+
+       var  num = this.props.values.height * this.props.values.weight
+        var result = Math.pow(num , 2)
+        this.setState(
+            {
+                bmi:result
+            }
+        )
+    } 
+
     continue = e =>
     {
         //Prevent default behaviour of event
@@ -29,18 +59,61 @@ export class Health extends Component {
             //Get the values from the user from
             const {values , handleChange } = this.props;
     
+            const levels =["Sedentary - Little to no regular exercise" 
+            , "Lightly Active - Intensive exercise for at least 20 minutes 1 to 3 times per week." 
+            , "Active - Intensive exercise for 60 minutes or greater 5 to 7 days per week" ,
+             "Very Active - Exceedingly active and/or very demanding activities"]
             //Icons
-            const at = <Icon icon="envelope"  size={Icon.SIZE_STANDARD}/>
-            const person = <Icon icon="person"  size={Icon.SIZE_STANDARD}/>
-            const eye = <Icon icon="eye-open"  size={Icon.SIZE_STANDARD}/>
-            const lock = <Icon icon="lock"  size={Icon.SIZE_STANDARD}/>
+            // const at = <Icon icon="envelope"  size={Icon.SIZE_STANDARD}/>
+            // const person = <Icon icon="person"  size={Icon.SIZE_STANDARD}/>
+            // const eye = <Icon icon="eye-open"  size={Icon.SIZE_STANDARD}/>
+            // const lock = <Icon icon="lock"  size={Icon.SIZE_STANDARD}/>
     
     
             return (
                 <div>
                    <Navabr/>
-                   <h1>Enter Health Details</h1>
-               
+                   <Grommet>
+                   <Box fill align="center" justify="center">
+                    
+                   <h1>Health Information</h1>
+                   <div className="Body">
+                   <Box width="medium">
+                       <Form>
+
+                            <FormField label="Height" help = "Meters"name="height"  onChange = {handleChange("height")}/>
+                            <FormField label="Weight" help = "Kilograms"name="weight"  onChange = {handleChange("weight")}/>
+
+                            {/* <FormField label="BMI" help = "Body Mass Index"name="bmi" on/> */}
+
+                            
+                            
+                            {/* <FormField label="Physical level of Activity" >
+                                <Select
+                                placeholder="Select Appropriate Level"
+                                options={levels}
+                                onChange={handleChange("active")}/>
+                            </FormField> */}
+                               
+
+                           
+                           
+
+                            <div className = "next">
+                            <Button plain icon={<FormNext />} onClick={this.continue} />
+                        </div>
+                        <div className = "back">
+                            <Button plain icon={<FormPrevious />} onClick={this.back} />
+                        </div>
+        
+                       </Form>
+                      
+                   </Box>
+                   </div>
+                   </Box>
+               </Grommet>
+             
+{/*                
                <FormGroup
                labelFor= "first_input"
                label = "First Name">
@@ -98,7 +171,7 @@ export class Health extends Component {
                    <hr/>
                    
                    <Button rightIcon="arrow-right" onClick={this.continue}>Next</Button>
-                   <Button rightIcon="arrow-left" onClick={this.back}>Next</Button>
+                   <Button rightIcon="arrow-left" onClick={this.back}>Next</Button> */}
     
                  
                 </div>

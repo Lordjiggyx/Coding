@@ -7,6 +7,8 @@ const crypto = require("crypto")
 // models
 const User = require("../../Models/user")
 const ET = require("../../Models/EmailToken")
+//const hbs = require("nodemailer-express-handlebars")
+// const ch = require("../../Views/")
 
 
 router.get("/users/getUsers" , (req , res)=>
@@ -26,18 +28,24 @@ router.get("/users/hello" , (req , res)=>
 
 router.post("/users/register" , (req ,res)=>
 {
-    // const {firstName , lastName , email , Password} =req.body
+     const {firstName , lastName , email , password ,gender ,  DOB  , height , weight ,userName } =req.body
+     console.log(req.body)
 
-const firstname = req.body.firstName
-const email = req.body.email
+// const firstname = req.body.firstName
+// const email = req.body.email
 
     const newUser = new User()
 
 
-    newUser.FirstName = firstname
-    //newUser.LastName = LastName
+    newUser.FirstName = firstName
+    newUser.LastName = lastName
     newUser.Email = email
-    //newUser.Password = Password
+    newUser.Password = password
+    newUser.Gender=gender;
+    newUser.Height = height;
+    newUser.Weight = weight;
+    newUser.DOB = DOB
+    newUser.UserName = userName
 
     console.log("here")
     newUser.save()
@@ -66,13 +74,29 @@ const email = req.body.email
                             
                         }
                     )
+
+                    const handlebarOptions=
+                    {
+                        viewEngine: {
+                            extName: '.handlebars',
+                            partialsDir: './Views/',
+                            layoutsDir: './Views/',
+                            defaultLayout: 'email.handlebars',
+                          },
+                          viewPath: './Views',
+                          extName: '.handlebars',
+                    }
+
+                 //   transporter.use("compile" , hbs(handlebarOptions))
+                      
         
                     const mailOptions = 
                     {
                         from:"tomiiloriponc@gmail.com",
                         to:user.Email,
                         subject:"Confirmation Email",
-                        html:"Hello,<br> Please Click on the link to verify your email.<br><a href="+link+">Click here to verify</a>"
+                        html:"Hello,<br> Please Click on the link to verify your email.<br><a href="+link+">Click here to verify</a>",
+                        template:"email"
                     }
                     
                     transporter.sendMail(mailOptions, function(error, info){
@@ -128,6 +152,7 @@ router.get("/users/verify/", (req , res)=>
                         {
                             user.Verified = true
                             user.save()
+                            //come back amd return a file that says the acount has been verified and redirec to login page
                             return res.status(400).json({msg:`Account Verfied Proceed to Login`})
                         }
                     })

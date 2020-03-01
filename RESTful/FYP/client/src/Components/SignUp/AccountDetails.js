@@ -1,10 +1,23 @@
 import React, { Component } from 'react'
 import Header from "../Parallax/Header"
 import Navabr from '../General/Navabr';
-import {Button , InputGroup , Radio ,RadioGroup , Slider , Label , Icon , FormGroup} from "@blueprintjs/core";
+//import {Button , InputGroup , Radio ,RadioGroup , Slider , Label , Icon , FormGroup} from "@blueprintjs/core";
+import "../../CSS/SignUpComponents/SignUp.css"
 
-
-
+import { Close, Send, User , FormNext , } from "grommet-icons";
+import {
+    Box,
+    Button,
+    CheckBox,
+    Grommet,
+    Form,
+    FormField,
+    RadioButtonGroup,
+    RangeInput,
+    Select,
+    TextArea
+    ,TextInput
+  } from "grommet";
 
 
 export class AccountDetails extends Component {
@@ -27,16 +40,48 @@ continue = e =>
         const {values , handleChange} = this.props;
 
         //Icons
-        const at = <Icon icon="envelope"  size={Icon.SIZE_STANDARD}/>
-        const person = <Icon icon="person"  size={Icon.SIZE_STANDARD}/>
-        const eye = <Icon icon="eye-open"  size={Icon.SIZE_STANDARD}/>
-        const lock = <Icon icon="lock"  size={Icon.SIZE_STANDARD}/>
-
-
+        // const at = <Icon icon="envelope"  size={Icon.SIZE_STANDARD}/>
+        // const person = <Icon icon="person"  size={Icon.SIZE_STANDARD}/>
+        // const eye = <Icon icon="eye-open"  size={Icon.SIZE_STANDARD}/>
+        // const lock = <Icon icon="lock"  size={Icon.SIZE_STANDARD}/>
+        
+        const icon = <FormNext/>
         return (
             <div>
                <Navabr/>
-               <h1>Enter User Details</h1>
+               <Grommet>
+                   <Box fill align="center" justify="center">
+                    
+                   <h1>Account Information</h1>
+                   <div className="Body">
+                   <Box width="medium">
+                       <Form>
+                            <FormField
+                            Icon = {icon}
+                            label="Username"
+                            name="userName"
+                            required
+                            onChange = {handleChange("userName")}
+                            />
+
+                            <FormField label="Email" name="email" type="email" onChange = {handleChange("email")}required />
+
+                            <FormField label="Password" name="Password" type="password" required onChange = {handleChange("password")} />
+
+
+                           
+
+
+        
+                       </Form>
+                       <div className = "next1">
+                            <Button plain icon={<FormNext />} onClick={this.continue} />
+                        </div>
+                   </Box>
+                   </div>
+                   </Box>
+               </Grommet>
+               {/* <h1>Enter User Details</h1>
                    
                    <FormGroup
                    labelFor= "email_input"
@@ -95,7 +140,7 @@ continue = e =>
                <hr/>
                
                <Button rightIcon="arrow-right" onClick={this.continue}>Next</Button>
-               
+                */}
              
             </div>
         )
