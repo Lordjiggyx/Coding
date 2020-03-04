@@ -18,6 +18,8 @@ import {
     ,List
   } from "grommet";
 
+  import {motion} from "framer-motion"
+
 
 export class Confirm extends Component {
 
@@ -73,10 +75,24 @@ export class Confirm extends Component {
 
         const {values :{firstName , lastName , email , userName
             , gender ,  DOB , country , height , weight  , active}} =this.props
+
+            const fade_in=
+            {
+                hidden:{ opacity:0},
+                visible:{opacity:1},
+                
+            }
+    
         
         return (
             <div>
                 <Navabr/>
+                <motion.div
+                    initial="hidden"
+                    animate="visible"
+                    variants={fade_in}
+                    transition={{duration:1.5}}>
+                   >
                 <Grommet>
                    <Box fill align="center" justify="center">
                     
@@ -109,7 +125,7 @@ export class Confirm extends Component {
                    </div>
                    </Box>
                </Grommet>
-
+               </motion.div>
 
 
                  {/* <h1>Confirm User Information</h1>

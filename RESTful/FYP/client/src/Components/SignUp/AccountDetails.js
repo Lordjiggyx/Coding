@@ -3,6 +3,10 @@ import Header from "../Parallax/Header"
 import Navabr from '../General/Navabr';
 //import {Button , InputGroup , Radio ,RadioGroup , Slider , Label , Icon , FormGroup} from "@blueprintjs/core";
 import "../../CSS/SignUpComponents/SignUp.css"
+import { motion } from "framer-motion"
+import {Link} from "react-router-dom";
+
+
 
 import { Close, Send, User , FormNext , } from "grommet-icons";
 import {
@@ -44,11 +48,23 @@ continue = e =>
         // const person = <Icon icon="person"  size={Icon.SIZE_STANDARD}/>
         // const eye = <Icon icon="eye-open"  size={Icon.SIZE_STANDARD}/>
         // const lock = <Icon icon="lock"  size={Icon.SIZE_STANDARD}/>
+
+        const fade_in=
+        {
+            hidden:{ opacity:0},
+            visible:{opacity:1},
+            
+        }
         
         const icon = <FormNext/>
         return (
             <div>
                <Navabr/>
+               <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={fade_in}
+                transition={{duration:1.5}}>
                <Grommet>
                    <Box fill align="center" justify="center">
                     
@@ -78,9 +94,17 @@ continue = e =>
                             <Button plain icon={<FormNext />} onClick={this.continue} />
                         </div>
                    </Box>
+
+                    <Box align="center" pad="medium">
+                    <h3>Have an account?</h3>
+                    <Link to= "/Login">
+                    <Button label="Login" />
+                    </Link>
+                    </Box>
                    </div>
                    </Box>
                </Grommet>
+               </motion.div>
                {/* <h1>Enter User Details</h1>
                    
                    <FormGroup

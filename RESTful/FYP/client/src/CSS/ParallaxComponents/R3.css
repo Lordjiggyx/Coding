@@ -99,3 +99,14 @@
     font-family: 'Nanum Myeongjo', serif;
     font-weight: bold
 }
+
+.bp3-minimal.bottom
+{
+    position: absolute;
+    top:80%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-family: 'Nanum Myeongjo', serif;
+    font-weight: bold
+}

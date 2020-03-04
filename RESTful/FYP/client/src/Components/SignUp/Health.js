@@ -4,6 +4,7 @@ import Header from "../Parallax/Header"
 import Navabr from '../General/Navabr';
 import {Slider} from "@blueprintjs/core";
 import { Close, Send, User , FormNext ,FormPrevious } from "grommet-icons";
+import {motion} from "framer-motion"
 import {
     Box,
     Button,
@@ -68,11 +69,25 @@ export class Health extends Component {
             // const person = <Icon icon="person"  size={Icon.SIZE_STANDARD}/>
             // const eye = <Icon icon="eye-open"  size={Icon.SIZE_STANDARD}/>
             // const lock = <Icon icon="lock"  size={Icon.SIZE_STANDARD}/>
-    
+
+            const fade_in=
+        {
+            hidden:{ opacity:0},
+            visible:{opacity:1},
+            
+        }
+
+   
     
             return (
                 <div>
                    <Navabr/>
+                   <motion.div
+                    initial="hidden"
+                    animate="visible"
+                    variants={fade_in}
+                    transition={{duration:1.5}}>
+                   >
                    <Grommet>
                    <Box fill align="center" justify="center">
                     
@@ -112,6 +127,7 @@ export class Health extends Component {
                    </div>
                    </Box>
                </Grommet>
+               </motion.div>
              
 {/*                
                <FormGroup

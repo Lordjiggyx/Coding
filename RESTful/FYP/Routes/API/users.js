@@ -11,11 +11,16 @@ const ET = require("../../Models/EmailToken")
 // const ch = require("../../Views/")
 
 
-router.get("/users/getUsers" , (req , res)=>
+router.get("/users/getUser" , (req , res)=>
+
 {
-    User.find({}).then(user=>
+    console.log(req.body)
+    const{email} = req.body
+    
+    User.findOne({Email:email}).then(user=>
         {
-            res.send(user)
+            console.log(user.FirstName )
+          return   res.send(user)
         })
 })
 
@@ -163,22 +168,24 @@ router.get("/users/verify/", (req , res)=>
 
 router.post("/users/login" , (req,res)=>
 {
-    const { Email , Password} =req.body
+    console.log(req.body)
+    const { email , password} =req.body
 
-    User.findOne({Email:Email})
+    User.findOne({Email:email})
     .then(user=>
         {
             if(!user)
             {
                 console.log("User Does not exist")
-                return res.status(400).json({msg:"User Does not exist"})
+                return res.redirect("http://localhost:3000/Profile")
+                 //res.status(400).json({msg:"User Does not exist"})
                 
             }
-            if(Password === user.Password)
+            if(password === user.Password)
             {
-                console.log("User Logged In")
+                
             }
-            if(Password != user.Password)
+            if(password != user.Password)
             {
                 console.log("Invalid credientials")
                 return res.status(400).json({msg:"Invalid credientials"})
@@ -190,6 +197,7 @@ router.post("/users/login" , (req,res)=>
             }
             else
             {
+                console.log("User Logged In")
                 return res.status(400).json(
                     {msg:"User Account Verified Logging in....."})
             }

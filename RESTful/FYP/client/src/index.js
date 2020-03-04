@@ -14,6 +14,8 @@ import R1 from './Components/Parallax/R1';
 import R2 from './Components/Parallax/R2';
 import R3 from './Components/Parallax/R3';
 import UserForm from './Components/SignUp/UserForm';
+import Login from "./Components/Login/Login"
+import Details from "./Components/Profile/Details"
 
   const routes = (
     <Router>
@@ -23,6 +25,9 @@ import UserForm from './Components/SignUp/UserForm';
             <Route path = "/why/R2" component = {R2}/>
             <Route path = "/why/R3" component = {R3}/>
             <Route path = "/SignUp" component = {UserForm}/>
+            <Route path = "/Login" component = {Login}/>
+            <Route path = "/Profile" component = {Details}/>
+
             
         </div>
     </Router>
