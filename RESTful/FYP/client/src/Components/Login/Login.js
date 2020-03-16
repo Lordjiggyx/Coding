@@ -25,6 +25,7 @@ import {
     ,TextInput
     ,Text
   } from "grommet";
+import Continue from './Continue';
 
 
 export class Login extends Component {
@@ -138,8 +139,8 @@ export class Login extends Component {
                                       
                                         <Button onClick = {this.login} >
                                         <Box pad="small" direction="row" align="center" gap="small">
-                                        <Checkmark />
                                         <Text>Login</Text>
+                                        <Checkmark />
                                         </Box>
                                         </Button>
                                        
@@ -161,7 +162,7 @@ export class Login extends Component {
                     )
             case 1:
                 return(
-                    <Details/>
+                    <Continue/>
                 )
         }
        

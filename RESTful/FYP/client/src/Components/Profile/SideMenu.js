@@ -1,6 +1,7 @@
 import React, { Component  , useState} from 'react'
 import { grommet, Box, Button, Grommet, Nav, Text } from "grommet";
-import "../../CSS/ProfileComponents/sidebar.css"
+import "../../CSS/ProfileComponents/Profile.css"
+
 export class SideMenu extends Component {
     
     state = 
@@ -10,41 +11,52 @@ export class SideMenu extends Component {
         
     }
     render() {
+      const {goTo} = this.props;
+
+      const sideMenuData= ["User Information", "Personal Information" , "Health Information" ,"Create Dashboard" ]
+
+      const customTheme = {
+          button: {
+            border: {
+              radius: "100px",
+              color: 'white',
+              Text:'#FFFFFF'
+            },
+            color:"#FFFFFF"
+           
+          },
+        };
 
         return (
-            <Grommet>
-            <Box fill direction="row">
-                <div className="sideMenu">
-              <Nav background="green">
-                {["Dashboard", "Devices", "Settings" , "Settings" , "Settings" , "Settings" , "Settings" , "Settings"].map(label => (
-                  <SidebarButton
-                    key={label}
-                    label={label}
-                    // active={label === active}
-                    onClick={() =>this.setState({active:label})}
-                  />
-                ))}
-              </Nav>
-              </div>
-            </Box>
-          </Grommet>
+          <div>
+
+          <Grommet theme={customTheme}>
+                    <ul>
+                        <li>
+                        <Button label={sideMenuData[0]}
+                        onClick={goTo(1)} />
+                        </li>
+
+                        <li>
+                        <Button label={sideMenuData[1]}
+                        onClick={goTo(2)}/>
+                        </li>
+
+                        <li>
+                        <Button label={sideMenuData[2]}
+                        onClick={goTo(3)}/>
+                        </li>
+
+                        <li>
+                        <Button label={sideMenuData[3]}/>
+                        </li>
+                    </ul>
+                    </Grommet>
+          </div>
         )
     }
 }
 
-
-const SidebarButton = ({ label, ...rest }) => (
-    <Button plain {...rest}>
-      {({ hover }) => (
-        <Box
-          background={hover ? "#D976ED" : undefined}
-          pad={{ horizontal: "large", vertical: "medium" }}
-        >
-          <Text size="large">{label}</Text>
-        </Box>
-      )}
-    </Button>
-  );
 
 
 export default SideMenu

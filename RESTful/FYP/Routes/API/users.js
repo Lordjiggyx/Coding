@@ -28,6 +28,7 @@ router.get("/users/hello" , (req , res)=>
 {
     console.log("request Reavched");
  
+    res.send("Hello")
    
 })
 
