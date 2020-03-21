@@ -11,16 +11,17 @@ const ET = require("../../Models/EmailToken")
 // const ch = require("../../Views/")
 
 
-router.get("/users/getUser" , (req , res)=>
+router.get("/users/getUser/:email" , (req , res)=>
 
 {
-    console.log(req.body)
-    const{email} = req.body
+    console.log(req.params)
+
+     const{email} = req.params
     
     User.findOne({Email:email}).then(user=>
         {
-            console.log(user.FirstName )
-          return   res.send(user)
+            console.log(user.FirstName)
+           res.send(user)
         })
 })
 
@@ -29,8 +30,10 @@ router.get("/users/hello" , (req , res)=>
     console.log("request Reavched");
  
     res.send("Hello")
-   
 })
+
+
+
 
 router.post("/users/register" , (req ,res)=>
 {
@@ -178,8 +181,7 @@ router.post("/users/login" , (req,res)=>
             if(!user)
             {
                 console.log("User Does not exist")
-                return res.redirect("http://localhost:3000/Profile")
-                 //res.status(400).json({msg:"User Does not exist"})
+               res.status(400).json({msg:"User Does not exist"})
                 
             }
             if(password === user.Password)
@@ -206,28 +208,43 @@ router.post("/users/login" , (req,res)=>
         })
 })
 
-router.post("/users/update/:id",(req,res)=>
+router.post("/users/update/:email",(req,res)=>
 {
 
-    const {DOB , Height , Weight , Ethnicity , Activity_Level , Cancer_Type , Smokes , Verified} = req.body
+    console.log(req.body)
+    const {dob , height , weight , firstname ,lastname, gender ,email ,username,password} = req.body
+    
 
-
-    User.findByIdAndUpdate(req.params.id , req.body)
+    User.findOne({Email:req.params.email})
     .then(user=>
         {
-            user.DOB = DOB
-            user.Height = Height
-            user.Weight = Weight
-            user.Ethnicity = Ethnicity
-            user.Activity_Level = Activity_Level
-            user.Cancer_Type = Cancer_Type
-            user.Smokes = Smokes
-            user.Verified = Verified
-           
-            console.log("User Values Updated")
-            User.update(user)
-            return res.status(400).json({msg:"User Values Updated"})
+            user.FirstName = firstname,
+            user.LastName = lastname,
+            user.UserName= username,
+            user.DOB = dob,
+            user.Weight=weight,
+            user.Height=height,
+            user.Password=password,
+            user.Gender=gender,
+            user.Email=email
+            user.save()
         })
+
+})
+
+
+router.get("/users/delete/:email" , (req , res)=>
+{
+    User.findOne({Email:req.params.email})
+    .then((user=>
+        {
+            user.remove()
+            console.log("User Removed")
+        }))
+
+    // console.log(req.params)
+    // User.findOneAndDelete({})
+    // res.send("User Deleted")
 })
 
 module.exports = router

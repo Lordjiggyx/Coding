@@ -20,17 +20,43 @@
 
   }
 
-li
+.menu_list li
 {
     width: 70%;
     margin-left:5%; 
     list-style-type: none;
     margin-bottom: 50%;
-    margin-top: 20%;
+    margin-top: 50%;
 
 }
 
 .center-info
 {
     margin-left:50%
+}
+
+/* .normal_list li {
+    margin-bottom: 3%;
+    margin-top: 0%;
+    font-family: 'Nanum Myeongjo', serif;
+} */
+
+.center
+{
+    font-family: 'Nanum Myeongjo', serif;
+    text-align: start;
+    margin-left: 20px
+}
+
+.avatar
+{
+    margin-top:-50%;
+    margin-left:110%;    
+}
+
+.avatar img
+{
+    
+    width: 200px;
+    height: 200px;
 }
