@@ -55,6 +55,8 @@ router.post("/users/register" , (req ,res)=>
     newUser.Weight = weight;
     newUser.DOB = DOB
     newUser.UserName = userName
+    newUser.Cancer_Type = ""
+    newUser.Cancer_Location = ""
 
     console.log("here")
     newUser.save()
@@ -227,6 +229,23 @@ router.post("/users/update/:email",(req,res)=>
             user.Password=password,
             user.Gender=gender,
             user.Email=email
+            user.save()
+        })
+
+})
+
+router.post("/users/setCancer/:email",(req,res)=>
+{
+
+    console.log(req.body)
+    const {location , type} = req.body
+    
+
+    User.findOne({Email:req.params.email})
+    .then(user=>
+        {
+            user.Cancer_Type = type,
+            user.Cancer_Location=location
             user.save()
         })
 

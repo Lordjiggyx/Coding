@@ -17,6 +17,8 @@ import UserForm from './Components/SignUp/UserForm';
 import Login from "./Components/Login/Login"
 import Details from "./Components/Profile/Details"
 import Dashboard from "./Components/Dashboard/Dashboard"
+import UserDashboard from "./Components/Dashboard\/UserDashboard"
+
 
   const routes = (
     <Router>
@@ -29,6 +31,7 @@ import Dashboard from "./Components/Dashboard/Dashboard"
             <Route path = "/Login" component = {Login}/>
             <Route path = "/Profile" component = {Details}/>
             <Route path = "/Dashboard" component = {Dashboard}/>
+            <Route path = "/UserDashboard" component = {UserDashboard}/>
 
             
         </div>

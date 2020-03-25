@@ -48,6 +48,17 @@ const UserSchema = new mongoose.Schema(
             type:Boolean,
             default:false
         }
+        ,
+        Cancer_Location:
+        {
+            type:String,
+        },
+
+        Cancer_Type:
+        {
+            type:String,
+           
+        }
     }
 
 )
