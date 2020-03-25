@@ -75,6 +75,10 @@ export class Continue extends Component {
             <Button className="bp3-minimal right" rightIcon="arrow-right" >View My Profile</Button>
             </Link>
 
+            <Link to = "/Dashboard">
+            <Button className="bp3-minimal center"  >Dashboard</Button>
+            </Link>
+
             <Link to ="/">
             <Button className="bp3-minimal left" icon="arrow-left" >Go To Home</Button>
             </Link>
