@@ -1,0 +1,18 @@
+//  Core
+
+.app-page-title {
+  margin: 0 0 $layout-spacer;
+
+  h1 {
+    font-size: $display4-size;
+    font-weight: 700;
+    margin: 0 0 ($spacer / 2);
+  }
+
+  p {
+    font-size: $font-size-base * 1.1;
+    opacity: .7;
+    font-weight: normal;
+    margin: 0;
+  }
+}

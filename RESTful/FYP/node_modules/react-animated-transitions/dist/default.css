@@ -1,0 +1,19 @@
+.react-animated-transitions-fade-appear,
+.react-animated-transitions-fade-enter {
+  opacity: 0;
+}
+
+.react-animated-transitions-fade-appear-active,
+.react-animated-transitions-fade-enter-active {
+  opacity: 1;
+  transition: opacity 400ms ease-in;
+}
+
+.react-animated-transitions-fade-exit {
+  opacity: 1;
+}
+
+.react-animated-transitions-fade-exit-active {
+  opacity: 0;
+  transition: opacity 400ms ease-out;
+}

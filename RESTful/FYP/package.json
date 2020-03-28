@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@liquid-design/liquid-design-react": "^2.0.0",
     "axios": "^0.19.2",
     "bcrypt": "^3.0.6",
     "concurrently": "^5.0.0",

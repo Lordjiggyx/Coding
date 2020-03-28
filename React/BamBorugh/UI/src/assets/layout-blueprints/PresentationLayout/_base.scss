@@ -1,0 +1,72 @@
+//  Core
+
+html,
+body {
+  -ms-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-smooth: auto;
+  height: 100%;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.app-wrapper {
+  display: flex;
+  flex: 1;
+  background: $page-bg;
+  transition: all 0.5s $app-transition;
+}
+
+.app-main {
+  display: flex;
+  flex: 1 auto;
+  min-width: 0;
+  flex-direction: column;
+  position: relative;
+  min-height: 100vh;
+}
+
+.app-content {
+  flex: 1;
+  display: flex;
+  padding: 0;
+  flex-direction: column;
+  transition: all 0.5s $app-transition;
+
+  &--inner {
+    padding: $layout-spacer;
+    display: flex;
+    flex: 1;
+
+    &__wrapper {
+      display: block;
+      width: 100%;
+    }
+  }
+}
+
+// Routes animations
+
+router-outlet + * {
+  display: block;
+  animation: fade 1s;
+
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+// Removes padding for some routes
+
+.rm-padding-wrapper {
+  margin: 0 (-($spacer * 3));
+}

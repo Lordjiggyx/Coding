@@ -1,0 +1,80 @@
+//  Core
+
+.app-header {
+  width: 100%;
+  left: 0;
+  top: 0;
+  height: $header-height;
+  padding: 0 $layout-spacer;
+  background: $header-bg;
+  align-items: center;
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  justify-content: space-between;
+  z-index: 11;
+  transition: all 0.5s cubic-bezier(0.685, 0.0473, 0.346, 1);
+
+  &--shadow {
+    box-shadow: $header-shadow;
+  }
+
+  &:hover {
+    background: $header-bg-hover;
+  }
+
+  & > .container-fluid,
+  & > .container {
+    position: relative;
+  }
+
+  @include media-breakpoint-down(md) {
+    padding: 0;
+  }
+}
+
+.app-header.header-nav-wrapper {
+  .nav-logo {
+    a {
+      i {
+        background: $gray-200;
+        @include border-radius(100%)
+      }
+    }
+  }
+
+  .header-nav-logo {
+    flex: auto;
+  }
+
+  .header-nav-menu {
+    flex: auto;
+  }
+}
+
+.app-header {
+  .nav-logo {
+    background: $second;
+    width: 126px;
+    height: 110px;
+    padding: 0;
+    display: block;
+    @include border-radius(100%);
+    text-align: center;
+    margin: 0 auto -30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+
+    span {
+      display: block;
+    }
+
+    img {
+      width: 50px;
+    }
+  }
+}
