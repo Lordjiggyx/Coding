@@ -1,0 +1,36 @@
+.black
+{
+    text-align: center;
+    background-color: black;
+    color: white
+}
+
+.heading
+{
+    text-align: center;
+    margin-top: -1em;
+   
+}
+
+.mid
+{
+    text-align: center;
+    /* font-family: 'Nanum Myeongjo', serif; */
+}
+
+.bottom
+{
+    
+    /* font-family: 'Nanum Myeongjo', serif; */
+
+}
+
+.bottom img
+{
+height: 500px;
+    
+}
+.boldText
+{
+    font-weight: bold
+}

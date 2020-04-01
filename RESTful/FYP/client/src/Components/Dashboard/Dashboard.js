@@ -17,7 +17,7 @@ export class Dashboard extends Component {
 
 
 
-    componentDidMount()
+componentDidMount()
 {
     
     axios.get(`/Routes/API//users/getUser/${this.state.email}`)
@@ -35,6 +35,8 @@ export class Dashboard extends Component {
 
     render() {
         const cancer = this.state.cancer
+        const email = this.state.email
+
 
         if(cancer == "")
         {
@@ -57,7 +59,9 @@ export class Dashboard extends Component {
                    {/* <h1>DashBoard Home</h1>  */}
     
                   
-                   <UserDashboard/>
+                   <UserDashboard
+                   email={email}
+                   />
                    
                 </div>
             )

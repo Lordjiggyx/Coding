@@ -1,0 +1,39 @@
+.heading1
+{
+    text-align: center;
+    margin-top: -1em;
+}
+
+.block1
+{
+    
+    margin-left: 15px;
+    height:400px
+}
+
+.block2
+{
+    text-align: center;
+ 
+    height:300px;
+    
+}
+
+.block3
+{
+   text-align: center;
+   margin-left: 15px;
+    margin-top: 100px;
+    align-content: stretch;
+
+}
+
+.block4
+{
+ 
+}
+
+.cardHeight
+{
+    height: 230px;
+}

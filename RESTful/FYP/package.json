@@ -18,6 +18,8 @@
     "@liquid-design/liquid-design-react": "^2.0.0",
     "axios": "^0.19.2",
     "bcrypt": "^3.0.6",
+    "bootstrap": "^4.4.1",
+    "chart.js": "^2.9.3",
     "concurrently": "^5.0.0",
     "create-react-app": "^3.3.0",
     "crypto": "^1.0.1",
@@ -27,8 +29,12 @@
     "mongoose": "^5.7.7",
     "nodemailer": "^6.3.1",
     "nodemon": "^1.19.4",
+    "primeflex": "^1.0.0",
+    "primeicons": "^2.0.0",
+    "primereact": "^4.1.2",
     "react-d3-tree": "^1.16.1",
     "react-icons": "^3.9.0",
+    "reactstrap": "^8.4.1",
     "styled-components": "^5.0.1"
   }
 }

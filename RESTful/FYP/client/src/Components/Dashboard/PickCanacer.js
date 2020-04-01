@@ -82,17 +82,17 @@ export class PickCanacer extends Component {
 
                     ]
                 },
-                // {
-                //   name: 'Bowel',
-                //   children:[
-                //     {name:"Colorectal adenocarcinoma"},
-                //     {name:"Gastrointestinal carcinoid tumors"},
-                //     {name:"Primary colorectal lymphomas"},
-                //     {name:"Gastrointestinal stromal tumors"},
-                //     {name:"Leiomyosarcomas "},
+                {
+                  name: 'Bowel',
+                  children:[
+                    {name:"Colorectal adenocarcinoma"},
+                    {name:"Gastrointestinal carcinoid tumors"},
+                    {name:"Primary colorectal lymphomas"},
+                    {name:"Gastrointestinal stromal tumors"},
+                    {name:"Leiomyosarcomas "},
 
-                //   ]
-                // },
+                  ]
+                },
                 {
                     name: 'Prostate',
                     children:[
