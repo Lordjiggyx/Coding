@@ -7,7 +7,7 @@
 .block1
 {
     
-    margin-left: 15px;
+    /* margin-left: 15px; */
     height:400px
 }
 
@@ -31,6 +31,23 @@
 .block4
 {
  
+}
+
+.addExcercise
+{
+    text-align: center;
+    width: 100%
+}
+
+.addExcercise label
+{
+   font-weight: bold;
+   color: #D976ED;
+}
+
+.modalHeader
+{
+    text-align: center;
 }
 
 .cardHeight

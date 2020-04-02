@@ -1,12 +1,13 @@
-import React, { Component } from 'react'
+import React, { Component  ,useState } from 'react'
 import Navabr from '../General/Navabr';
 import {Link} from "react-router-dom";
 import {
     Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button
+    CardTitle, CardSubtitle, Button,Modal, ModalHeader, ModalBody, ModalFooter ,  InputGroup, InputGroupAddon, InputGroupText , Form, FormGroup, Label, Input, FormText 
   } from 'reactstrap';
 
   import {Chart} from 'primereact/chart';
+  import {Rating} from 'primereact/rating';
   import axios from "axios"
   import "../../../node_modules/primeflex/primeflex.css"
   import 'bootstrap/dist/css/bootstrap.min.css';
@@ -15,17 +16,36 @@ import {
 
 export class ExcercisePage extends Component {
 
+    state = 
+    {
+        m1:false,
+        m2:false,
+        m3:false,
+        m4:false
+    }
 
 
-    
+    m1Toggle =()=>
+    {
+        this.setState({
+            m1:!this.state.m1
+        })
+    }
+    m2Toggle =()=>
+    {
+        this.setState({
+            m2:!this.state.m2
+        })
+    }
+
     render() {
 
         const linedata = {
             labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
             datasets: [
                 {
-                    label: 'First Dataset',
-                    data: [65, 59, 80, 121,],
+                    label: 'Calories Burned Each Day',
+                    data: [65, 59, 80, 121,100,12,98,,],
                     fill: false,
                     backgroundColor: '#D976ED',
                     borderColor: '#D976ED'
@@ -34,7 +54,7 @@ export class ExcercisePage extends Component {
         };
 
         const piedata = {
-            labels: ['Calories Burned','Calories Remaining'],
+            labels: ['Calories Burned:','Calories Remaining'],
             datasets: [
                 {
                     data: [300,  100],
@@ -86,10 +106,7 @@ export class ExcercisePage extends Component {
 
         }
 
-        const cardStyle=
-        {
-            height:"100%"
-        }
+
 
         return (
             <div>
@@ -100,14 +117,14 @@ export class ExcercisePage extends Component {
                 </div>
 
                 <div className="p-grid">
-                <div className="p-col-5  block1">
+                <div className="p-col-5 p-offset-1 block1">
 
                 <Card >
                 <Chart type="line" data={linedata} options={options1}/>
                 </Card>
                 </div>
 
-                <div className="p-col-5 p-offset-1 block2">
+                <div className="p-col-5  block2">
 
                 <div className="cardHeight">
                 <Card >
@@ -128,14 +145,83 @@ export class ExcercisePage extends Component {
                 </div>
 
                 <div className="p-col-3 p-offset-5 block4">
-                <Button style ={buttonstyle}>Add Excercise</Button>
-                <Button style ={buttonstyle}>Create Excersise Plan</Button>
+                <Button style ={buttonstyle}
+                onClick={this.m1Toggle}>
+                    
+                Add Excercise
+                
+                </Button>
+    
+                <Button style ={buttonstyle}
+                 onClick={this.m2Toggle}
+                 >Set Weekly Target</Button>
                 <Button style ={buttonstyle}>Why Fitness Matters</Button>
                 <Button style ={buttonstyle}>Daily Log</Button>
+                
                 </div>
 
                 </div>
                 
+
+                <Modal isOpen={this.state.m1}
+                toggle={this.m1Toggle}>
+                <ModalHeader >Add Excercise</ModalHeader>
+                <ModalBody>
+                <InputGroup>
+                <Form className="addExcercise">
+                    <FormGroup>
+                        <Label for="ExName">Name</Label>
+                        <Input type="text" name ="name" id="ExName" placeholder="Name"/>
+
+                        <Label for="ExDesc">Description</Label>
+                        <Input type="textarea" name ="ExDesc" id="ExDesc" placeholder="Describe This Excercise"/>
+
+                        <Label for="ExCat">Category</Label>
+                        <Input type="select" name ="ExCat" id="ExCat">
+                            <option>Aerobic</option>
+                            <option>Strength</option>
+                            <option>Flexibility</option>
+                        </Input>
+                        <Label for="ExRate">Rating</Label>
+                        <Input type="select" name ="ExCat" id="ExCat">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </Input>        
+                  
+                    </FormGroup>
+                </Form>
+                </InputGroup>                  
+                </ModalBody>
+                <ModalFooter>
+                    <Button style={buttonstyle}>Add</Button>
+                    <Button style={buttonstyle} onClick={this.m1Toggle}>Cancel</Button>
+                </ModalFooter>
+                </Modal>
+
+
+                <Modal isOpen={this.state.m2}
+                toggle={this.m2Toggle}>
+                <ModalHeader >Weekly Target</ModalHeader>
+                <ModalBody>
+                <InputGroup>
+                <Form className="addExcercise">
+                    <FormGroup>
+                        <Label for="Target">Target</Label>
+                        <Input type="text" name ="Target" id="Target" placeholder="Set Your Target For The Week"/>          
+                    </FormGroup>
+                </Form>
+                </InputGroup>                  
+                </ModalBody>
+                <ModalFooter>
+                    <Button style={buttonstyle}>Save</Button>
+                    <Button style={buttonstyle} onClick={this.m2Toggle}>Cancel</Button>
+                </ModalFooter>
+                </Modal>
+
+
             </div>
         )
     }
