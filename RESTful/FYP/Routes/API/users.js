@@ -6,6 +6,7 @@ const mail = require("nodemailer")
 const crypto = require("crypto")
 // models
 const User = require("../../Models/user")
+const fd = require("../../Models/FitnessData")
 const ET = require("../../Models/EmailToken")
 //const hbs = require("nodemailer-express-handlebars")
 // const ch = require("../../Views/")
@@ -125,6 +126,8 @@ router.post("/users/register" , (req ,res)=>
         {
             console.log(err)
         })
+
+        fitnessData
 })
 
 //Need to reverse 
@@ -253,6 +256,20 @@ router.post("/users/setCancer/:email",(req,res)=>
 
 
 router.get("/users/delete/:email" , (req , res)=>
+{
+    User.findOne({Email:req.params.email})
+    .then((user=>
+        {
+            user.remove()
+            console.log("User Removed")
+        }))
+
+    // console.log(req.params)
+    // User.findOneAndDelete({})
+    // res.send("User Deleted")
+})
+
+router.get("/users/" , (req , res)=>
 {
     User.findOne({Email:req.params.email})
     .then((user=>

@@ -7,7 +7,6 @@ import {
   } from 'reactstrap';
 
   import {Chart} from 'primereact/chart';
-  import {Rating} from 'primereact/rating';
   import axios from "axios"
   import "../../../node_modules/primeflex/primeflex.css"
   import 'bootstrap/dist/css/bootstrap.min.css';
@@ -21,7 +20,12 @@ export class ExcercisePage extends Component {
         m1:false,
         m2:false,
         m3:false,
-        m4:false
+        m4:false,
+        Name:"",
+        Description:"",
+        Category:"Aerobic",
+        Rating:"1",
+        
     }
 
 
@@ -36,6 +40,46 @@ export class ExcercisePage extends Component {
         this.setState({
             m2:!this.state.m2
         })
+    }
+
+    handleChange = input => e =>{
+        this.setState({
+            [input]:e.target.value
+        })
+        
+    }
+
+    addExercise = async e =>
+    {
+        e.preventDefault();
+
+        const excercise =
+        {
+            name:this.state.Name,
+            desc:this.state.Description,
+            cat:this.state.Category,
+            rate:this.state.Rating,
+            createdBy:localStorage.getItem("Email")
+
+        }
+
+        const response = await fetch("/Routes/API//excercise/add", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(excercise)
+        })
+        console.log(response.text())
+
+        this.setState({
+            Name:"",
+            Description:"",
+            Category:"Aerobic",
+            Rating:"1",
+        })
+
+        document.getElementById("form1").reset();
     }
 
     render() {
@@ -168,22 +212,22 @@ export class ExcercisePage extends Component {
                 <ModalHeader >Add Excercise</ModalHeader>
                 <ModalBody>
                 <InputGroup>
-                <Form className="addExcercise">
+                <Form className="addExcercise" id="form1">
                     <FormGroup>
                         <Label for="ExName">Name</Label>
-                        <Input type="text" name ="name" id="ExName" placeholder="Name"/>
+                        <Input type="text" name ="name" id="ExName" placeholder="Name" onChange={this.handleChange("Name")}/>
 
                         <Label for="ExDesc">Description</Label>
-                        <Input type="textarea" name ="ExDesc" id="ExDesc" placeholder="Describe This Excercise"/>
+                        <Input type="textarea" name ="ExDesc" id="ExDesc" placeholder="Describe This Excercise" onChange={this.handleChange("Description")}/>
 
                         <Label for="ExCat">Category</Label>
-                        <Input type="select" name ="ExCat" id="ExCat">
+                        <Input type="select" name ="ExCat" id="ExCat" onChange={this.handleChange("Category")}>
                             <option>Aerobic</option>
                             <option>Strength</option>
                             <option>Flexibility</option>
                         </Input>
                         <Label for="ExRate">Rating</Label>
-                        <Input type="select" name ="ExCat" id="ExCat">
+                        <Input type="select" name ="ExRatee" id="ExRate"  onChange={this.handleChange("Rating")}>
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -196,7 +240,7 @@ export class ExcercisePage extends Component {
                 </InputGroup>                  
                 </ModalBody>
                 <ModalFooter>
-                    <Button style={buttonstyle}>Add</Button>
+                    <Button style={buttonstyle} onClick={this.addExercise}>Add</Button>
                     <Button style={buttonstyle} onClick={this.m1Toggle}>Cancel</Button>
                 </ModalFooter>
                 </Modal>
@@ -207,7 +251,7 @@ export class ExcercisePage extends Component {
                 <ModalHeader >Weekly Target</ModalHeader>
                 <ModalBody>
                 <InputGroup>
-                <Form className="addExcercise">
+                <Form className="addTarget" id="form2">
                     <FormGroup>
                         <Label for="Target">Target</Label>
                         <Input type="text" name ="Target" id="Target" placeholder="Set Your Target For The Week"/>          

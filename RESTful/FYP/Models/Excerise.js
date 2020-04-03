@@ -18,6 +18,10 @@ const ExcerciseSchema  = new mongoose.Schema({
 
     Rating:{
         type:String
+    },
+    CreatedBy:
+    {
+        type:String
     }
 
 
