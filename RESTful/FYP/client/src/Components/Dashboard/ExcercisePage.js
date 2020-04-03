@@ -101,7 +101,7 @@ export class ExcercisePage extends Component {
             labels: ['Calories Burned:','Calories Remaining'],
             datasets: [
                 {
-                    data: [300,  100],
+                    data: [2000,  95],
                     backgroundColor: [
                         "#D976ED",
                         "#FFFFFF",
@@ -200,7 +200,7 @@ export class ExcercisePage extends Component {
                  onClick={this.m2Toggle}
                  >Set Weekly Target</Button>
                 <Button style ={buttonstyle}>Why Fitness Matters</Button>
-                <Button style ={buttonstyle}>Daily Log</Button>
+                <Button style ={buttonstyle}>Workout</Button>
                 
                 </div>
 
@@ -251,7 +251,7 @@ export class ExcercisePage extends Component {
                 <ModalHeader >Weekly Target</ModalHeader>
                 <ModalBody>
                 <InputGroup>
-                <Form className="addTarget" id="form2">
+                <Form className="addExercise" id="form2">
                     <FormGroup>
                         <Label for="Target">Target</Label>
                         <Input type="text" name ="Target" id="Target" placeholder="Set Your Target For The Week"/>          
