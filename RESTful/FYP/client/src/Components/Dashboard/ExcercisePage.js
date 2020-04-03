@@ -251,7 +251,7 @@ export class ExcercisePage extends Component {
                 <ModalHeader >Weekly Target</ModalHeader>
                 <ModalBody>
                 <InputGroup>
-                <Form className="addExercise" id="form2">
+                <Form className="addExcercise" id="form2">
                     <FormGroup>
                         <Label for="Target">Target</Label>
                         <Input type="text" name ="Target" id="Target" placeholder="Set Your Target For The Week"/>          
