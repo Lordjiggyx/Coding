@@ -20,6 +20,7 @@ import Dashboard from "./Components/Dashboard/Dashboard"
 import UserDashboard from "./Components/Dashboard/UserDashboard"
 import FoodPage from "./Components/Dashboard/FoodPage"
 import ExcercisePage from "./Components/Dashboard/ExcercisePage"
+import DiaryPage from "./Components/Dashboard/DiaryPage"
 
   const routes = (
     <Router>
@@ -35,6 +36,7 @@ import ExcercisePage from "./Components/Dashboard/ExcercisePage"
             <Route path = "/UserDashboard" component = {UserDashboard}/>
             <Route path = "/Food" component = {FoodPage}/>
             <Route path = "/Fitness" component = {ExcercisePage}/>
+            <Route path = "/Diary" component = {DiaryPage}/>
 
             
         </div>

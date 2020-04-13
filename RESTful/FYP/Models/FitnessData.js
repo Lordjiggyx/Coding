@@ -14,9 +14,19 @@ const FDSchema = new mongoose.Schema(
             type:Number
             
         },
-        CaloriesBurned:
+        CaloriesRemaing:
         {
             type:Number
-        }
+        },
+        DateSet:
+        {
+            type:String
+        },
+        dailyInfo:[{type:Number}]
+        
     }
 )
+let FitnessData = mongoose.model("FitnessData" , FDSchema)
+
+//Exporting the user object
+module.exports = FitnessData

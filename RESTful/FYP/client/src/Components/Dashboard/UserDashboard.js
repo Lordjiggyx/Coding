@@ -99,7 +99,9 @@ export class UserDashboard extends Component {
                     <CardTitle>Diary</CardTitle>
                     </div>
                     <CardText>Don't bottle in your feelings let us know how you feel!!</CardText>
+                    <Link to ="/Diary">
                     <Button style={buttonstyle}>Let's It Out</Button>
+                    </Link>
                 </Card>
 
                 

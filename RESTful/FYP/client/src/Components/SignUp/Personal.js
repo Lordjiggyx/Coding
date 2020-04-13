@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-
+import {Calendar} from 'primereact/calendar';
+import 'primereact/resources/primereact.min.css';
 import Header from "../Parallax/Header"
 import Navabr from '../General/Navabr';
 import { motion } from "framer-motion"
@@ -107,9 +108,12 @@ export class Personal extends Component {
                             </FormField>
 
                             <FormField label="Date of Birth" name="Dob">
-                            <DateMaskedInput
+                            {/* <DateMaskedInput
                             handleChange = {handleChange}
-                            />
+                            /> */}
+
+                            {/* <Calendar  onChange={handleChange("DOB")} /> */}
+                            <input type="date" id="birthday" onChange={handleChange("DOB")}></input>
                             </FormField>
 
                             {/* <FormField label="Country" name="Country">

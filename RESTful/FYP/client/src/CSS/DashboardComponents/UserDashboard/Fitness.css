@@ -15,7 +15,7 @@
 {
     text-align: center;
  
-    height:300px;
+    height:400px;
     
 }
 
@@ -23,13 +23,19 @@
 {
    text-align: center;
    margin-left: 15px;
-    margin-top: 100px;
+    margin-top: 40px;
     align-content: stretch;
+ 
 
 }
 
+/* button{
+    margin-left: 0.5em;
+} */
+
 .block4
 {
+    background-color: aliceblue;
  
 }
 
@@ -53,4 +59,9 @@
 .cardHeight
 {
     height: 230px;
+}
+
+.info-title
+{
+    color: #D976ED;
 }

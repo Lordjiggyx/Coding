@@ -7,23 +7,10 @@ const ExcerciseSchema  = new mongoose.Schema({
     {
         type:String
     },
-    Description:
+    MET:
     {
-        type:String
-    },
-    Category:
-    {
-        type:String
-    },
-
-    Rating:{
-        type:String
-    },
-    CreatedBy:
-    {
-        type:String
+        type:Number
     }
-
 
 })
 

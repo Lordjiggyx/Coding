@@ -6,7 +6,7 @@ const mail = require("nodemailer")
 const crypto = require("crypto")
 // models
 const User = require("../../Models/user")
-const fd = require("../../Models/FitnessData")
+const FitnessData = require("../../Models/FitnessData")
 const ET = require("../../Models/EmailToken")
 //const hbs = require("nodemailer-express-handlebars")
 // const ch = require("../../Views/")
@@ -59,6 +59,8 @@ router.post("/users/register" , (req ,res)=>
     newUser.Cancer_Type = ""
     newUser.Cancer_Location = ""
 
+   
+
     console.log("here")
     newUser.save()
     .then(user=>
@@ -66,6 +68,17 @@ router.post("/users/register" , (req ,res)=>
             const crypt = crypto.randomBytes(16).toString('hex')
             const host = req.get('host')
             const link = `http://${host}/Routes/API/users/verify?token=${crypt}&&Email=${user.Email}`
+
+            const fitnessdata = new FitnessData(
+                {
+                    userId:user.id,
+                    CalorieTarget:0,
+                    CaloriesRemaing:0,
+                    dailyInfo:[0,0,0,0,0,0,0]
+                }
+            )
+            fitnessdata.save()
+
             RegToken = new ET(
                 {
                     userId:user.id,
@@ -127,7 +140,9 @@ router.post("/users/register" , (req ,res)=>
             console.log(err)
         })
 
-        fitnessData
+        
+
+
 })
 
 //Need to reverse 

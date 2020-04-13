@@ -1,0 +1,20 @@
+.heading2{
+    text-align: center;
+   color:  #D976ED;
+}
+
+.block
+{
+    margin: 5px;
+}
+
+.block5
+{
+    background-color: red;
+}
+
+.diary
+{
+    overflow-y: scroll;
+    height: 400px;
+}
