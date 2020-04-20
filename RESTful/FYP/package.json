@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fullcalendar/timegrid": "^4.4.0",
     "@liquid-design/liquid-design-react": "^2.0.0",
     "axios": "^0.19.2",
     "bcrypt": "^3.0.6",

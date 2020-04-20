@@ -115,7 +115,9 @@ export class UserDashboard extends Component {
                     <CardTitle>Calendar</CardTitle>
                     </div>
                     <CardText>Track events in your life and create schdules!!</CardText>
+                    <Link to = "/Calender">
                     <Button style={buttonstyle}>Get It Done</Button>
+                    </Link>
                    
                 </Card>
 

@@ -58,13 +58,14 @@ const UserSchema = new mongoose.Schema(
         {
             type:String,
            
-        }
-    }
-
+        },
+    
+    },
+    {strict:false}
 )
 
 //Createing a User Object to be manipulated based on the scehma
-let User = mongoose.model("User" , UserSchema)
+let User = mongoose.model("User" , UserSchema  )
 
 //Exporting the user object
 module.exports = User

@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 const Users = require("./Routes/API/users")
 const Fitness = require("./Routes/API/fitness")
 const Entries = require("./Routes/API/Entries")
-
+const Events = require("./Routes/API/Events")
 //Initialise express
 const app = express()
 
@@ -29,6 +29,8 @@ const port = process.env.PORT || 5000
 app.use("/Routes/API", Users);
 app.use("/Routes/API", Fitness)
 app.use("/Routes/API", Entries)
+app.use("/Routes/API", Events)
+
 
 
 //app.listen() used ot start the server
