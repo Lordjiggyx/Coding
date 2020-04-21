@@ -4,6 +4,12 @@ const User = require("../../Models/user")
 const Entry = require("../../Models/Entry")
 const AFFIN = require("../../Sentiment/AFINN-111.json")
 
+const MonkeyLearn = require('monkeylearn')
+const pd = require('paralleldots');
+pd.apiKey = "rVP1o1KSEQmPRvZTYOv71esPwFmxlZJ2yGv0P3o21Os";
+const ml = new MonkeyLearn('7607d89b56eac6e67a52706e684d56854bf22a11')
+let model_id = 'cl_pi3C7JiL'
+
 
 
 
@@ -11,46 +17,49 @@ router.post("/Entries/add" , (req , res) =>
 {
     const {title , body , author , date , e_id , stitle}  = req.body
 
-    const newEnt = new Entry()
+
+        //Change text into json string
+        var text_array=JSON.stringify([body]);
     
-    var score = analyzeText(body)
-
-    newEnt.Title = title
-    newEnt.SubTitle = stitle
-    newEnt.Body = body
-    newEnt.Author = author
-    newEnt.Date = date
-    newEnt.E_id = e_id
-    newEnt.Sentiment_Score = score
-    newEnt.DateTime = new Date()
-    //If score is greater than 0 user entry is marked true = postive
-    if(score>0)
-    {
-        newEnt.Sentiment= true
-    }
-    //If score is less than 0 user entry is marked false = negative
-    else if(score<0)
-    {
-        newEnt.Sentiment=false
-    }
-    else if(score == 0)
-    {
-        newEnt.Sentiment=null
-    }
-
-    newEnt.save()
-    .then(ent =>
+        //First Algorithm gets emotion for the content
+         pd.emotionBatch(text_array,'en')
+        .then((response) => 
         {
-            console.log("entry created")
-            
-        })
+          let data = JSON.parse(response)
+          let emotions = data.emotion[0]
+          let emotionFound=getHighestEmotion(emotions , 1)
+              //Second algorithm gets sentiment and confidence
+          
+          let data1 = [body]
+          ml.classifiers.classify(model_id, data1).then(res => {
+
+            const newEnt = new Entry()
+
+            newEnt.Title = title
+            newEnt.SubTitle = stitle
+            newEnt.Body = body
+            newEnt.Author = author
+            newEnt.Date = date
+            newEnt.E_id = e_id
+            newEnt.DateTime = new Date()
+            newEnt.Sentiment_Score = res.body[0].classifications[0].confidence *100
+            newEnt.Sentiment= res.body[0].classifications[0].tag_name
+            newEnt.Sentiment_Emotion = emotionFound
+
+            newEnt.save()
+            .then(ent => console.log("entry saved"))
+
+          })
+    
+         
+    })
 
 })
 
 
 router.get("/Entries/getEntries/:email" , (req , res)=>
 {
-    console.log(req.params)
+
     Entry.find({Author:req.params.email})
     .sort({"DateTime" :-1})
     .then(ent =>res.json(ent))
@@ -122,36 +131,17 @@ router.get("/Entries/getED/:email" , (req, res)=>
     )
 })
 
-//Sentiment methods
-function tokenize(text)
+
+function getHighestEmotion(obj ,n)
 {
-    return text
-    .toLowerCase()
-    .split(" ");
+    var keys = Object.keys(obj);
+    keys.sort(function(a,b){
+        return obj[b] - obj[a];
+      })
+      return keys[0];
 }
 
-function deleteUselessWords(word)
-{
-    return word.replace(/[|&;$%@"<>()+,]/g, "");
-}
 
-function rateWord(word)
-{
-    return (word in AFFIN ) ? AFFIN[word] : 0
-}
-
-function sumText(x , y)
-{
-    return x+y;
-}
-
-function analyzeText(text)
-{
-    return tokenize(text)
-    .map(deleteUselessWords)
-    .map(rateWord)
-    .reduce(sumText)
-}
 
 
 module.exports = router

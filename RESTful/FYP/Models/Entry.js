@@ -34,7 +34,11 @@ const EntrySchema = new mongoose.Schema({
     },
     Sentiment:
     {
-        type:Boolean
+        type:String
+    },
+    Sentiment_Emotion:
+    {
+        type:String
     }
 })
 
