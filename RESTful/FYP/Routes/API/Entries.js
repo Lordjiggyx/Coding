@@ -3,59 +3,61 @@ const router = express.Router()
 const User = require("../../Models/user")
 const Entry = require("../../Models/Entry")
 const AFFIN = require("../../Sentiment/AFINN-111.json")
-
-const MonkeyLearn = require('monkeylearn')
-const pd = require('paralleldots');
-pd.apiKey = "rVP1o1KSEQmPRvZTYOv71esPwFmxlZJ2yGv0P3o21Os";
-const ml = new MonkeyLearn('7607d89b56eac6e67a52706e684d56854bf22a11')
-let model_id = 'cl_pi3C7JiL'
+const axios = require("axios")
 
 
+const natural = require("natural")
+const aposToLexForm = require('apos-to-lex-form');
+const SpellCorrector = require('spelling-corrector');
+const spellCorrector = new SpellCorrector();
+spellCorrector.loadDictionary();
+const SW = require('stopword');
 
 
-router.post("/Entries/add" , (req , res) =>
+
+
+router.post("/Entries/add", async  (req , res) =>
 {
     const {title , body , author , date , e_id , stitle}  = req.body
 
+    const newEnt = new Entry()
 
-        //Change text into json string
-        var text_array=JSON.stringify([body]);
+   
     
-        //First Algorithm gets emotion for the content
-         pd.emotionBatch(text_array,'en')
-        .then((response) => 
+    var score = getSentiment(body)
+
+    newEnt.Title = title
+    newEnt.SubTitle = stitle
+    newEnt.Body = body
+    newEnt.Author = author
+    newEnt.Date = date
+    newEnt.E_id = e_id
+    newEnt.Sentiment_Score = score
+    newEnt.DateTime = new Date()
+    //If score is greater than 0 user entry is marked true = postive
+    if(score>0)
+    {
+        newEnt.Sentiment= true
+    }
+    //If score is less than 0 user entry is marked false = negative
+    else if(score<0)
+    {
+        newEnt.Sentiment=false
+    }
+    else if(score == 0)
+    {
+        newEnt.Sentiment=null
+    }
+
+    newEnt.save()
+    .then(ent =>
         {
-          let data = JSON.parse(response)
-          let emotions = data.emotion[0]
-          let emotionFound=getHighestEmotion(emotions , 1)
-              //Second algorithm gets sentiment and confidence
-          
-          let data1 = [body]
-          ml.classifiers.classify(model_id, data1).then(res => {
-
-            const newEnt = new Entry()
-
-            newEnt.Title = title
-            newEnt.SubTitle = stitle
-            newEnt.Body = body
-            newEnt.Author = author
-            newEnt.Date = date
-            newEnt.E_id = e_id
-            newEnt.DateTime = new Date()
-            newEnt.Sentiment_Score = res.body[0].classifications[0].confidence *100
-            newEnt.Sentiment= res.body[0].classifications[0].tag_name
-            newEnt.Sentiment_Emotion = emotionFound
-
-            newEnt.save()
-            .then(ent => console.log("entry saved"))
-
-          })
-    
-         
-    })
+            console.log("entry created")
+            
+        })
 
 })
-
+           
 
 router.get("/Entries/getEntries/:email" , (req , res)=>
 {
@@ -65,6 +67,12 @@ router.get("/Entries/getEntries/:email" , (req , res)=>
     .then(ent =>res.json(ent))
 
 })
+
+router.get("/hellocall" , (req ,res)=>
+{
+    res.json({msg:"it worked"})
+})
+
 
 router.get("/Entries/getEntry/:id" , (req, res) =>
 {
@@ -97,16 +105,17 @@ router.post("/Entries/saveEntry/:id" , (req, res) =>
 
 router.get("/Entries/getED/:email" , (req, res)=>
 {
+   
     var ed = 
     {
         postive:0,
         negative:0,
         neutrual:0
     }
-
     Entry.find({Author:req.params.email})
     .then(ent =>
         {
+         
             
             ent.forEach(entry => {
                
@@ -140,6 +149,61 @@ function getHighestEmotion(obj ,n)
       })
       return keys[0];
 }
+   
+
+//Sentiment methods
+function tokenize(text)
+{
+    return text
+    .toLowerCase()
+    .split(" ");
+}
+
+function deleteUselessWords(word)
+{
+    return word.replace(/[|&;$%@"<>()+,]/g, "");
+}
+
+function rateWord(word)
+{
+    return (word in AFFIN ) ? AFFIN[word] : 0
+}
+
+function sumText(x , y)
+{
+    return x+y;
+}
+
+function analyzeText(text)
+{
+    return tokenize(text)
+    .map(deleteUselessWords)
+    // .map(rateWord)
+    // .reduce(sumText)
+}
+
+function getSentiment(body)
+{
+    const lexedBody = aposToLexForm(body);
+    const casedBody = lexedBody.toLowerCase();
+    const alphaOnlyBody = casedBody.replace(/[^a-zA-Z\s]+/g, '');
+
+    const { WordTokenizer } = natural;
+    const tokenizer = new WordTokenizer();
+    const tokenizedBody = tokenizer.tokenize(alphaOnlyBody);
+
+    tokenizedBody.forEach((word, index) => {
+        tokenizedBody[index] = spellCorrector.correct(word);
+      })
+
+      const filteredBody = SW.removeStopwords(tokenizedBody);
+
+      const { SentimentAnalyzer, PorterStemmer } = natural;
+      const analyzer = new SentimentAnalyzer('English', PorterStemmer, 'afinn');
+      const analysis = analyzer.getSentiment(filteredBody);
+      return analysis
+}
+
 
 
 

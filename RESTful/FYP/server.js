@@ -14,6 +14,9 @@ const app = express()
 //Body Parser MiddleWare
 app.use(express.json())
 
+
+app.disable('etag');
+
 //Database
 const db = require("./config/Keys").MongoUrl;
 

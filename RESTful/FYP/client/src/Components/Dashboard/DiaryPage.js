@@ -247,19 +247,19 @@ export class DiaryPage extends Component {
 
     buttonColour=(score)=>
     {
-         if(score < 0 && score <= -7)
+         if(score < 0 && score <= -1)
          {
             return "danger"
          }
-         else if(score < 0 && score > -7)
-         {
-             return "info"
-         }
-         else if(score > 0 && score < 7)
+         else if(score < 0 && score > -1)
          {
              return "warning"
          }
-         else if(score > 0 && score > 7)
+         else if(score > 0 && score <= 1)
+         {
+             return "info"
+         }
+         else if(score > 0 && score > 1)
          {
              return "success"
          }

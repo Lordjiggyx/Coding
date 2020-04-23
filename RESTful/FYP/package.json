@@ -17,6 +17,7 @@
   "dependencies": {
     "@fullcalendar/timegrid": "^4.4.0",
     "@liquid-design/liquid-design-react": "^2.0.0",
+    "apos-to-lex-form": "^1.0.5",
     "axios": "^0.19.2",
     "bcrypt": "^3.0.6",
     "bootstrap": "^4.4.1",
@@ -29,6 +30,7 @@
     "grommet-icons": "^4.4.0",
     "mongoose": "^5.7.7",
     "monkeylearn": "^3.4.0",
+    "natural": "^0.6.3",
     "nodemailer": "^6.3.1",
     "nodemon": "^1.19.4",
     "paralleldots": "^3.2.5",
@@ -38,6 +40,8 @@
     "react-d3-tree": "^1.16.1",
     "react-icons": "^3.9.0",
     "reactstrap": "^8.4.1",
+    "spelling-corrector": "^3.0.0",
+    "stopword": "^1.0.0",
     "styled-components": "^5.0.1"
   }
 }
