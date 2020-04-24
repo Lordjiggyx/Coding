@@ -108,9 +108,10 @@ router.get("/Entries/getED/:email" , (req, res)=>
    
     var ed = 
     {
-        postive:0,
+        positive:0,
         negative:0,
-        neutrual:0
+        neutrual:0,
+        Sentiment:""
     }
     Entry.find({Author:req.params.email})
     .then(ent =>
@@ -125,15 +126,20 @@ router.get("/Entries/getED/:email" , (req, res)=>
                 }
                 else if(entry.Sentiment == true)
                 {
-                    ed.postive+=1
+                    ed.positive+=1
                 }
                 else if(entry.Sentiment == null)
                 {
                     ed.neutrual+=1
                 }
+
+                var keys = Object.keys(ed);
+                keys.sort(function(a,b){
+                    return ed[b] - ed[a];
+                  })
+                 ed.Sentiment= keys[0];
+
             });
-            console.log(ed.negative)
-            console.log(ed.postive)
             res.json(ed)
         }
        
@@ -141,7 +147,7 @@ router.get("/Entries/getED/:email" , (req, res)=>
 })
 
 
-function getHighestEmotion(obj ,n)
+function getHighestEmotion(obj )
 {
     var keys = Object.keys(obj);
     keys.sort(function(a,b){

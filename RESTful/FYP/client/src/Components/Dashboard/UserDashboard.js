@@ -13,6 +13,7 @@ import workout from "../../Images/workout.png"
 import calender from "../../Images/calender.png"
 import diary from "../../Images/diary.png"
 import diet from "../../Images/diet.png"
+import emotions from "../../Images/emotions.png"
 import {Link} from "react-router-dom";
 export class UserDashboard extends Component {
 
@@ -100,7 +101,7 @@ export class UserDashboard extends Component {
                     </div>
                     <CardText>Don't bottle in your feelings let us know how you feel!!</CardText>
                     <Link to ="/Diary">
-                    <Button style={buttonstyle}>Let's It Out</Button>
+                    <Button style={buttonstyle}>Let It Out</Button>
                     </Link>
                 </Card>
 
@@ -120,9 +121,21 @@ export class UserDashboard extends Component {
                     </Link>
                    
                 </Card>
+            </div>
 
-                
-      
+
+            <div className="p-col-6 bottom"> 
+                <Card body className="text-center">
+                    <CardImg top width="100%" src={emotions} alt="Card image cap" />
+                    <div className= "boldText">
+                    <CardTitle>Emotional Awareness</CardTitle>
+                    </div>
+                    <CardText>Understand your emotions better and how they may be affecting you!!</CardText>
+                    <Link to = "/Emotion">
+                    <Button style={buttonstyle}>We Feel You</Button>
+                    </Link>
+                   
+                </Card>
             </div>
 
                 </div>

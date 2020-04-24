@@ -322,7 +322,7 @@ export class CalenderPage extends Component {
                 <div className="p-col-12 heading1"><h1>Calender</h1></div>
 
                 <div className="p-grid">
-                <div className="p-offset-1 p-col-8">
+                <div className="p-offset-1 p-col-7">
                 <Container >
                     <FullCalendar
                      defaultView="dayGridMonth"

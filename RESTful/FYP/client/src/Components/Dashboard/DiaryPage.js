@@ -444,10 +444,10 @@ export class DiaryPage extends Component {
                 <p>By now should notice that the colour of each entry is different, we designed this diary to actively read your entry and predict the mood that you may have felt at the time of entry , based on the content you wrote in your entry, your mood is placed on a score and this score is reflected in the colour of the entry</p>
 
                 <p>Here are the meanings of each color:</p>
-                <li>Green = Very Postive</li>
-                <li>Yellow = Slightly Postive</li>
+                <li>Green = Very postive</li>
+                <li>Blue = Slightly postive</li>
                 <li>Grey = Neutral</li>
-                <li>Blue = Slightly Negative</li>
+                <li>Yellow = Slightly negative</li>
                 <li>Red = Very Negative</li>
 
                 </ModalBody>
