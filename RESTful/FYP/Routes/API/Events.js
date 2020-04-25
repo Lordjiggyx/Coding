@@ -2,29 +2,63 @@ const express = require("express")
 const router = express.Router()
 const User = require("../../Models/user")
 const Event = require("../../Models/Event")
+var messagebird = require('messagebird')("nDOG8S1CCzJZEpO7A2yYqp1V3");
+const moment = require("moment")
+
 
 router.post("/Events/addEvent/:email" , (req,res)=>
 {
-    const {id , title , start , end  , importance  , content} = req.body.event
+     const {id , title , start , end  , importance  , content} = req.body.event
 
     const newEvent = new Event()
 
-    newEvent.Title = title
-    newEvent.E_id = id
-    newEvent.Body = content
-    newEvent.StartDate = start
-    newEvent.EndDate = end
-    newEvent.Importance = importance
-    newEvent.Email = req.params.email
+  
 
-    newEvent.save()
-    .then(ent =>
+
+    User.findOne({Email:req.params.email})
+    .then(user =>
         {
-            console.log("Entry Saved")
-            console.log(ent)
-        })
 
-})
+
+            newEvent.Title = title
+            newEvent.E_id = id
+            newEvent.Body = content
+            newEvent.StartDate = start
+            newEvent.EndDate = end
+            newEvent.Importance = importance
+            newEvent.Email = req.params.email
+        
+            newEvent.save()
+            .then(ent =>
+                {
+                    console.log("Entry Saved")
+                    // console.log(ent)
+                                // console.log(user.Phone)
+                    var EventReminderStart = moment(req.body.StartDate).add({hours:1 , minutes:2})
+                    var rem = EventReminderStart.clone().subtract({hours:1})
+                    // console.log(EventReminderStart)
+                    // console.log(rem)
+                    // console.log(rem.format())
+
+                    messagebird.messages.create({
+                        originator:"Ponc.ie",
+                        recipients:[user.Phone],
+                        scheduledDatetime :rem.format(),
+                        body:`Hi ${user.FirstName} here's a reminder that you have the following event "${newEvent.Title}" scheduled for ${EventReminderStart.format("HH:mm")} see you soon`
+                    },function(err,response)
+                    {
+                        console.log(err)
+                        //console.log(response)
+                    })
+
+                    });
+                })
+
+
+
+
+ })
+
 
 router.get("/Events/getAll/:email" , (req , res)=>
 {

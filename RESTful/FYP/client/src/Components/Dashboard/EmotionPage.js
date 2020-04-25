@@ -40,7 +40,7 @@ export class EmotionPage extends Component {
           })
         this.getEntryData()
         this.getQuote()
-        //  this.getArticles()
+        // this.getArticles()
         
     }
 
@@ -209,6 +209,9 @@ export class EmotionPage extends Component {
                 <Chart type="doughnut" data={piedata} options={options} height={175} />
                 </Card>
                 <Button onClick={this.m1}style={buttonstyle2}>What is this chart?</Button>
+                <Link to="/UserDashboard">
+                    <Button style ={buttonstyle2}>Back</Button>
+                    </Link>
                 </div>
 
 
@@ -262,9 +265,7 @@ export class EmotionPage extends Component {
                 </Modal>
 
                 <div className ="p-col-4 p-offset-1">
-                <Link to="/UserDashboard">
-                    <Button style ={buttonstyle2}>Back</Button>
-                    </Link>
+                
                     </div>
             </div>
         )

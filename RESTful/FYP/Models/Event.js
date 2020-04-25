@@ -36,8 +36,12 @@ const EventSchema = new mongoose.Schema({
     Importance:
     {
         type:String
+    },
+    ReminderDT:
+    {
+        
     }
-})
+} , {strict: false})
 
 let Event = mongoose.model("Event" , EventSchema)
 
