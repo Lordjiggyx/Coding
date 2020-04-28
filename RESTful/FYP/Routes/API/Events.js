@@ -32,13 +32,10 @@ router.post("/Events/addEvent/:email" , (req,res)=>
             .then(ent =>
                 {
                     console.log("Entry Saved")
-                    // console.log(ent)
-                                // console.log(user.Phone)
+ 
                     var EventReminderStart = moment(req.body.StartDate).add({hours:1 , minutes:2})
                     var rem = EventReminderStart.clone().subtract({hours:1})
-                    // console.log(EventReminderStart)
-                    // console.log(rem)
-                    // console.log(rem.format())
+
 
                     messagebird.messages.create({
                         originator:"Ponc.ie",
@@ -48,7 +45,7 @@ router.post("/Events/addEvent/:email" , (req,res)=>
                     },function(err,response)
                     {
                         console.log(err)
-                        //console.log(response)
+                        
                     })
 
                     });
@@ -108,8 +105,6 @@ router.post("/Events/saveGC/:email" , (req,res)=>
     .then(user=>
         {
             console.log(user)
-            // user.GcSync = true;
-            // user.gcEmail =req.body.data.email
             user.set("Gcsync" , true)
             user.set("gcEmail" , req.body.data.email)
             user.save()

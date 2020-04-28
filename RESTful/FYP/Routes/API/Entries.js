@@ -147,47 +147,6 @@ router.get("/Entries/getED/:email" , (req, res)=>
 })
 
 
-function getHighestEmotion(obj )
-{
-    var keys = Object.keys(obj);
-    keys.sort(function(a,b){
-        return obj[b] - obj[a];
-      })
-      return keys[0];
-}
-   
-
-//Sentiment methods
-function tokenize(text)
-{
-    return text
-    .toLowerCase()
-    .split(" ");
-}
-
-function deleteUselessWords(word)
-{
-    return word.replace(/[|&;$%@"<>()+,]/g, "");
-}
-
-function rateWord(word)
-{
-    return (word in AFFIN ) ? AFFIN[word] : 0
-}
-
-function sumText(x , y)
-{
-    return x+y;
-}
-
-function analyzeText(text)
-{
-    return tokenize(text)
-    .map(deleteUselessWords)
-    // .map(rateWord)
-    // .reduce(sumText)
-}
-
 function getSentiment(body)
 {
     const lexedBody = aposToLexForm(body);
