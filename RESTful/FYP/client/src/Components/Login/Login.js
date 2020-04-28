@@ -14,15 +14,9 @@ import { Close, Send, User , FormNext, Checkmark , } from "grommet-icons";
 import {
     Box,
     Button,
-    CheckBox,
     Grommet,
     Form,
-    FormField,
-    RadioButtonGroup,
-    RangeInput,
-    Select,
-    TextArea
-    ,TextInput
+    FormField
     ,Text
   } from "grommet";
 import Continue from './Continue';
@@ -32,7 +26,6 @@ export class Login extends Component {
 
     state={
         step:0,
-        Username:"",
         Email:"",
         Password:""
     }
@@ -122,12 +115,7 @@ export class Login extends Component {
                                <div className="Body">
                                <Box width="medium">
                                    <Form>
-                                        <FormField
-                                        label="Username"
-                                        name="userName"
-                                        required
-                                        onChange = {this.handleChange("Username")}
-                                        />
+
             
                                         <FormField label="Email" name="email" type="email"   onChange = {this.handleChange("Email")}/>
             

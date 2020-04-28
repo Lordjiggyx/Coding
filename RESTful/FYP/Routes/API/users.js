@@ -104,22 +104,7 @@ router.post("/users/register" , (req ,res)=>
                             }
                             
                         }
-                    )
-
-                    const handlebarOptions=
-                    {
-                        viewEngine: {
-                            extName: '.handlebars',
-                            partialsDir: './Views/',
-                            layoutsDir: './Views/',
-                            defaultLayout: 'email.handlebars',
-                          },
-                          viewPath: './Views',
-                          extName: '.handlebars',
-                    }
-
-                 //   transporter.use("compile" , hbs(handlebarOptions))
-                      
+                    )      
         
                     const mailOptions = 
                     {
@@ -238,7 +223,7 @@ router.post("/users/update/:email",(req,res)=>
 {
 
     console.log(req.body)
-    const {dob , height , weight , firstname ,lastname, gender ,email ,username,password} = req.body
+    const {dob , height , weight , firstname ,lastname, gender ,email ,password} = req.body
     
 
     User.findOne({Email:req.params.email})
@@ -246,7 +231,6 @@ router.post("/users/update/:email",(req,res)=>
         {
             user.FirstName = firstname,
             user.LastName = lastname,
-            user.UserName= username,
             user.DOB = dob,
             user.Weight=weight,
             user.Height=height,
