@@ -121,6 +121,10 @@ export class EmotionPage extends Component {
         {
             question=Queries.negative
             console.log(question)
+        } if(this.state.ed.Sentiment == "neutrual")
+        {
+            question=Queries.neutrual
+            console.log(question)
         }
 
        

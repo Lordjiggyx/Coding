@@ -8,6 +8,12 @@ const crypto = require("crypto")
 const User = require("../../Models/user")
 const FitnessData = require("../../Models/FitnessData")
 const ET = require("../../Models/EmailToken")
+const request = require("request")
+const cheerio = require("cheerio")
+const brain = require("brain.js")
+const natural = require("natural")
+const fs = require('fs')
+const path = require('path');
 //const hbs = require("nodemailer-express-handlebars")
 // const ch = require("../../Views/")
 
@@ -297,5 +303,86 @@ router.get("/users/" , (req , res)=>
     // User.findOneAndDelete({})
     // res.send("User Deleted")
 })
+
+router.get("/users/tumorDef/:type", (req , res)=>
+{
+    tumor = req.params.type.toLowerCase()
+    request(`https://www.cancer.ie/cancer-information-and-support/cancer-types/${tumor}-cancer`,(error , response , html)=>
+    {
+        if(!error && response.statusCode==200)
+        {
+            const $ = cheerio.load(html)
+           
+            
+
+        $("h3" ).each((i , el)=>
+        {
+           if(i == 0){
+
+            const def1 = $(el).next().text()
+            const def2 = $(el).next().next().text()
+            const definitons = {
+                def1:def1,
+                def2:def2
+            }
+            res.send(definitons)
+    }
+        })
+
+        
+        }
+    })
+})
+
+
+router.get("/users/getGenes/:type", (req , res)=>
+{
+    tumor = req.params.type
+   
+    const net = new brain.recurrent.LSTM()
+
+    net.train([
+       { input:"Breast" ,output:["TP53 " , "KMT2C " ,"PIK3CA " , "GATA3 " , "CDH1 "]},
+       { input:"Bladder" ,output:["TP53 " , "KDM6A " ,"PIK3CA " , "KMT2D " , "ARID1A "]},
+       { input:"Prostate" ,output:["TP53 " , "SPOP " ,"AR " , "FOXA1 " , "KMT2D "]},
+       { input:"Skin" ,output:["BRAF " , "NRAS " ,"FAT3 " , "CDKN2A " , "PTPRB "]},
+       { input:"Lung" ,output:["TP53 " , "KRAS " ,"KEAP1 " , "EGFR " , "STK11 "]},
+       { input:"Pancreas" ,output:["KRAS " , "TP53 " ,"SMAD4 " , "CDKN2A " , "ARID1A "]},
+       
+    ],{iterations:200})
+
+
+    const output = net.run(tumor)
+
+    const { WordTokenizer } = natural;
+    const tokenizer = new WordTokenizer();
+    const genes = tokenizer.tokenize(output);
+
+    
+    console.log(genes)
+    res.send(genes)
+})
+
+
+router.get("/users/getGeneData/:type", (req , res)=>
+{
+    tumor = req.params.type
+   
+    
+   let folderPath = `C:/Users/ilori/Desktop/Tomi/Coding/RESTful/FYP/Data/${tumor}.csv`
+
+   const csv=require('csvtojson')
+    csv()
+    .fromFile(folderPath)
+    .then(jsonObj=>{
+    
+       res.send(jsonObj)
+})
+ 
+})
+
+
+
+
 
 module.exports = router

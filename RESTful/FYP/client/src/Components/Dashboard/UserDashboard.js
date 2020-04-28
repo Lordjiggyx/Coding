@@ -14,6 +14,7 @@ import calender from "../../Images/calender.png"
 import diary from "../../Images/diary.png"
 import diet from "../../Images/diet.png"
 import emotions from "../../Images/emotions.png"
+import research from "../../Images/mResearch.png"
 import {Link} from "react-router-dom";
 export class UserDashboard extends Component {
 
@@ -64,6 +65,22 @@ export class UserDashboard extends Component {
                 </div>
 
                 <div className="p-grid">
+
+                <div className="p-col-6 p-offset-3 bottom"> 
+                
+                <Card body className="text-center">
+                    <CardImg  top width="10%" src={research} alt="Card image cap" />
+                    <div className= "boldText">
+                    <CardTitle>Understanding Your Cancer Type</CardTitle>
+                    </div>
+                    <CardText>Cancer is more complicated than you could possibly imagine we want to provide you the most accurate and reliable information about your cancer type and genes that cause  it  </CardText>
+                    <Link to = "/Research">
+                    <Button style={buttonstyle}>Get To It</Button>
+                    </Link>
+                   
+                </Card>
+      
+            </div>
                     
                 <div className="p-col-6 bottom"> 
                 <Card body className="text-center">
@@ -79,7 +96,7 @@ export class UserDashboard extends Component {
                 </Card>
       
             </div>
-            <div className="p-col-6 bottom"> 
+            {/* <div className="p-col-6 bottom"> 
                 <Card body className="text-center">
                     <CardImg  top width="100px" src={diet} alt="Card image cap" />
                     <div className= "boldText">
@@ -91,7 +108,7 @@ export class UserDashboard extends Component {
                     </Link>
                 </Card>
       
-            </div>
+            </div> */}
 
             <div className="p-col-6 bottom"> 
                 <Card body className="text-center">

@@ -23,6 +23,7 @@ import ExcercisePage from "./Components/Dashboard/ExcercisePage"
 import DiaryPage from "./Components/Dashboard/DiaryPage"
 import CalenderPage from "./Components/Dashboard/CalenderPage"
 import EmotionPage from "./Components/Dashboard/EmotionPage"
+import ResearchPage from "./Components/Dashboard/ResearchPage"
 
   const routes = (
     <Router>
@@ -41,6 +42,7 @@ import EmotionPage from "./Components/Dashboard/EmotionPage"
             <Route path = "/Diary" component = {DiaryPage}/>
             <Route path = "/Calender" component = {CalenderPage}/>
             <Route path = "/Emotion" component = {EmotionPage}/>
+            <Route path = "/Research" component ={ResearchPage}/>
 
         </div>
     </Router>
