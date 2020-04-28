@@ -44,7 +44,7 @@ router.get("/users/hello" , (req , res)=>
 
 router.post("/users/register" , (req ,res)=>
 {
-     const {firstName , lastName , email , password ,gender ,  DOB  , height , weight ,userName } =req.body
+     const {firstName , lastName , email , password ,gender ,  DOB  , height , weight ,phone } =req.body
      console.log(req.body)
 
 // const firstname = req.body.firstName
@@ -61,8 +61,7 @@ router.post("/users/register" , (req ,res)=>
     newUser.Height = height;
     newUser.Weight = weight;
     newUser.DOB = DOB
-    newUser.UserName = userName
-    newUser.Cancer_Type = ""
+    newUser.Phone = phone
     newUser.Cancer_Location = ""
 
    
@@ -223,7 +222,7 @@ router.post("/users/update/:email",(req,res)=>
 {
 
     console.log(req.body)
-    const {dob , height , weight , firstname ,lastname, gender ,email ,password} = req.body
+    const {dob , height , weight , firstname ,lastname, gender ,email ,password , phone} = req.body
     
 
     User.findOne({Email:req.params.email})
@@ -236,7 +235,8 @@ router.post("/users/update/:email",(req,res)=>
             user.Height=height,
             user.Password=password,
             user.Gender=gender,
-            user.Email=email
+            user.Email=email,
+            user.Phone = phone
             user.save()
         })
 
@@ -246,13 +246,12 @@ router.post("/users/setCancer/:email",(req,res)=>
 {
 
     console.log(req.body)
-    const {location , type} = req.body
+    const {location } = req.body
     
 
     User.findOne({Email:req.params.email})
     .then(user=>
         {
-            user.Cancer_Type = type,
             user.Cancer_Location=location
             user.save()
         })

@@ -20,13 +20,13 @@ export class UpdateInfo extends Component {
         findemail:this.props.email,
             firstname:"",
             lastname:"",
-            username:"",
             email:"",
             dob:"",
             gender:"",
             height:"",
             weight:"",
-            password:""
+            password:"",
+            phone:""
         
     }
 
@@ -45,7 +45,9 @@ export class UpdateInfo extends Component {
             gender:this.state.gender,
             height:this.state.height,
             weight:this.state.weight,
-            password:this.state.password
+            password:this.state.password,
+            phone:this.state.phone
+
         }
 
         const response = await fetch(`/Routes/API//users/update/${this.state.findemail}`, {
@@ -80,8 +82,8 @@ export class UpdateInfo extends Component {
                         weight:res.data.Weight,
                         gender:res.data.Gender,
                         email:res.data.Email,
-                        username:res.data.UserName,
-                        password:res.data.Password
+                         password:res.data.Password,
+                        phone:res.data.Phone
 
                 }
             )
@@ -114,15 +116,16 @@ export class UpdateInfo extends Component {
                                     />
                                    </FormField>
 
-                                   <FormField label="Username"name="username" >
-                                    <TextInput
-                                    onChange={this.handleChange("username")} value={this.state.username}
-                                    />
-                                   </FormField>
 
                                    <FormField label="Email"name="email" >
                                     <TextInput
                                     onChange={this.handleChange("email")} value={this.state.email}
+                                    />
+                                   </FormField>
+
+                                   <FormField label="Phone Number"name="phone" >
+                                    <TextInput
+                                    onChange={this.handleChange("phone")} value={this.state.phone}
                                     />
                                    </FormField>
 
@@ -142,9 +145,7 @@ export class UpdateInfo extends Component {
                                 { label: "Female", value: "Female" }
                                 
                             ]}
-                            // value={value}
-                            // onChange={event => setValue(event.target.value)}
-                            // {...props}
+
                             onChange = {this.handleChange("gender")}
                             
                             />                      
@@ -174,10 +175,10 @@ export class UpdateInfo extends Component {
                                </Box>
 
                                     <Box align="center" pad="small">
-                                    <h3>Save Information</h3>
+                                    
                                     <Button 
                                     onClick={this.update}
-                                    label="Update" />
+                                    label="Update Account" />
                                     </Box>
                                </div>
                                </Box>

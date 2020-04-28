@@ -17,12 +17,13 @@ export class DeleteAccount extends Component {
         user:{
             firstname:"",
             lastname:"",
-            username:"",
             email:"",
             dob:"",
             gender:"",
             height:"",
-            weight:""
+            weight:"",
+            
+            phone:""
         }
     }
 
@@ -76,14 +77,14 @@ DeleteAccount  = async e =>
                     <List
                      data={[
                          { name: `Name : ${user.FirstName}  ${user.LastName} `},
-                         { name: `Username : ${user.UserName}`},
                          { name: `Email : ${user.Email}` },
+                         { name: `Phone Number : ${user.Phone}` },
                          { name: `Date of Birth : ${user.DOB}` },
                          { name: `Gender : ${user.Gender}` },
-                         // { name: 'Country : ', info: country },
+                         
                          { name: `Height : ${user.Height} meters ` },
                          { name: `Weight : ${user.Weight} kg`},
-                         // { name: 'Activeness : ', info : active },
+                         
                      ]}
                      />
                      </div>

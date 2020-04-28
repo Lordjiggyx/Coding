@@ -21,6 +21,7 @@ export class UserForm extends Component {
         height :"",
         //come back and add
         password : "",
+        phone:"",
         user: "",
         active:""
 
@@ -66,13 +67,13 @@ export class UserForm extends Component {
         const {step} = this.state;
 
         //get fields
-        const {firstName , lastName , email 
+        const {firstName , lastName , email,phone
          , gender ,  DOB ,  height , weight  , password} = this.state;
 
         //Values holds all the variables which can be passed into each component
         const values =
         {
-            firstName , lastName , email  
+            firstName , lastName , email  ,phone
          , gender ,  DOB ,  height , weight  , password
         }
 

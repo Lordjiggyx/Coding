@@ -65,6 +65,7 @@ continue = e =>
 
                             <FormField label="Password" name="Password" type="password" required onChange = {handleChange("password")} />
 
+                            <FormField label="Phone Number" name="text" type="text"  help = "Format: Country Code + Number"required onChange = {handleChange("phone")} />
 
                            
 

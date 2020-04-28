@@ -48,12 +48,6 @@ const UserSchema = new mongoose.Schema(
         {
             type:String,
         },
-
-        Cancer_Type:
-        {
-            type:String,
-           
-        },
         Phone:
         {
             type:String

@@ -48,9 +48,6 @@ export class SideMenu extends Component {
                         onClick={goTo(3)}/>
                         </li>
 
-                        {/* <li>
-                        <Button label={sideMenuData[3]}/>
-                        </li> */}
                     </ul>
                     </div>
                     </Grommet>

@@ -21,7 +21,7 @@ export class Confirm extends Component {
         //Process form
 
         const {values :{firstName , lastName , email ,ethnicity , userName
-            , gender ,  DOB , country , height , weight  , password}} =this.props
+            , gender ,  DOB , country , height , weight ,phone , password}} =this.props
 
 
         const User = 
@@ -34,7 +34,8 @@ export class Confirm extends Component {
             weight:this.props.values.weight,
             password:this.props.values.password,
             DOB:this.props.values.DOB,
-            userName: this.props.values.userName
+            userName: this.props.values.userName,
+            phone : this.props.values.phone
 
         }
 
@@ -64,7 +65,7 @@ export class Confirm extends Component {
     render() {
 
         const {values :{firstName , lastName , email 
-            , gender ,  DOB  , height , weight  }} =this.props
+            , gender ,  DOB  , height , weight ,phone }} =this.props
 
             const fade_in=
             {
@@ -93,6 +94,7 @@ export class Confirm extends Component {
                     data={[
                         { name: `Name : ${firstName} ${lastName} `},
                         { name: `Email : ${email}` },
+                        { name: `Phone : ${phone}` },
                         { name: `Date of Birth : ${DOB}` },
                         { name: `Gender : ${gender}` },
                         { name: `Height : ${height} meters` },

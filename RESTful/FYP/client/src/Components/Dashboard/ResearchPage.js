@@ -5,7 +5,7 @@ import axios from "axios"
 import {
     Card, CardText, CardBody,
     CardTitle,  ListGroupItem,  ListGroupItemText, 
-Nav , NavItem ,NavLink ,TabContent, TabPane,  CardHeader , Button , ListGroup , } from 'reactstrap';
+Nav , NavItem ,NavLink ,TabContent, TabPane,  CardHeader , Button , ListGroup } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Chart} from 'primereact/chart';
 import {Carousel} from 'primereact/carousel';
@@ -199,13 +199,13 @@ const WORD_KEY = 'word';
         </Nav>
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
-            { this.state.activeTab === 1 ? <div>
+            { this.state.activeTab == 1 ? <div>
                 <strong>This chart shows the most recurrently mutated cancer driver genes in {this.state.tumor} Cancer . Each bar of the histogram indicates the amount of samples with the gene mutated.</strong>
                 <Chart type="bar" data={barData} options ={options}height={175} />
                 </div>: null }
           </TabPane>
           <TabPane tabId="2">
-            { this.state.activeTab === 2 ?
+            { this.state.activeTab == 2 ?
              <ListGroup className="diary text-center" >
              {this.state.chartData.map((entry , i)=>
          

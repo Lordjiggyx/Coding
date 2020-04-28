@@ -7,6 +7,11 @@ import {Link} from "react-router-dom";
 
 class Welcome extends React.Component
 {
+componentDidMount()
+{
+    localStorage.setItem("Logged" , false) 
+}
+
 
     render()
     {

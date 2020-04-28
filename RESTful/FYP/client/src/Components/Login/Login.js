@@ -62,6 +62,7 @@ export class Login extends Component {
           });
           console.log(response.text())
           localStorage.setItem("Email" , User.email)
+          localStorage.setItem("Logged" , "true")
          this.next()
     }
     

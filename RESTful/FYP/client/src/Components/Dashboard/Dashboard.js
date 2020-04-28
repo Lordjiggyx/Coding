@@ -24,7 +24,7 @@ componentDidMount()
     .then(res => {
         this.setState(
             {
-                cancer:res.data.Cancer_Type
+                cancer:res.data.Cancer_Location
                 
             }
         )
@@ -38,7 +38,7 @@ componentDidMount()
         const email = this.state.email
 
 
-        if(cancer === "")
+        if(cancer == "")
         {
             return (
                 <div>

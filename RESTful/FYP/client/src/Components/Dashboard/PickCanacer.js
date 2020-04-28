@@ -21,7 +21,7 @@ export class PickCanacer extends Component {
   {
     evt.preventDefault();
 
-    if(nodeData.depth === 2)
+    if(nodeData.depth === 1)
     {
       console.log(nodeData.parent.name)
       console.log(nodeData.name)
@@ -32,8 +32,8 @@ export class PickCanacer extends Component {
 
         const cancerInfo=
         {
-          location:nodeData.parent.name,
-          type:nodeData.name
+          location:nodeData.name,
+          
         }
 
         const response = await fetch(`/Routes/API//users/setCancer/${this.state.email}`, {
@@ -71,57 +71,23 @@ export class PickCanacer extends Component {
               children: [
                 {
                   name: 'Breast',
-                  children:[
-                      {name:"Metastatic"},
-                      {name:"Ductal Carcinoma"},
-                      {name:"Invasive Ductal Carcinoma"},
-                      {name:"Triple Negative"},
-                      {name:"Male Breast Cancer"},
-
-                    ]
+                 
                 },
                 {
                   name: 'Bowel',
-                  children:[
-                    {name:"Colorectal adenocarcinoma"},
-                    {name:"Gastrointestinal carcinoid tumors"},
-                    {name:"Primary colorectal lymphomas"},
-                    {name:"Gastrointestinal stromal tumors"},
-                    {name:"Leiomyosarcomas "},
-
-                  ]
+                 
                 },
                 {
                     name: 'Prostate',
-                    children:[
-                        {name:"Acinar adenocarcinoma "},
-                        {name:"Ductal adenocarcinoma "},
-                        {name:"Squamous cell cancer  "},
-                        {name:"Small cell prostate cancer "},
-                        {name:"Transitional cell cancer "},
-    
-                      ]
+                 
                 },
                 {
                     name: 'Skin',
-                    children:[
-                        {name:"basal cell carcinoma"},
-                        {name:"squamous cell carcinoma"},
-                        {name:"Melanoma"},
-                        {name:"Actinic Keratoses"},
-                        {name:"Merkel cell carcinoma"},
-    
-                      ]
+                    
                 },
                 {
                     name: 'Lung',
-                    children:[
-                        {name:"Small cell lung cancer"},
-                        {name:"NSCLC Adenocarcinoma "},
-                        {name:"NSCLC Squamous cell cancer  "},
-                        {name:"NSCLC Large cell carcinoma "},
-    
-                      ]
+                   
                 },
               ],
             },

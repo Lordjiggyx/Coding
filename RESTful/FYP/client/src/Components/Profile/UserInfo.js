@@ -21,12 +21,12 @@ export class UserInfo extends Component {
         user:{
             firstname:"",
             lastname:"",
-            username:"",
             email:"",
             dob:"",
             gender:"",
             height:"",
-            weight:""
+            weight:"",
+            phone:""
         }
     }
 
@@ -38,16 +38,7 @@ componentDidMount()
         this.setState(
             {
                 user:res.data
-                // {
-                //     firstname:res.data.FirstName,
-                //     lastname:res.data.LastName,
-                //     dob:res.data.DOB,
-                //     height:res.data.Height,
-                //     weight:res.data.Weight,
-                //     gender:res.data.Gender,
-                //     email:res.data.Email,
-                //     username:res.data.UserName
-                // }
+
             }
         )
         console.log(this.state.user)
@@ -71,14 +62,14 @@ componentDidMount()
                    <List
                     data={[
                         { name: `Name : ${user.FirstName}  ${user.LastName} `},
-                        { name: `Username : ${user.UserName}`},
                         { name: `Email : ${user.Email}` },
+                        { name: `Phone Number : ${user.Phone}` },
                         { name: `Date of Birth : ${user.DOB}` },
                         { name: `Gender : ${user.Gender}` },
-                        // { name: 'Country : ', info: country },
+                        
                         { name: `Height : ${user.Height} meters ` },
                         { name: `Weight : ${user.Weight} kg`},
-                        // { name: 'Activeness : ', info : active },
+                       
                     ]}
                     />
                     </div>

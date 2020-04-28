@@ -22,7 +22,7 @@ state =
     user:{
         firstname:"",
         lastname:"",
-        username:"",
+      
         email:"",
         dob:"",
         gender:"",
@@ -54,7 +54,8 @@ componentDidMount =  ()=>
                     weight:res.data.Weight,
                     gender:res.data.Gender,
                     email:res.data.Email,
-                    username:res.data.UserName
+                    username:res.data.UserName,
+                    phone:res.data.Phone
                 }
             }
         )
