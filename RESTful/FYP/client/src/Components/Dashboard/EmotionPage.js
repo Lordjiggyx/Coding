@@ -3,9 +3,9 @@ import Navabr from '../General/Navabr';
 import {Link} from "react-router-dom";
 import axios from "axios"
 import {
-    Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button,Modal, ModalHeader, ModalBody, ModalFooter ,ListGroup, ListGroupItem, ListGroupItemHeading ,  ListGroupItemText,  InputGroup, InputGroupAddon, InputGroupText , Form, FormGroup, Label, Input, FormText ,Row,Col , Alert
- ,Nav , NavItem ,NavLink ,TabContent, TabPane, CardFooter ,Media , CardLink} from 'reactstrap';
+    Card, CardText, CardBody,
+    CardTitle, CardSubtitle, Button,Modal, ModalHeader, ModalBody, ModalFooter
+} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Chart} from 'primereact/chart';
 import {Carousel} from 'primereact/carousel';
@@ -112,16 +112,16 @@ export class EmotionPage extends Component {
         console.log(this.state.ed)
         var question =""
 
-        if(this.state.ed.Sentiment == "positive")
+        if(this.state.ed.Sentiment === "positive")
         {
             question=Queries.positive
             console.log(question)
         }
-        if(this.state.ed.Sentiment == "negative")
+        if(this.state.ed.Sentiment === "negative")
         {
             question=Queries.negative
             console.log(question)
-        } if(this.state.ed.Sentiment == "neutrual")
+        } if(this.state.ed.Sentiment === "neutrual")
         {
             question=Queries.neutrual
             console.log(question)
@@ -138,7 +138,7 @@ export class EmotionPage extends Component {
         .then(response =>
         {
             let apiResponse = response.data.organic_results.filter((article)=>{
-                return article.snippet != ""
+                return article.snippet !== ""
             });
             this.setState({articles:apiResponse})
             console.log(apiResponse)
@@ -223,9 +223,9 @@ export class EmotionPage extends Component {
                 <div className="p-col-5   ">
              
                 <h5 className="heading2"> {this.state.name} most of your diary entries seem to be {this.state.ed.Sentiment}
-                {this.state.ed.Sentiment=="negative" ? <span> here's some articles to lift your spirit</span>: null}
-                {this.state.ed.Sentiment=="positive" ? <span> here's some articles to maintain that postivity</span>: null}
-                {this.state.ed.Sentiment=="neutrual" ? <span> here's some intrestesting articles on emotional awareness and health</span>: null}
+                {this.state.ed.Sentiment==="negative" ? <span> here's some articles to lift your spirit</span>: null}
+                {this.state.ed.Sentiment==="positive" ? <span> here's some articles to maintain that postivity</span>: null}
+                {this.state.ed.Sentiment==="neutrual" ? <span> here's some intrestesting articles on emotional awareness and health</span>: null}
                 </h5>
                
                 {/* <ListGroup  >

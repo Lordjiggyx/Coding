@@ -1,6 +1,5 @@
-import React, { Component , useState } from 'react'
-import { Icon, Intent } from "@blueprintjs/core";
-import { useSpring, animated as a } from "react-spring";
+import React, { Component  } from 'react'
+import { Icon } from "@blueprintjs/core";
 import { Button } from "@blueprintjs/core";
 import {Link} from "react-router-dom";
 import { motion } from "framer-motion"

@@ -5,14 +5,13 @@ import "../../../node_modules/primeflex/primeflex.css"
 import "../../CSS/DashboardComponents/UserDashboard/Home.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
-    Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button
+    Card, CardImg, CardText,
+    CardTitle,  Button
   } from 'reactstrap';
 
 import workout from "../../Images/workout.png"
 import calender from "../../Images/calender.png"
 import diary from "../../Images/diary.png"
-import diet from "../../Images/diet.png"
 import emotions from "../../Images/emotions.png"
 import research from "../../Images/mResearch.png"
 import {Link} from "react-router-dom";
@@ -66,7 +65,7 @@ export class UserDashboard extends Component {
 
                 <div className="p-grid">
 
-                <div className="p-col-6 p-offset-3 bottom"> 
+                <div className="p-col-6  bottom"> 
                 
                 <Card body className="text-center">
                     <CardImg  top width="10%" src={research} alt="Card image cap" />
@@ -96,19 +95,7 @@ export class UserDashboard extends Component {
                 </Card>
       
             </div>
-            {/* <div className="p-col-6 bottom"> 
-                <Card body className="text-center">
-                    <CardImg  top width="100px" src={diet} alt="Card image cap" />
-                    <div className= "boldText">
-                    <CardTitle>Diet Tracker</CardTitle>
-                    </div>
-                    <CardText>Track your daily intake and manage your calories!!</CardText>
-                    <Link to = "/Food">
-                    <Button style={buttonstyle}>Bite Me</Button>
-                    </Link>
-                </Card>
-      
-            </div> */}
+
 
             <div className="p-col-6 bottom"> 
                 <Card body className="text-center">

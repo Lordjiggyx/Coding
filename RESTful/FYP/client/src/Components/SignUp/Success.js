@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Icon, Intent } from "@blueprintjs/core";
+import { Icon } from "@blueprintjs/core";
 import "../../CSS/ParallaxComponents/R3.css"
 import { Button } from "@blueprintjs/core";
 import { motion } from "framer-motion"
@@ -17,20 +17,7 @@ export default class Success extends Component {
             
         }
 
-        const left_right=
-        {
-            hidden:{marginLeft:"-100%"},
-            visible:{marginLeft:"25%"},
-            
-        }
-
-        const right_left=
-        {
-            hidden:{right:"-0%"},
-            visible:{right:"20%"},
-            
-        }
-
+       
         const fade_in=
         {
             hidden:{ opacity:0},

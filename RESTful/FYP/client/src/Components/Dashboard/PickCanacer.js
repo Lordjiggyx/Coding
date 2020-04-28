@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import Tree from 'react-d3-tree';
 import "../../CSS/DashboardComponents/Dashboard.css"
-import { useInvertedScale } from 'framer-motion';
-import { HandleInteractionKind } from '@blueprintjs/core';
+
 import { Redirect   } from "react-router-dom";
 
 
@@ -22,12 +21,11 @@ export class PickCanacer extends Component {
   {
     evt.preventDefault();
 
-    if(nodeData.depth == 2)
+    if(nodeData.depth === 2)
     {
       console.log(nodeData.parent.name)
       console.log(nodeData.name)
 
-      // window.confirm("Are you sure this is your cancer type")
 
       if(window.confirm("Are your sure this is your cancer type "))
       {

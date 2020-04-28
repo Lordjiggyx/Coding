@@ -1,5 +1,5 @@
-import React, { Component  , useState} from 'react'
-import { grommet, Box, Button, Grommet, Nav, Text } from "grommet";
+import React, { Component  } from 'react'
+import {  Button, Grommet,  } from "grommet";
 import "../../CSS/ProfileComponents/Profile.css"
 
 export class SideMenu extends Component {

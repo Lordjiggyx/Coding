@@ -1,16 +1,14 @@
 import React, { Component } from 'react'
-import Header from "../Parallax/Header"
 import Navabr from '../General/Navabr';
 import "../../CSS/SignUpComponents/SignUp.css"
 import "../../CSS/LoginComponents/Login.css"
 
 import { motion } from "framer-motion"
 import {Link} from "react-router-dom";
-import {Details} from "../Profile/Details"
 
 
 
-import { Close, Send, User , FormNext, Checkmark , } from "grommet-icons";
+import {  Checkmark , } from "grommet-icons";
 import {
     Box,
     Button,
@@ -82,12 +80,7 @@ export class Login extends Component {
     render() {
         const {step} = this.state;
 
-        const right_left=
-        {
-            hidden:{right:"-1000%"},
-            visible:{right:"20%"},
-            
-        }
+
 
 
         const fade_in=

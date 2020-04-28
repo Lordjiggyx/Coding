@@ -1,18 +1,13 @@
 import React, { Component } from 'react'
-import { Close, Send, User , FormNext, Checkmark , } from "grommet-icons";
 import {
     Box,
     Button,
-    CheckBox,
+    
     Grommet,
     Form,
     FormField,
     RadioButtonGroup,
-    RangeInput,
-    Select,
-    TextArea
-    ,TextInput
-    ,Text,
+    TextInput,
     MaskedInput
   } from "grommet";
   import axios from "axios"
@@ -94,7 +89,6 @@ export class UpdateInfo extends Component {
     }
 
     render() {
-        const {goTo} = this.props;
         return (
             
 

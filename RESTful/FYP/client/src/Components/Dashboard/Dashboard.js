@@ -38,7 +38,7 @@ componentDidMount()
         const email = this.state.email
 
 
-        if(cancer == "")
+        if(cancer === "")
         {
             return (
                 <div>

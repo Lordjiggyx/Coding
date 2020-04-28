@@ -1,22 +1,12 @@
 import React, { Component } from 'react'
 import axios from "axios"
 import { Redirect   } from "react-router-dom";
-import { BrowserHistory } from "react-router";
 
-import { Close, Send, User , FormNext , } from "grommet-icons";
 import {
     Box,
     Button,
-    CheckBox,
     Grommet,
-    Form,
-    FormField,
-    RadioButtonGroup,
-    RangeInput,
-    Select,
-    TextArea
-    ,TextInput
-    ,List
+    List
   } from "grommet";
 
 export class DeleteAccount extends Component {
@@ -44,16 +34,7 @@ componentDidMount()
         this.setState(
             {
                 user:res.data
-                // {
-                //     firstname:res.data.FirstName,
-                //     lastname:res.data.LastName,
-                //     dob:res.data.DOB,
-                //     height:res.data.Height,
-                //     weight:res.data.Weight,
-                //     gender:res.data.Gender,
-                //     email:res.data.Email,
-                //     username:res.data.UserName
-                // }
+
             }
         )
         console.log(this.state.user)
@@ -118,7 +99,7 @@ DeleteAccount  = async e =>
                  
          )
         }
-        else if(this.state.redirect == true)
+        else if(this.state.redirect === true)
         {
             return <Redirect to = "/Login"/>
         }

@@ -1,34 +1,15 @@
 import React, { Component } from 'react'
-import { Icon, Intent } from "@blueprintjs/core";
+import { Icon } from "@blueprintjs/core";
 import "../../CSS/ParallaxComponents/R3.css"
 import { Button } from "@blueprintjs/core";
 import { motion } from "framer-motion"
 import {Link} from "react-router-dom"
 import Navabr from '../General/Navabr';
-import { StatusGood } from 'grommet-icons';
 
 export class Continue extends Component {
     render() {
-        const top_bottom=
-        {
-            hidden:{marginTop:"-100%"},
-            visible:{marginTop:"0%"},
-            
-        }
-
-        const left_right=
-        {
-            hidden:{marginLeft:"-100%"},
-            visible:{marginLeft:"25%"},
-            
-        }
-
-        const right_left=
-        {
-            hidden:{right:"-0%"},
-            visible:{right:"20%"},
-            
-        }
+       
+        
 
         const fade_in=
         {

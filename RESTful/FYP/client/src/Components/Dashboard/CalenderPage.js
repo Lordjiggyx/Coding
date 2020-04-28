@@ -15,7 +15,6 @@ import googleCalendarPlugin from '@fullcalendar/google-calendar';
 import '@fullcalendar/core/main.css'
 import '@fullcalendar/daygrid/main.css'
 import '@fullcalendar/timegrid/main.css'
-import { FILE_INPUT_HAS_SELECTION } from '@blueprintjs/core/lib/esm/common/classes';
 //Used Google maps api
 
 
@@ -75,7 +74,7 @@ export class CalenderPage extends Component {
     axios.get(`/Routes/API//users/getUser/${this.state.email}`)
     .then(res => {
         
-        if(res.data.Gcsync ==true)
+        if(res.data.Gcsync ===true)
         {
           this.setState({gcidconfirm:res.data.gcEmail , gcsync:true})
         }
@@ -156,15 +155,15 @@ export class CalenderPage extends Component {
               
           })}
           else{
-          if(arg.event.backgroundColor== "green")
+          if(arg.event.backgroundColor=== "green")
           {
             this.setState({importance:"Casual"})
           }
-          if(arg.event.backgroundColor== "red")
+          if(arg.event.backgroundColor=== "red")
           {
             this.setState({importance:"Urgent"})
           }
-          if(arg.event.backgroundColor== "yellow")
+          if(arg.event.backgroundColor=== "yellow")
           {
             this.setState({importance:"Important"})
           }
@@ -225,15 +224,15 @@ export class CalenderPage extends Component {
         formatEvent=(event)=>
         {
           var bg = null
-          if(event.Importance == "Casual")
+          if(event.Importance === "Casual")
           {
             bg = "green"
           }
-          else if(event.Importance == "Important")
+          else if(event.Importance === "Important")
           {
             bg = "yellow"
           }
-         else  if(event.Importance == "Urgent")
+         else  if(event.Importance === "Urgent")
           {
             bg = "red"
           }
@@ -325,7 +324,7 @@ export class CalenderPage extends Component {
                 <div className="p-offset-1 p-col-7">
                 <Container >
                     <FullCalendar
-                     defaultView="dayGridMonth"
+                    
                      defaultView="dayGridMonth"
                      googleCalendarApiKey="AIzaSyB44pC8Ol1NZxDob1DybXZ6OwVT2C_fdRw"
                      header={{
@@ -352,7 +351,7 @@ export class CalenderPage extends Component {
                     <div className=" p-col-3">
                 
                   <Button  style={{width:"100%" , marginTop:"33%", backgroundColor:"#D976ED"}} onClick={this.aeModal}>Add Event</Button>
-                  {this.state.gcsync == false ?<Button style={{width:"100%" ,backgroundColor:"#D976ED", marginTop:"33%"}} onClick={this.SyncModal}> Sync Google Calender</Button> : null }
+                  {this.state.gcsync === false ?<Button style={{width:"100%" ,backgroundColor:"#D976ED", marginTop:"33%"}} onClick={this.SyncModal}> Sync Google Calender</Button> : null }
                   <Link to = "/UserDashboard">
                   <Button style={{width:"100%",backgroundColor:"#D976ED" , marginTop:"33%"}}>Return To Dashboard</Button>
                   </Link>

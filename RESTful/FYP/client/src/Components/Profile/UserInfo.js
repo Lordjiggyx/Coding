@@ -1,27 +1,10 @@
 import React, { Component } from 'react'
 import axios from "axios"
-import Header from "../Parallax/Header"
-import Navabr from '../General/Navabr';
-//import {Button , InputGroup , Radio ,RadioGroup , Slider , Label , Icon , FormGroup} from "@blueprintjs/core";
-import "../../CSS/SignUpComponents/SignUp.css"
-import { motion } from "framer-motion"
-import {Link} from "react-router-dom";
-import crab from "../../Images/Crab.png"
 
 
-import { Close, Send, User , FormNext , } from "grommet-icons";
 import {
     Box,
-    Button,
-    CheckBox,
-    Grommet,
-    Form,
-    FormField,
-    RadioButtonGroup,
-    RangeInput,
-    Select,
-    TextArea
-    ,TextInput
+    Grommet
     ,List
   } from "grommet";
 

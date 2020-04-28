@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Navabr from '../General/Navabr';
-// import {Button , InputGroup , Radio ,RadioGroup , Slider , Label , Icon , FormGroup} from "@blueprintjs/core";
 import { FormNext ,FormPrevious } from "grommet-icons";
 import {
     Box,
@@ -114,19 +113,7 @@ export class Confirm extends Component {
                    </Box>
                </Grommet>
                </motion.div>
-
-
-                 {/* <h1>Confirm User Information</h1>
-                 <li>
-                    First Name : {firstName}
-                 </li>
-                 <li>
-                    Email  : {email}
-                 </li>
-
-                                    
-                 <Button rightIcon="arrow-right" onClick={this.continue}>Confirm & Continue</Button>
-                   <Button rightIcon="arrow-left" onClick={this.back}>Next</Button> */}
+    
     
                  
             </div>
@@ -135,14 +122,4 @@ export class Confirm extends Component {
 }
 
 
-function Listitem(props)
-{
-    const value = props.value
-    return(
-        <li>
-            {value}
-        </li>
-    )
-    
-}
 export default Confirm

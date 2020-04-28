@@ -1,15 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {
     BrowserRouter as Router,
-    Switch,
     Route,
-    Link
   } from "react-router-dom";
 import Welcome from './Components/WelcomeComponents/Welcome';
-import Header from './Components/Parallax/Header';
 import R1 from './Components/Parallax/R1';
 import R2 from './Components/Parallax/R2';
 import R3 from './Components/Parallax/R3';

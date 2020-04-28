@@ -1,17 +1,15 @@
-import React, { Component  ,useState } from 'react'
+import React, { Component   } from 'react'
 import Navabr from '../General/Navabr';
 import {Link} from "react-router-dom";
 import {
-    Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button,Modal, ModalHeader, ModalBody, ModalFooter ,  InputGroup, InputGroupAddon, InputGroupText , Form, FormGroup, Label, Input, FormText ,Row,Col , Alert
- ,Nav , NavItem ,NavLink ,TabContent, TabPane } from 'reactstrap';
+    Card,  CardText, 
+    CardTitle,  Button,Modal, ModalHeader, ModalBody, ModalFooter ,  InputGroup,  Form, FormGroup, Label, Input ,Row,Col  } from 'reactstrap';
 
   import {Chart} from 'primereact/chart';
   import axios from "axios"
   import "../../../node_modules/primeflex/primeflex.css"
   import 'bootstrap/dist/css/bootstrap.min.css';
   import "../../CSS/DashboardComponents/UserDashboard/Fitness.css"
-import { pbkdf2 } from 'crypto';
 
 
 export class ExcercisePage extends Component {
@@ -42,21 +40,6 @@ export class ExcercisePage extends Component {
         
     }
 
-    shouldComponentUpdate()
-    {
-        if(this.state.render== false)
-        {
-            return false
-        }
-        if(this.state.render==true)
-        {
-            return true
-        }
-        else
-        {
-            return true
-        }
-    }
 
 componentDidMount = () =>
 {
@@ -84,7 +67,7 @@ getTodaysCalories=()=>
     .then(res =>
         {
             this.setState({TodaysCalories:res.data})
-           // this.populateLineChart()
+
             this.populatePieChart(this.state.WeeklyTarget)
             console.log(this.state.TodaysCalories)
             this.setDailyProgress()
@@ -265,11 +248,7 @@ getUser = () =>
         }),this.getWeeklyTarget(),this.getTodaysCalories(),this.getWeeklyTarget()
         )
         console.log(response.text())
-        
-        
-        
-        // this.populateLineChart()
-        // this.populatePieChart(this.state.WeeklyTarget)
+
 
          document.getElementById("form1").reset();
         
@@ -325,17 +304,12 @@ getUser = () =>
     caloriesBurned =()=>
     {
         const se = this.state.SelectedExcercise
-        // console.log(se)
-        const found  = this.state.Excercises.find(e => e.name == se)
-        // console.log(found)
-        // console.log(found.MET)
+        const found  = this.state.Excercises.find(e => e.name === se)
+
 
         const caloriesPerHour = this.state.weight * found.MET
-        // console.log(caloriesPerHour)
 
        const percentOfMet = this.state.Duration/60
-
-        // console.log(percentOfMet)
 
        const  cb = caloriesPerHour * percentOfMet
 
@@ -344,7 +318,6 @@ getUser = () =>
             CaloriesBurnedWorkout:num
         })
 
-        // console.log(this.state.CaloriesBurnedWorkout)
     }
 
     populateLineChart=() =>
@@ -494,9 +467,7 @@ getUser = () =>
 
                     <div className="p-col ">
                     <div>
-                        {/* <Alert color="success" isOpen={this.state.alertVis} toggle={this.alertHandler}>
-                        Target set
-                    </Alert> */}
+
     </div>
                     
                     <Button style ={buttonstyle} onClick={this.m1Toggle}>Log Workout </Button>

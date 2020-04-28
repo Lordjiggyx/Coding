@@ -7,25 +7,7 @@ const Excercise = require("../../Models/Excerise")
 const FitnessData = require("../../Models/FitnessData")
 const Workout = require("../../Models/Workout")
 
-router.post("/excercise/add" , (req,res)=>
-{
-    const{name , desc , cat , rate , createdBy} = req.body
 
-    const newExc = new Excercise();
-
-    newExc.Name = name;
-    newExc.Description = desc;
-    newExc.cat = cat;
-    newExc.Rating = rate
-    newExc.CreatedBy = createdBy
-
-    newExc.save()
-    .then(exc =>
-        {
-            console.log("Excercise added")
-            return res.status(200).json({msg:"Success"})
-        })
-})
 
 
 router.get("/fitness/getExcercises" , (req,res)=>
@@ -93,32 +75,33 @@ router.post("/fitness/setDailyProgress/:email" ,(req ,res) =>
             FitnessData.findOne({userId:user.id})
             .then(fd =>
                 {
+                    
                     var d = new Date()
-                    console.log()
-                    console.log(req.body)
+                    if(d.getDay()==0)
+                    {
+                        fd.dailyInfo =[0 ,0 ,0 ,0 ,0 ,0,0]
+                        console.log(req.body)
                     today = req.body.value
                     fd.dailyInfo[d.getDay()] = today
                     fd.markModified("dailyInfo")
                     fd.save()
+                    }
+                    else
+                    {
+                        console.log(req.body)
+                    today = req.body.value
+                    fd.dailyInfo[d.getDay()] = today
+                    fd.markModified("dailyInfo")
+                    fd.save()
+                    }
+                    
                     console.log(fd.dailyInfo)
-                    // fd.dailyInfo[d.getDay()] = req.body.calories
-                    // fd.save()
+
                 })
         })
 })
 
-// router.get("/fitness/getDailyProgress/:email" , (req,res)=>
-// {
-//     User.findOne({Email:req.params.email})
-//     .then(user =>
-//         {
-//             FitnessData.findOne({userId:user.id})
-//             .then(fd =>
-//                 {
-//                     res.json(fd)
-//                 })
-//         })
-// })
+
 
 
 router.get("/fitness/getCalories/:email" , (req,res)=>
@@ -158,14 +141,13 @@ router.get("/fitness/getCalories/:email" , (req,res)=>
                             totalToday+=parseFloat(workouts[i].CaloriesBurned)
                             
                         }
-                        // console.log(totalToday)
+                        
                         res.json(totalToday)
                     })
                 }
             )
         })
-    // workoutsfound.map(w => w.calories)
-    // console.log(workoutsfound)
+
 
 })
 

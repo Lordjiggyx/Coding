@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Icon, Intent } from "@blueprintjs/core";
+import { Icon } from "@blueprintjs/core";
 import "../../CSS/ParallaxComponents/R2.css"
 import { motion } from "framer-motion"
 import { Button } from "@blueprintjs/core";

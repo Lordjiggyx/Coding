@@ -3,9 +3,7 @@ import Navabr from '../General/Navabr';
 import {Link} from "react-router-dom";
 import axios from "axios"
 import {
-    Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button,Modal, ModalHeader, ModalBody, ModalFooter ,ListGroup, ListGroupItem, ListGroupItemHeading ,  ListGroupItemText,  InputGroup, InputGroupAddon, InputGroupText , Form, FormGroup, Label, Input, FormText ,Row,Col , Alert
- ,Nav , NavItem ,NavLink ,TabContent, TabPane, CardFooter } from 'reactstrap';
+  Button,Modal, ModalHeader, ModalBody, ModalFooter ,ListGroup, ListGroupItem, ListGroupItemHeading ,  ListGroupItemText , Form, FormGroup, Label, Input} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../../CSS/DashboardComponents/UserDashboard/Diary.css"
 
@@ -341,32 +339,6 @@ export class DiaryPage extends Component {
                 
                 )}
             </ListGroup>
-
-        {/* <Row>
-        {this.state.latestEntries.map((entry , i) =>
-        
-            <Col sm="6" key={i}>
-                <Card className="text-center" size="lg">
-                <CardTitle style={{color:"#D976ED"}}><strong>{entry.Title}</strong></CardTitle>
-                <CardSubtitle><strong><em>"{entry.SubTitle}"</em></strong></CardSubtitle>
-                <CardBody>
-                <Row>
-                <Col sm="6">
-                <Button style={buttonstyle} onClick={(e) =>this.viewEntry(entry.E_id)}>View</Button>
-                </Col>
-                <Col sm="6">
-                <Button style={buttonstyle} onClick={(e)=> this.m2(entry.E_id)}>Delete</Button>
-                </Col>
-                </Row>
-                <br></br>
-                Date Created:{entry.Date}
-                </CardBody>
-                </Card>
-                
-            </Col>
-        )}
-
-        </Row> */}
 
                 </div>
 

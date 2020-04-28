@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Header from "../Parallax/Header"
+
 import Navabr from '../General/Navabr';
 import "../../CSS/SignUpComponents/SignUp.css"
 import { motion } from "framer-motion"
@@ -7,7 +7,7 @@ import {Link} from "react-router-dom";
 
 
 
-import { Close, Send, User , FormNext , } from "grommet-icons";
+import {  FormNext  } from "grommet-icons";
 import {
     Box,
     Button,

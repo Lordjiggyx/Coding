@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import "../../CSS/ParallaxComponents/Header.css"
-import {Navbar , NavbarHeading , NavbarDivider , NavbarGroup , Button} from "@blueprintjs/core"
+import {Navbar} from "@blueprintjs/core"
 import crab from "../../Images/Crab.png"
 import{Link} from "react-router-dom"
 
