@@ -37,8 +37,8 @@ class Welcome extends React.Component
                         
 
 
-                        <Link to ="/">
-                    <Button className="bp3-minimal continue" rightIcon="arrow-right" intent = "none">Continue To Home</Button>
+                        <Link to ="/SignUp">
+                    <Button className="bp3-minimal continue" rightIcon="arrow-right" intent = "none">Register/Login</Button>
                     </Link>
 
 

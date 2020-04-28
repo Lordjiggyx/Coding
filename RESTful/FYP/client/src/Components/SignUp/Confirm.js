@@ -1,21 +1,12 @@
 import React, { Component } from 'react'
 import Navabr from '../General/Navabr';
 // import {Button , InputGroup , Radio ,RadioGroup , Slider , Label , Icon , FormGroup} from "@blueprintjs/core";
-import { Close, Send, User , FormNext ,FormPrevious, Checkmark } from "grommet-icons";
+import { FormNext ,FormPrevious } from "grommet-icons";
 import {
     Box,
     Button,
-    CheckBox,
     Grommet,
-    Form,
-    FormField,
-    MaskedInput ,
-    RadioButtonGroup,
-    RangeInput,
-    Select,
-    TextArea
-    ,TextInput
-    ,List
+    List
   } from "grommet";
 
   import {motion} from "framer-motion"
@@ -73,8 +64,8 @@ export class Confirm extends Component {
 
     render() {
 
-        const {values :{firstName , lastName , email , userName
-            , gender ,  DOB , country , height , weight  , active}} =this.props
+        const {values :{firstName , lastName , email 
+            , gender ,  DOB  , height , weight  }} =this.props
 
             const fade_in=
             {
@@ -102,14 +93,11 @@ export class Confirm extends Component {
                    <List
                     data={[
                         { name: `Name : ${firstName} ${lastName} `},
-                        { name: `Username : ${userName}`},
                         { name: `Email : ${email}` },
                         { name: `Date of Birth : ${DOB}` },
                         { name: `Gender : ${gender}` },
-                        // { name: 'Country : ', info: country },
                         { name: `Height : ${height} meters` },
                         { name: `Weight : ${weight} kg`},
-                        // { name: 'Activeness : ', info : active },
                     ]}
                     />
                       

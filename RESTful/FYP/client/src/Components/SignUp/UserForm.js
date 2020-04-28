@@ -14,14 +14,11 @@ export class UserForm extends Component {
 
         //User information
         firstName : "",
-        userName : "",
         lastName :"",
         email : "",
         gender : "",
         DOB : "",
-        country: "",
         height :"",
-        weight : "",
         //come back and add
         password : "",
         user: "",
@@ -69,14 +66,14 @@ export class UserForm extends Component {
         const {step} = this.state;
 
         //get fields
-        const {firstName , lastName , email ,ethnicity , userName
-         , gender ,  DOB , country , height , weight  , password} = this.state;
+        const {firstName , lastName , email 
+         , gender ,  DOB ,  height , weight  , password} = this.state;
 
         //Values holds all the variables which can be passed into each component
         const values =
         {
-            firstName , lastName , email ,ethnicity , userName
-         , gender ,  DOB , country , height , weight  , password
+            firstName , lastName , email  
+         , gender ,  DOB ,  height , weight  , password
         }
 
         {/*Going to use switch to change the page based on the step */}

@@ -38,11 +38,6 @@ const UserSchema = new mongoose.Schema(
             type:String,
             default:null
         },
-        UserName:
-        {
-            type:String,
-            default:null
-        },
         Verified:
         {
             type:Boolean,
