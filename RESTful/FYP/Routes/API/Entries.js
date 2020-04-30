@@ -2,7 +2,6 @@ const express = require("express")
 const router = express.Router()
 const User = require("../../Models/user")
 const Entry = require("../../Models/Entry")
-const AFFIN = require("../../Sentiment/AFINN-111.json")
 const axios = require("axios")
 
 

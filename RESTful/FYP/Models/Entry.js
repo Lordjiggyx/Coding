@@ -24,10 +24,6 @@ const EntrySchema = new mongoose.Schema({
     {
         type:Number
     },
-    DateTime:
-    {
-        type:Date
-    },
     Sentiment_Score:
     {
         type:Number

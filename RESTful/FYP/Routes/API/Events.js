@@ -22,7 +22,6 @@ router.post("/Events/addEvent/:email" , (req,res)=>
 
             newEvent.Title = title
             newEvent.E_id = id
-            newEvent.Body = content
             newEvent.StartDate = start
             newEvent.EndDate = end
             newEvent.Importance = importance
