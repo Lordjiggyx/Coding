@@ -299,11 +299,11 @@ export class CalenderPage extends Component {
         {
           const data =
           {
-            email:this.state.gcidconfirm
+            email:this.state.gcid
           }
           axios.post(`/Routes/API//Events/saveGC/${this.state.email}`, {data})
           .then(this.getUser())
-          this.setState({gcidconfirm:this.state.gcid ,SyncModal:false})
+          this.setState({gcidconfirm:this.state.gcid ,SyncModal:false ,gcsync:true})
         }
 
 

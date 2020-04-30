@@ -27,7 +27,7 @@ router.get("/users/getUser/:email" , (req , res)=>
     
     User.findOne({Email:email}).then(user=>
         {
-            console.log(user.FirstName)
+            
            res.send(user)
         })
 })
@@ -99,7 +99,7 @@ router.post("/users/register" , (req ,res)=>
                             service:"gmail",
                             auth:{
                                 user:"tomiiloriponc@gmail.com",
-                                pass:"Lordjiggy123."
+                                pass:"123."
                             }
                             
                         }
@@ -144,7 +144,7 @@ router.get("/users/verify/", (req , res)=>
     console.log(req.query.token)
     console.log(req.query.Email)
     
-
+    //Search for Email token in V link
     ET.findOne(
         {
             token:req.query.token
@@ -152,26 +152,29 @@ router.get("/users/verify/", (req , res)=>
     )
     .then(token=>
         {
+            //Token not found
             if(!token)
             {
                 return res.status(400).json({msg:`Token Not Found`})
             }
             else
             {
+                //Search for User with email in V link
                 User.findOne({
                     Email:req.query.Email
                 })
                 .then(user=>
                     {
+                        //User not found
                         if(!user)
                         {
                             return res.status(400).json({msg:`User Not Found`})
                         }
                         else
                         {
+                            //Updated user verified value to true 
                             user.Verified = true
                             user.save()
-                            //come back amd return a file that says the acount has been verified and redirec to login page
                             return res.status(400).json({msg:`Account Verfied Proceed to Login`})
                         }
                     })
@@ -273,41 +276,37 @@ router.get("/users/delete/:email" , (req , res)=>
     // res.send("User Deleted")
 })
 
-router.get("/users/" , (req , res)=>
-{
-    User.findOne({Email:req.params.email})
-    .then((user=>
-        {
-            user.remove()
-            console.log("User Removed")
-        }))
 
-    // console.log(req.params)
-    // User.findOneAndDelete({})
-    // res.send("User Deleted")
-})
 
 router.get("/users/tumorDef/:type", (req , res)=>
 {
+    //User cancer type
     tumor = req.params.type.toLowerCase()
+    //request made ro irish cancer society
     request(`https://www.cancer.ie/cancer-information-and-support/cancer-types/${tumor}-cancer`,(error , response , html)=>
     {
+        //if there is no error
         if(!error && response.statusCode==200)
         {
+            //dollar sign variable acts as it would in JQuery allowing me to manipulate the dom
             const $ = cheerio.load(html)
            
             
 
+        //Find h3 tags
         $("h3" ).each((i , el)=>
         {
+            //The first h3 element contained the information i need
            if(i == 0){
-
+            //Two pieces if information are taken from the next elements
             const def1 = $(el).next().text()
             const def2 = $(el).next().next().text()
+            //content stored in an object
             const definitons = {
                 def1:def1,
                 def2:def2
             }
+            //object sent back to front end
             res.send(definitons)
     }
         })

@@ -3,6 +3,7 @@ import "../../CSS/WelcomeComponents/welcome.css"
 import crab from "../../Images/Crab.png"
 import { Button } from "@blueprintjs/core";
 import {Link} from "react-router-dom";
+import Navabr from "../General/Navabr";
 
 
 class Welcome extends React.Component
@@ -19,6 +20,7 @@ componentDidMount()
         return(
             
             <div>
+                <Navabr/>
                     <div className = 'split left'>
                     <img src={crab} alt="Logo" className="crab"/>
                         <div className="welcome_center">

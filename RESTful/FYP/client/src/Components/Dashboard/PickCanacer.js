@@ -133,7 +133,7 @@ export class PickCanacer extends Component {
               <br/> */}
               <div className= "centerdash">
               <h1>Pick Cancer</h1>
-              <h3>Explore the branches and select the location of your tumor and the type of Cancer</h3>
+              <h3>Explore the branches and select the location of your tumor</h3>
               <Tree 
               data={TreeData}
               orientation="vertical"

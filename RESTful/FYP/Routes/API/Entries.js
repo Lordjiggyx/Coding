@@ -120,23 +120,28 @@ router.get("/Entries/getED/:email" , (req, res)=>
             
             ent.forEach(entry => {
                
+                //False == negative
                 if(entry.Sentiment == false)
                 {
                     ed.negative+=1
                 }
+                //True == postive
                 else if(entry.Sentiment == true)
                 {
                     ed.positive+=1
                 }
+                //Null == neutrual
                 else if(entry.Sentiment == null)
                 {
                     ed.neutrual+=1
                 }
 
+                //Get Highest valued key
                 var keys = Object.keys(ed);
                 keys.sort(function(a,b){
                     return ed[b] - ed[a];
                   })
+                  //Set sentiment to this keyy
                  ed.Sentiment= keys[0];
 
             });
@@ -149,23 +154,34 @@ router.get("/Entries/getED/:email" , (req, res)=>
 
 function getSentiment(body)
 {
+    //Convert text to lexicon
     const lexedBody = aposToLexForm(body);
+    //Convert to lower case
     const casedBody = lexedBody.toLowerCase();
+    //Remove non alphabetical characters
     const alphaOnlyBody = casedBody.replace(/[^a-zA-Z\s]+/g, '');
 
+    //import tokenizer
     const { WordTokenizer } = natural;
     const tokenizer = new WordTokenizer();
+    //Create a tokenized veriosn of the content from user
     const tokenizedBody = tokenizer.tokenize(alphaOnlyBody);
 
+    //for each word corretc spelling
     tokenizedBody.forEach((word, index) => {
         tokenizedBody[index] = spellCorrector.correct(word);
       })
 
+      //Remove stop words
       const filteredBody = SW.removeStopwords(tokenizedBody);
 
+      //Import Sentiment analyser and Stemmer
       const { SentimentAnalyzer, PorterStemmer } = natural;
+      //Create object to analyse text
       const analyzer = new SentimentAnalyzer('English', PorterStemmer, 'afinn');
+      //Gets sentiment of filtered down text
       const analysis = analyzer.getSentiment(filteredBody);
+      //returns value of sentiment
       return analysis
 }
 

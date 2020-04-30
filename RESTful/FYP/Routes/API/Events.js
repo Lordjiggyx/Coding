@@ -36,6 +36,8 @@ router.post("/Events/addEvent/:email" , (req,res)=>
                     var EventReminderStart = moment(req.body.StartDate).add({hours:1 , minutes:2})
                     var rem = EventReminderStart.clone().subtract({hours:1})
 
+                    console.log(EventReminderStart)
+                    console.log(rem)
 
                     messagebird.messages.create({
                         originator:"Ponc.ie",
@@ -101,14 +103,18 @@ router.post("/Events/editFull/:id" , (req , res)=>
 
 router.post("/Events/saveGC/:email" , (req,res)=>
 {
+    //find user
     User.findOne({Email:req.params.email})
     .then(user=>
         {
-            console.log(user)
+            
+            console.log(req.body)
+            //Add attributes to indicate user has a google account synced
             user.set("Gcsync" , true)
             user.set("gcEmail" , req.body.data.email)
+            //Updated user
             user.save()
-            console.log(user)
+            
         }
     )
 })

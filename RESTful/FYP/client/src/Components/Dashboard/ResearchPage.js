@@ -230,7 +230,7 @@ const WORD_KEY = 'word';
                     
                 </div >
 
-                <div className="p-offset-1 p-col-3 " >
+                <div className="p-offset-1 p-col-4 " >
                     
                 <Card style={{height:"260px" , margin:"5px"}}>
                 <CardHeader style={{backgroundColor:"#D976ED"}}><h5>Top 5 Driver Genes For {this.state.tumor} Cancer </h5></CardHeader>

@@ -153,6 +153,8 @@ getUser = () =>
   console.log(`Week ${week}/52`)
   this.setState({Week:week})
     }
+
+
     getExcercies= () =>
     {
         axios.get("/Routes/API//fitness/getExcercises")
@@ -162,7 +164,6 @@ getUser = () =>
                     return {id:exc._id , name:exc.Name , MET:exc.MET} 
                 })
                 this.setState({Excercises:excerciseAPi})
-            console.log(this.state.Excercises)
         })
     
     }
@@ -303,17 +304,23 @@ getUser = () =>
 
     caloriesBurned =()=>
     {
+        //Selected Excercise
         const se = this.state.SelectedExcercise
+        //Get the object with the title that matches the selected excercise
         const found  = this.state.Excercises.find(e => e.name === se)
 
-
+        //Weight by MET gives clories per hour of doing this excercise
         const caloriesPerHour = this.state.weight * found.MET
 
+        //Percentage of an hour 
        const percentOfMet = this.state.Duration/60
 
+       //Calories Burned calculated
        const  cb = caloriesPerHour * percentOfMet
 
+       //Rounded to first decimal place
        const num =cb.toFixed(1)
+       //Workout calories burned vaalue is set to this calculated value
         this.setState({
             CaloriesBurnedWorkout:num
         })
@@ -527,7 +534,7 @@ getUser = () =>
 
                 <Modal isOpen={this.state.m2}
                 toggle={this.m2Toggle}>
-                <ModalHeader >Weekly Target</ModalHeader>
+                <ModalHeader >Daily Target</ModalHeader>
                 <ModalBody>
                 <InputGroup>
                 <Form className="addExcercise" id="form2" >

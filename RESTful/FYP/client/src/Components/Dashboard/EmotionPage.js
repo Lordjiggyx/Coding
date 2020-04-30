@@ -40,7 +40,7 @@ export class EmotionPage extends Component {
           })
         this.getEntryData()
         this.getQuote()
-        // this.getArticles()
+        this.getArticles()
         
     }
 
@@ -49,6 +49,7 @@ export class EmotionPage extends Component {
         axios.get(`/Routes/API//Entries/getED/${this.state.email}`)
         .then(res =>
             {
+                console.log(res.data)
                 this.setState({
                     ed:res.data,
                 })
@@ -102,16 +103,18 @@ export class EmotionPage extends Component {
     {
         window.setTimeout(()=>{
 
-            const  Queries=
+        //Questions for google
+        const  Queries=
         {
             positive:"how positivity affects health recent",
             negative:"how negativity affects health recent",
             neutrual:"how mental health affects health recent"
         }
        
-        console.log(this.state.ed)
+        //question
         var question =""
 
+        //Determines what question
         if(this.state.ed.Sentiment === "positive")
         {
             question=Queries.positive
@@ -128,18 +131,21 @@ export class EmotionPage extends Component {
         }
 
        
+        //Object with access key, question and number of results
         const params = {
         access_key: 'eb7a8e81a09f4e209081d05b0660de90',
         query: question,
         num:20
         }
-
+        //API search request
         axios.get('http://api.serpstack.com/search', {params})
         .then(response =>
         {
+            //filtered repsonse
             let apiResponse = response.data.organic_results.filter((article)=>{
                 return article.snippet !== ""
             });
+            //internal
             this.setState({articles:apiResponse})
             console.log(apiResponse)
         })

@@ -72,7 +72,7 @@ export class UserDashboard extends Component {
                     <div className= "boldText">
                     <CardTitle>Understanding Your Cancer Type</CardTitle>
                     </div>
-                    <CardText>Cancer is more complicated than you could possibly imagine we want to provide you the most accurate and reliable information about your cancer type and genes that cause  it  </CardText>
+                    <CardText>Cancer is more complicated than you could possibly imagine we want to provide you the most accurate and reliable information about the genes being mutated that cause your cancer type </CardText>
                     <Link to = "/Research">
                     <Button style={buttonstyle}>Get To It</Button>
                     </Link>
@@ -85,7 +85,7 @@ export class UserDashboard extends Component {
                 <Card body className="text-center">
                     <CardImg  top width="100px" src={workout} alt="Card image cap" />
                     <div className= "boldText">
-                    <CardTitle>Excercise Tracker</CardTitle>
+                    <CardTitle>Fitness Tracker</CardTitle>
                     </div>
                     <CardText>Set fitness goals for yourself and track your progress!!</CardText>
                     <Link to = "/Fitness">
