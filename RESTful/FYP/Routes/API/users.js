@@ -99,7 +99,7 @@ router.post("/users/register" , (req ,res)=>
                             service:"gmail",
                             auth:{
                                 user:"tomiiloriponc@gmail.com",
-                                pass:"123."
+                                pass:"Lordjiggy123."
                             }
                             
                         }

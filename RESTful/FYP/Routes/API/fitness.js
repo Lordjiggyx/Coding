@@ -42,9 +42,10 @@ console.log(req.body)
     User.findOne({Email:req.params.email})
     .then(user =>
         {
-            FitnessData.findOne({userId:user.id})
+            FitnessData.findOne({userId:user._id})
             .then(fd =>
                 {
+                    
                     res.send(fd)
                 })
         })
@@ -120,15 +121,18 @@ router.get("/fitness/getCalories/:email" , (req,res)=>
     User.findOne({Email:req.params.email})
     .then(user =>
         {
+            console.log(user._id)
+            
             Workout.find(
                 {
-                    userId:user.id,
+                    userId:user._id,
                     
                 }
             ).then(workouts =>
                 {
                    Workout.find(
                        {
+                            userId:user._id,
                            Date:date
                        }
                    )

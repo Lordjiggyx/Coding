@@ -2,7 +2,7 @@ const express = require("express")
 const router = express.Router()
 const User = require("../../Models/user")
 const Event = require("../../Models/Event")
-var messagebird = require('messagebird')("nDOG8S1CCzJZEpO7A2yYqp1V3");
+var messagebird = require('messagebird')("s3IxlAZJwvXlV5qR23CXKjrU1");
 const moment = require("moment")
 
 
@@ -32,7 +32,7 @@ router.post("/Events/addEvent/:email" , (req,res)=>
                 {
                     console.log("Entry Saved")
  
-                    var EventReminderStart = moment(req.body.StartDate).add({hours:1 , minutes:2})
+                    var EventReminderStart = moment(start)
                     var rem = EventReminderStart.clone().subtract({hours:1})
 
                     console.log(EventReminderStart)

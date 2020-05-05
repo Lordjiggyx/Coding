@@ -102,7 +102,7 @@ DeleteAccount  = async e =>
         }
         else if(this.state.redirect === true)
         {
-            return <Redirect to = "/Login"/>
+            return <Redirect to = "/SignUp"/>
         }
 
     }

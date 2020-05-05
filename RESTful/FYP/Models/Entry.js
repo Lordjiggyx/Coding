@@ -28,6 +28,10 @@ const EntrySchema = new mongoose.Schema({
     {
         type:Number
     },
+    DateTime:
+    {
+        type:String
+    },
     Sentiment:
     {
         type:Boolean
