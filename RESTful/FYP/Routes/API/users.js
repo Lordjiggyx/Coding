@@ -175,7 +175,8 @@ router.get("/users/verify/", (req , res)=>
                             //Updated user verified value to true 
                             user.Verified = true
                             user.save()
-                            return res.status(400).json({msg:`Account Verfied Proceed to Login`})
+                            // return res.status(400).json({msg:`Account Verfied Proceed to Login`})
+                            res.sendFile(path.join(__dirname+"/Success.html"))
                         }
                     })
             }
