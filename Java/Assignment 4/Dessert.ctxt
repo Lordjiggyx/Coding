@@ -1,0 +1,26 @@
+#BlueJ class context
+comment0.params=
+comment0.target=Dessert()
+comment1.params=name\ price\ stock
+comment1.target=Dessert(java.lang.String,\ double,\ int)
+comment10.params=
+comment10.target=int\ stockremaining()
+comment11.params=
+comment11.target=void\ display()
+comment2.params=
+comment2.target=java.lang.String\ getname()
+comment3.params=
+comment3.target=double\ getprice()
+comment4.params=
+comment4.target=int\ getstock()
+comment5.params=name
+comment5.target=void\ setname(java.lang.String)
+comment6.params=price
+comment6.target=void\ setprice(double)
+comment7.params=stock
+comment7.target=void\ setstock(int)
+comment8.params=stock
+comment8.target=void\ stockremover(int)
+comment9.params=stock
+comment9.target=void\ stockadder(int)
+numComments=12

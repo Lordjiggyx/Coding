@@ -1,0 +1,24 @@
+#BlueJ class context
+comment0.params=cname\ Address\ owed
+comment0.target=Customer(java.lang.String,\ java.lang.String,\ double)
+comment1.params=
+comment1.target=Customer()
+comment10.params=
+comment10.target=void\ blockAccount1()
+comment2.params=
+comment2.target=java.lang.String\ getcname()
+comment3.params=
+comment3.target=java.lang.String\ getAddress()
+comment4.params=
+comment4.target=double\ getowed()
+comment5.params=cname
+comment5.target=void\ setcname(java.lang.String)
+comment6.params=Address
+comment6.target=void\ setAddress(java.lang.String)
+comment7.params=owed
+comment7.target=void\ setowed(double)
+comment8.params=
+comment8.target=void\ display()
+comment9.params=
+comment9.target=void\ blockAccount()
+numComments=11

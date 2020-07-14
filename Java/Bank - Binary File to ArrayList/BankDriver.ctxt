@@ -1,0 +1,21 @@
+#BlueJ class context
+comment0.params=
+comment0.target=BankDriver()
+comment1.params=
+comment1.target=void\ getNumberAccounts()
+comment1.text=Method\ 1\ -\ ask\ user\ for\ number\ of\ accounts\ *******
+comment2.params=
+comment2.target=void\ createAccounts()
+comment2.text=Method\ 2\ -\ get\ user\ to\ input\ that\ number\ of\ accounts\ and\ add\ to\ ArrayList\ ****
+comment3.params=
+comment3.target=void\ displayAccounts()
+comment3.text=Method\ 3\ -\ display\ all\ of\ the\ accounts\ ****
+comment4.params=
+comment4.target=void\ saveToFile()
+comment4.text=Method\ 4\ -\ save/write\ the\ account\ objects\ to\ a\ file\ ****
+comment5.params=
+comment5.target=boolean\ readFromFile()
+comment5.text=Method\ 5\ -\ read/copy\ the\ account\ objects\ to\ an\ ArrayList\ in\ memory\ ****
+comment6.params=args
+comment6.target=void\ main(java.lang.String[])
+numComments=7
