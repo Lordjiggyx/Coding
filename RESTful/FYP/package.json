@@ -32,7 +32,7 @@
     "express": "^4.17.1",
     "grommet": "^2.11.1",
     "grommet-icons": "^4.4.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "messagebird": "^3.4.0",
     "moment": "^2.24.0",
     "mongoose": "^5.7.7",
