@@ -38,7 +38,7 @@
     "mongoose": "^5.7.7",
     "monkeylearn": "^3.4.0",
     "natural": "^0.6.3",
-    "nodemailer": "^6.3.1",
+    "nodemailer": "^6.4.16",
     "nodemon": "^1.19.4",
     "paralleldots": "^3.2.5",
     "primeflex": "^1.0.0",
