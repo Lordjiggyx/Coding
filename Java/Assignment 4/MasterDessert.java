@@ -54,20 +54,26 @@ public class MasterDessert
     //Method for displaying cakes
     public void displayCakes()
     {
+    	if(desserts.size()==0)
+    	{
+    		 System.out.println("NO DESSERTS CONTACT STAFF TO CREATE A DESSERT");
+    	}
+
         //loop Goes through the array looking for objects of type dessert
         for (Dessert adessert : desserts) 
         {
             //In this case especially and only Desserts that are of type Cake
-            if( adessert instanceof Cake)
+        	if( adessert instanceof Cake)
             {
                 //Display method for Cake is called
                 adessert.display();
                 //Space
                 System.out.println( " ");
-                if (adessert == null)
-                {
-                    System.out.println("There are no cakes at the moment");
-                }
+                
+            }
+            else if (!(adessert instanceof Cake ))
+            {
+                System.out.println("There are no cakes at the moment");
             }
         }
     }
@@ -75,6 +81,10 @@ public class MasterDessert
     //Method for displaying cookies
     public void displayCookies()
     {
+    	if(desserts.size()==0)
+    	{
+    		 System.out.println("NO DESSERTS CONTACT STAFF TO CREATE A DESSERT");
+    	}
         //loop Goes through the array looking for objects of type dessert
         for (Dessert adessert : desserts) 
         {
@@ -86,9 +96,10 @@ public class MasterDessert
                 //Space
                 System.out.println( " ");
             }
-            if (adessert == null)
+            else if (!(adessert instanceof Cookie ))
             {
-                System.out.println("There are no cakes at the moment");
+                System.out.println( " ");
+                System.out.println("There are no cookies at the moment");
             }
         }
     }
@@ -165,8 +176,14 @@ public class MasterDessert
         answer = scan.nextLine();
 
         //If the user wants to buy a cake
-        if (answer.equals("yes"))
+        if (answer.equalsIgnoreCase("yes"))
         {
+        	if(desserts.size()==0)
+        	{
+                System.out.println( " ");
+        		System.out.println("NO DESSERTS CONTACT STAFF TO CREATE A DESSERT");
+        	}
+        	else {
             //Asking for name of the cake
             System.out.println("Okay cool whats the name of the cake you would like to buy??");
             name = scan.nextLine();
@@ -179,7 +196,7 @@ public class MasterDessert
                     //Creates a new variable of type cake
                     Cake aCake = (Cake) adessert;
                     //If the name of the cake entered by the user is equals the name of an existing cake
-                    if (aCake.getname().equals(name))
+                    if (aCake.getname().equalsIgnoreCase(name))
                     {
                         //The empty cake variable is set to the new Cake variable
                         theCake = aCake;
@@ -209,11 +226,13 @@ public class MasterDessert
                 {
                     //Method that removes the stock
                     theCake.stockremover(stock);
+                    System.out.println("You Purchased the " + theCake.name + " Cake");
                 }
             }
             //If the cake was not found the user will be sent back to the menu
             if (found ==  false)
             {
+                System.out.println( " ");
                 System.out.print("Sorry your cake was not found you will be returned to the menu");
             }
 
@@ -224,6 +243,7 @@ public class MasterDessert
             System.out.println("You will now be returned to the menu");
             System.out.println(" "); 
         }
+    }
     }
 
     public void buycookie()
@@ -249,6 +269,11 @@ public class MasterDessert
         //If the user says yes
         if (answer.equals("yes"))
         {
+        	if(desserts.size()==0)
+        	{
+        		 System.out.println("NO DESSERTS CONTACT STAFF TO CREATE A DESSERT");
+        	}
+        	else {
             //Asking for the name of the cookie
             System.out.println("Okay cool whats the name of the cookie you would like to buy??");
             name = scan.nextLine();
@@ -259,7 +284,7 @@ public class MasterDessert
                 {
                     //Creates a new variable of type cake
                     Cookie aCookie = (Cookie) adessert;
-                    if (aCookie.getname().equals(name))
+                    if (aCookie.getname().equalsIgnoreCase(name))
                     {
                         //The empty cake variable is set to the new Cake variable
                         theCookie = aCookie;
@@ -288,6 +313,7 @@ public class MasterDessert
                 {
                     //Method that removes stock
                     theCookie.stockremover(stock);
+                    System.out.println("You Purchased the " + theCookie.name + " Cookie");
                 }
             }
             //If the cookie is not found
@@ -303,6 +329,7 @@ public class MasterDessert
             System.out.println("You will now be returned to the menu");
             System.out.println(" "); 
         }
+    }
     }
     //Method used to add stock
     public void addstock()
@@ -339,7 +366,7 @@ public class MasterDessert
                 if (adessert instanceof Cake)
                 {
                     Cake aCake = (Cake) adessert;
-                    if (aCake.getname().equals(name))
+                    if (aCake.getname().equalsIgnoreCase(name))
                     {
                         theCake = aCake;
                         found = true;
@@ -373,7 +400,7 @@ public class MasterDessert
                 if (adessert instanceof Cookie)
                 {
                     Cookie aCookie = (Cookie) adessert;
-                    if (aCookie.getname().equals(name2))
+                    if (aCookie.getname().equalsIgnoreCase(name2))
                     {
                         theCookie = aCookie;
                         found = true;
@@ -771,7 +798,7 @@ public class MasterDessert
                     {
                         //Creates a new variable of type cake
                         Cookie aCookie = (Cookie) adessert;
-                        if (aCookie.getname().equals(name))
+                        if (aCookie.getname().equalsIgnoreCase(name))
                         {
                             //The empty cake variable is set to the new Cake variable
                             theCookie = aCookie;
@@ -825,7 +852,7 @@ public class MasterDessert
         //Try-Catch used to have a less violent crash
         try{
             //Output stream is set to a new output stream which is named 
-            fileOut = new ObjectOutputStream(new FileOutputStream("Dessert3.dat"));
+            fileOut = new ObjectOutputStream(new FileOutputStream("Dessert.dat"));
             //loop goes through array
             for (Dessert adessert : desserts)
             {
@@ -859,7 +886,7 @@ public class MasterDessert
         //Try-Catch used to have a less violent crash
         try{
             //input stream is set to a new input stream which is named 
-            fileIn = new ObjectInputStream(new FileInputStream("Dessert3.dat"));
+            fileIn = new ObjectInputStream(new FileInputStream("Dessert.dat"));
             //indicates file was opened
             System.out.println("Opened file successfully");
             //Sets empty dessert variable to object being copied into the program
