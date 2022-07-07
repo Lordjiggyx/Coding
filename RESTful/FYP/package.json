@@ -34,7 +34,7 @@
     "grommet-icons": "^4.4.0",
     "lodash": "^4.17.15",
     "messagebird": "^3.4.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "mongoose": "^5.7.7",
     "monkeylearn": "^3.4.0",
     "natural": "^0.6.3",
