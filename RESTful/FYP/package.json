@@ -22,7 +22,7 @@
     "bcrypt": "^3.0.6",
     "bootstrap": "^4.4.1",
     "brain.js": "^2.0.0-alpha.12",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "cheerio": "^1.0.0-rc.3",
     "concurrently": "^5.0.0",
     "create-react-app": "^3.3.0",
